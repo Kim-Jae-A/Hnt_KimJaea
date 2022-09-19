@@ -17,6 +17,7 @@ var options = new MqttServerOptionsBuilder()
 // Create a new mqtt server
 var server = new MqttFactory().CreateMqttServer(options.Build());
 WriteLine("Connection Completed");
+
 //Add Interceptor for logging incoming messages
 server.InterceptingPublishAsync += Server_InterceptingPublishAsync;
 // Start the server

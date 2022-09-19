@@ -3887,11 +3887,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\windows\\source\\repos\\MQTT_broker\\MQTT_broker\\MQTT_broker.csproj",
+      "projectUniqueName": "C:\\Users\\windows\\source\\repos\\Hnt_KimJaea\\MQTT_broker\\MQTT_broker\\MQTT_broker.csproj",
       "projectName": "MQTT_broker",
-      "projectPath": "C:\\Users\\windows\\source\\repos\\MQTT_broker\\MQTT_broker\\MQTT_broker.csproj",
+      "projectPath": "C:\\Users\\windows\\source\\repos\\Hnt_KimJaea\\MQTT_broker\\MQTT_broker\\MQTT_broker.csproj",
       "packagesPath": "C:\\Users\\windows\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\windows\\source\\repos\\MQTT_broker\\MQTT_broker\\obj\\",
+      "outputPath": "C:\\Users\\windows\\source\\repos\\Hnt_KimJaea\\MQTT_broker\\MQTT_broker\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\windows\\AppData\\Roaming\\NuGet\\NuGet.Config",
