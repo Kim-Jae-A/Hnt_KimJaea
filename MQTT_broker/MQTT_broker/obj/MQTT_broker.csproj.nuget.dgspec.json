@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\windows\\source\\repos\\Hnt_KimJaea\\MQTT_broker\\MQTT_broker\\MQTT_broker.csproj": {}
+    "C:\\Users\\SEONGMIN\\Documents\\GitHub\\Hnt_KimJaea\\MQTT_broker\\MQTT_broker\\MQTT_broker.csproj": {}
   },
   "projects": {
-    "C:\\Users\\windows\\source\\repos\\Hnt_KimJaea\\MQTT_broker\\MQTT_broker\\MQTT_broker.csproj": {
+    "C:\\Users\\SEONGMIN\\Documents\\GitHub\\Hnt_KimJaea\\MQTT_broker\\MQTT_broker\\MQTT_broker.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\windows\\source\\repos\\Hnt_KimJaea\\MQTT_broker\\MQTT_broker\\MQTT_broker.csproj",
+        "projectUniqueName": "C:\\Users\\SEONGMIN\\Documents\\GitHub\\Hnt_KimJaea\\MQTT_broker\\MQTT_broker\\MQTT_broker.csproj",
         "projectName": "MQTT_broker",
-        "projectPath": "C:\\Users\\windows\\source\\repos\\Hnt_KimJaea\\MQTT_broker\\MQTT_broker\\MQTT_broker.csproj",
-        "packagesPath": "C:\\Users\\windows\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\windows\\source\\repos\\Hnt_KimJaea\\MQTT_broker\\MQTT_broker\\obj\\",
+        "projectPath": "C:\\Users\\SEONGMIN\\Documents\\GitHub\\Hnt_KimJaea\\MQTT_broker\\MQTT_broker\\MQTT_broker.csproj",
+        "packagesPath": "C:\\Users\\SEONGMIN\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\SEONGMIN\\Documents\\GitHub\\Hnt_KimJaea\\MQTT_broker\\MQTT_broker\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\windows\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\SEONGMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

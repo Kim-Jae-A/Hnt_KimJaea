@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "t9BBoFPbGS0v1EpaxcvANIbrYCDvSFyoHIgJ+bJ0L76ZkyM99dKzzGNv1IdPcVFCtgHeAJXDDJwAgMGF1MGGEA==",
+  "dgSpecHash": "f/HrJczgDOXqmeSmy5m/pfYsVy/dzr2fvJ9tDy6dPtziMORZSTlisSRxNRgT7ObUWGV94H8rPgF3hvf8YG5FWQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\windows\\source\\repos\\Hnt_KimJaea\\MqttTest_winform\\MqttTest_winform\\MqttTest_winform.csproj",
+  "projectFilePath": "C:\\Users\\SEONGMIN\\Documents\\GitHub\\Hnt_KimJaea\\MqttTest_winform\\MqttTest_winform\\MqttTest_winform.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\windows\\.nuget\\packages\\m2mqtt\\4.3.0\\m2mqtt.4.3.0.nupkg.sha512"
+    "C:\\Users\\SEONGMIN\\.nuget\\packages\\m2mqtt\\4.3.0\\m2mqtt.4.3.0.nupkg.sha512"
   ],
   "logs": [
     {

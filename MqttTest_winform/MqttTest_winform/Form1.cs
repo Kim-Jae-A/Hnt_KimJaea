@@ -33,6 +33,7 @@ namespace MqttTest_winform
             }
             return client;
         }
+        
         static void Publish(MqttClient client, string topic, string msg)
         {
             client.Publish(topic, System.Text.Encoding.UTF8.GetBytes(msg));
@@ -45,17 +46,11 @@ namespace MqttTest_winform
             // 메시지를 한번만 보내지만 수신자가 메시지를 받을때까지 계속 저장후 주기적으로 재전송함
             /*client.Subscribe(new string[] { topic }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });*/
         }
-        static void DisSubscribe(MqttClient client, string topic)
-        {
-            client.MqttMsgPublishReceived -= client_MqttMsgPublishReceived;
-            client.Subscribe(new string[] { $"{topic}" }, new byte[] { MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE });
-        }
         static void client_MqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)
         {
             string payload = Encoding.Default.GetString(e.Message);
             listBox?.Items.Add(payload);
         }
-
         private void bt_join_Click(object sender, EventArgs e)
         {
             string broker = tx_borker.Text;
@@ -64,16 +59,26 @@ namespace MqttTest_winform
             string username = "emqx";
             string password = "public";
             topic = tx_topic.Text;
-            ConnectMQTT(broker, port, clientId, username, password);
             if (i != 0)
             {
-                DisSubscribe(client, topic);
+                client.Disconnect();
+                MessageBox.Show("DisConnected to MQTT Broker");
+                i = 0;
             }
             else
             {
+                ConnectMQTT(broker, port, clientId, username, password);
                 Subscribe(client, topic);
+                i++;
+            }   
+            if (bt_join.Text == "DisConnect")
+            {
+                bt_join.Text = "Join";
             }
-            i++;
+            else
+            {
+                bt_join.Text = "DisConnect";
+            }
         }
 
         private void bt_send_Click(object sender, EventArgs e)
@@ -81,6 +86,14 @@ namespace MqttTest_winform
             string msg = tx_maintext.Text;
             Publish(client, topic, msg);
             tx_maintext.Clear();
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (i != 0)
+            {
+                client.Disconnect();
+            }
         }
     }
 }
