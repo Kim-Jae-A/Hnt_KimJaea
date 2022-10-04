@@ -1,0 +1,39 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.1",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {
+      "PLC_Test1/1.0.0": {
+        "dependencies": {
+          "Interop.ACTMULTILib": "3.0.0.0"
+        },
+        "runtime": {
+          "PLC_Test1.dll": {}
+        }
+      },
+      "Interop.ACTMULTILib/3.0.0.0": {
+        "runtime": {
+          "Interop.ACTMULTILib.dll": {
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "3.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "PLC_Test1/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Interop.ACTMULTILib/3.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

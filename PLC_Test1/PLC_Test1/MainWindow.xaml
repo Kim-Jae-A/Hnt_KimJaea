@@ -1,0 +1,51 @@
+﻿<Window x:Class="PLC_Test1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PLC_Test1.ViewModel"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="400" Width="400">
+    <Grid>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Logical Station number " VerticalAlignment="Top"/>
+        <TextBox x:Name="textBox" HorizontalAlignment="Left"
+                 Height="23" Margin="145,8,0,0" TextWrapping="Wrap"
+                 VerticalAlignment="Top" Width="55"
+                 Text="{Binding Number}"/>
+        <Button x:Name="button1" Content="Connect" HorizontalAlignment="Left"
+                Margin="216,10,0,0" VerticalAlignment="Top" Width="75"
+                Command="{Binding ConnectCommand}"/>
+        <Button x:Name="button2" Content="Disconnect" HorizontalAlignment="Left"
+                Margin="302,10,0,0" VerticalAlignment="Top" Width="75"
+                Command="{Binding DisconnectCommand}"/>
+        <!-- <Button x:Name="button3" Content="PC->PLC Write" HorizontalAlignment="Left"
+                Margin="209,92,0,0" VerticalAlignment="Top" Width="168" Height="21"
+                Command="{Binding WriteCommand}"/> -->
+        <Button x:Name="button4" Content="PLC->PC Read" HorizontalAlignment="Center"
+                Margin="0,97,0,0" VerticalAlignment="Top" Width="168" Height="21"
+                Command="{Binding ReadCommand}"
+                />
+        <TextBlock x:Name="textBlock2" HorizontalAlignment="Center" Margin="0,139,0,0"
+                   TextWrapping="Wrap" VerticalAlignment="Top" Height="144"
+                   Width="169" Text="{Binding Str2, UpdateSourceTrigger= PropertyChanged}"/>
+        <TextBlock x:Name="textBlock3" HorizontalAlignment="Left" 
+                   Margin="38,50,0,0" TextWrapping="Wrap"
+                   Text="szDevice" VerticalAlignment="Top"/>
+        <TextBox x:Name="textBox1" HorizontalAlignment="Left" Height="23"
+                 Margin="101,46,0,0" TextWrapping="Wrap" 
+                 VerticalAlignment="Top" Width="53"
+                 Text="{Binding SzDevice}"/>
+        <TextBox x:Name="textBox5" HorizontalAlignment="Left" Height="23"
+                 Margin="302,46,0,0" TextWrapping="Wrap" 
+                 VerticalAlignment="Top" Width="53"
+                 Text="{Binding Num}"/>
+        <TextBlock x:Name="textBlock3_Copy" HorizontalAlignment="Left" 
+            Margin="182,50,0,0" TextWrapping="Wrap"
+            Text="Number to display" VerticalAlignment="Top"/>
+        <!-- <TextBox x:Name="textBox2" HorizontalAlignment="Left"
+                 Height="23" Margin="20,91,0,0"
+                 TextWrapping="Wrap" VerticalAlignment="Top" Width="168"
+                 Text="{Binding Str1}"/> -->
+
+    </Grid>
+</Window>

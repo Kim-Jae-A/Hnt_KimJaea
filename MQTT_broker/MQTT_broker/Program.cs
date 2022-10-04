@@ -55,13 +55,13 @@ Task Server_InterceptingPublishAsync(InterceptingPublishEventArgs arg)
 
     string savePath = @$"d:\brokerlog\{DateTime.Now.ToString("yyyy-MM-dd-HH")}_{arg.ApplicationMessage?.Topic}.txt";
     string textValue = $"TimeStamp: {DateTime.Now} - ClientId = {arg.ClientId}, Topic = {arg.ApplicationMessage?.Topic}, Payload = {payload}, QoS = {arg.ApplicationMessage?.QualityOfServiceLevel}, Retain-Flag = {arg.ApplicationMessage?.Retain}\r\n";
-    if (!File.Exists(savePath))
+    if (!File.Exists(savePath)) // 파일이 존재하는지 확인
     {
-        System.IO.File.WriteAllText(savePath, textValue);
+        File.WriteAllText(savePath, textValue);  // 파일이 없으면 새로 생성
     }
     else
     {
-        File.AppendAllText(savePath, textValue);
+        File.AppendAllText(savePath, textValue);  // 파일이 있으면 파일에 내용 추가
     }
 
     return Task.CompletedTask;
