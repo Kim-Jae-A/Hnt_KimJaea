@@ -1,32 +1,32 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\SEONGMIN\\Documents\\GitHub\\Hnt_KimJaea\\MQTT_broker\\MQTT_broker\\MQTT_broker.csproj": {}
+    "C:\\Users\\SEONGMIN\\source\\repos\\MQTT_Broker\\MQTT_Broker\\MQTT_Broker.csproj": {}
   },
   "projects": {
-    "C:\\Users\\SEONGMIN\\Documents\\GitHub\\Hnt_KimJaea\\MQTT_broker\\MQTT_broker\\MQTT_broker.csproj": {
+    "C:\\Users\\SEONGMIN\\source\\repos\\MQTT_Broker\\MQTT_Broker\\MQTT_Broker.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\SEONGMIN\\Documents\\GitHub\\Hnt_KimJaea\\MQTT_broker\\MQTT_broker\\MQTT_broker.csproj",
-        "projectName": "MQTT_broker",
-        "projectPath": "C:\\Users\\SEONGMIN\\Documents\\GitHub\\Hnt_KimJaea\\MQTT_broker\\MQTT_broker\\MQTT_broker.csproj",
+        "projectUniqueName": "C:\\Users\\SEONGMIN\\source\\repos\\MQTT_Broker\\MQTT_Broker\\MQTT_Broker.csproj",
+        "projectName": "MQTT_Broker",
+        "projectPath": "C:\\Users\\SEONGMIN\\source\\repos\\MQTT_Broker\\MQTT_Broker\\MQTT_Broker.csproj",
         "packagesPath": "C:\\Users\\SEONGMIN\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\SEONGMIN\\Documents\\GitHub\\Hnt_KimJaea\\MQTT_broker\\MQTT_broker\\obj\\",
+        "outputPath": "C:\\Users\\SEONGMIN\\source\\repos\\MQTT_Broker\\MQTT_Broker\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\SEONGMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net6.0"
+          "netcoreapp3.1"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net6.0": {
-            "targetAlias": "net6.0",
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
             "projectReferences": {}
           }
         },
@@ -37,26 +37,10 @@
         }
       },
       "frameworks": {
-        "net6.0": {
-          "targetAlias": "net6.0",
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "dependencies": {
             "MQTTnet": {
-              "target": "Package",
-              "version": "[4.1.0.247, )"
-            },
-            "MQTTnet.AspNetCore": {
-              "target": "Package",
-              "version": "[4.1.0.247, )"
-            },
-            "MQTTnet.Extensions.ManagedClient": {
-              "target": "Package",
-              "version": "[4.1.0.247, )"
-            },
-            "MQTTnet.Extensions.Rpc": {
-              "target": "Package",
-              "version": "[4.1.0.247, )"
-            },
-            "MQTTnet.Extensions.WebSocket4Net": {
               "target": "Package",
               "version": "[4.1.0.247, )"
             }
@@ -67,8 +51,7 @@
             "net47",
             "net471",
             "net472",
-            "net48",
-            "net481"
+            "net48"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -77,7 +60,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.412\\RuntimeIdentifierGraph.json"
         }
       }
     }

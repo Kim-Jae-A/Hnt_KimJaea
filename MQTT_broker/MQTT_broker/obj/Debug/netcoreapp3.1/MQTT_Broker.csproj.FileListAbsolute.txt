@@ -1,0 +1,5 @@
+C:\Users\SEONGMIN\source\repos\MQTT_Broker\MQTT_Broker\obj\Debug\netcoreapp3.1\MQTT_Broker.csproj.AssemblyReference.cache
+C:\Users\SEONGMIN\source\repos\MQTT_Broker\MQTT_Broker\obj\Debug\netcoreapp3.1\MQTT_Broker.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\SEONGMIN\source\repos\MQTT_Broker\MQTT_Broker\obj\Debug\netcoreapp3.1\MQTT_Broker.AssemblyInfoInputs.cache
+C:\Users\SEONGMIN\source\repos\MQTT_Broker\MQTT_Broker\obj\Debug\netcoreapp3.1\MQTT_Broker.AssemblyInfo.cs
+C:\Users\SEONGMIN\source\repos\MQTT_Broker\MQTT_Broker\obj\Debug\netcoreapp3.1\MQTT_Broker.csproj.CoreCompileInputs.cache

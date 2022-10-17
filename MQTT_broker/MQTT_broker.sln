@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.3.32901.215
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32901.82
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MQTT_broker", "MQTT_broker\MQTT_broker.csproj", "{3E6EDEFA-1828-4C29-BEE8-36F2FB7182F2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MQTT_Broker", "MQTT_Broker\MQTT_Broker.csproj", "{9F83FC55-56FD-44D9-9446-48ECEEDC2A31}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3E6EDEFA-1828-4C29-BEE8-36F2FB7182F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3E6EDEFA-1828-4C29-BEE8-36F2FB7182F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3E6EDEFA-1828-4C29-BEE8-36F2FB7182F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3E6EDEFA-1828-4C29-BEE8-36F2FB7182F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F83FC55-56FD-44D9-9446-48ECEEDC2A31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F83FC55-56FD-44D9-9446-48ECEEDC2A31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F83FC55-56FD-44D9-9446-48ECEEDC2A31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F83FC55-56FD-44D9-9446-48ECEEDC2A31}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {7EC40F7B-D061-44AE-A2BC-47B6DEFF70CF}
+		SolutionGuid = {E01D703A-9591-4695-9F19-157ED11183D1}
 	EndGlobalSection
 EndGlobal

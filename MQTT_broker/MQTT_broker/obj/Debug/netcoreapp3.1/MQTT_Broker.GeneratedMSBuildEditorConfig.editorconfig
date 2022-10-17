@@ -1,0 +1,3 @@
+is_global = true
+build_property.RootNamespace = MQTT_Broker
+build_property.ProjectDir = C:\Users\SEONGMIN\source\repos\MQTT_Broker\MQTT_Broker\

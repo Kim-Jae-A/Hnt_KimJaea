@@ -1,0 +1,10 @@
+C:\Users\SEONGMIN\source\repos\BitOperation\BitOperation\bin\Debug\BitOperation.exe.config
+C:\Users\SEONGMIN\source\repos\BitOperation\BitOperation\bin\Debug\BitOperation.exe
+C:\Users\SEONGMIN\source\repos\BitOperation\BitOperation\bin\Debug\BitOperation.pdb
+C:\Users\SEONGMIN\source\repos\BitOperation\BitOperation\obj\Debug\BitOperation.csproj.AssemblyReference.cache
+C:\Users\SEONGMIN\source\repos\BitOperation\BitOperation\obj\Debug\BitOperation.Form1.resources
+C:\Users\SEONGMIN\source\repos\BitOperation\BitOperation\obj\Debug\BitOperation.Properties.Resources.resources
+C:\Users\SEONGMIN\source\repos\BitOperation\BitOperation\obj\Debug\BitOperation.csproj.GenerateResource.cache
+C:\Users\SEONGMIN\source\repos\BitOperation\BitOperation\obj\Debug\BitOperation.csproj.CoreCompileInputs.cache
+C:\Users\SEONGMIN\source\repos\BitOperation\BitOperation\obj\Debug\BitOperation.exe
+C:\Users\SEONGMIN\source\repos\BitOperation\BitOperation\obj\Debug\BitOperation.pdb
