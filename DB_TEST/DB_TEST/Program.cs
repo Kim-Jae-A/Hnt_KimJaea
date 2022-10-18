@@ -8,18 +8,18 @@ namespace DB_TEST
 {
     static class Program
     {
-        /// <summary>
-        /// 해당 애플리케이션의 주 진입점입니다.
-        /// </summary>
         [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new LoginForm());
-            DBHelper helper = new DBHelper();
-/*            MainForm main = new MainForm();
-            main.Show();*/
+            LoginForm login = new LoginForm();
+            Application.Run(login);
         }
+/*        public static void MainWindow()
+        {
+            MainForm main = new MainForm();
+            main.ShowDialog();
+        }*/
     }
 }

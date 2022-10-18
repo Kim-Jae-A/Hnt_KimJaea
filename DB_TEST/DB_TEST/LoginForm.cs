@@ -22,7 +22,7 @@ namespace DB_TEST
         private void button2_Click(object sender, EventArgs e)
         {
             SignUpForm sign = new SignUpForm();
-            sign.Show();
+            sign.ShowDialog();
         }
 
         private void button1_Click(object sender, EventArgs e)

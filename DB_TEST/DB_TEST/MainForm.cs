@@ -12,9 +12,22 @@ namespace DB_TEST
 {
     public partial class MainForm : Form
     {
+        string loginid;
+        string loginname;
         public MainForm()
         {
             InitializeComponent();
+        }
+        public void UserCheck(string id, string name)
+        {
+            loginid = id;
+            loginname = name;
+            label1.Text = $"{loginname} 님 반갑습니다.";
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show($"ID = {loginid}");
         }
     }
 }

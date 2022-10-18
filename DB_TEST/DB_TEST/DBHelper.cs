@@ -16,6 +16,7 @@ namespace DB_TEST
         public static string server = "localhost";
         private SqlConnection conn = new SqlConnection($"SERVER={server}; DATABASE={database}; UID={uid}; PASSWORD={password}");
         SqlCommand cmd = new SqlCommand();
+        MainForm mainForm = new MainForm();
 
         public void Connect()
         {
@@ -56,8 +57,10 @@ namespace DB_TEST
                 if (id == (string)mdr["ID"] && pass == (string)mdr["PASSWORD"])
                 {
                     MessageBox.Show("로그인 성공");
-                    MainForm main = new MainForm();
-                    main.Show();
+                    string name = (string)mdr["NAME"];
+                    mainForm.UserCheck(id, name);
+                    mainForm.ShowDialog();
+                    /*Program.MainWindow();*/
                 }
                 else
                 {
