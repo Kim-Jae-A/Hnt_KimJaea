@@ -1,0 +1,13 @@
+C:\Users\SEONGMIN\source\repos\PrintTEST\PrintTEST\bin\Debug\PrintTEST.exe.config
+C:\Users\SEONGMIN\source\repos\PrintTEST\PrintTEST\bin\Debug\PrintTEST.exe
+C:\Users\SEONGMIN\source\repos\PrintTEST\PrintTEST\bin\Debug\PrintTEST.pdb
+C:\Users\SEONGMIN\source\repos\PrintTEST\PrintTEST\obj\Debug\PrintTEST.csproj.AssemblyReference.cache
+C:\Users\SEONGMIN\source\repos\PrintTEST\PrintTEST\obj\Debug\PrintTEST.Form1.resources
+C:\Users\SEONGMIN\source\repos\PrintTEST\PrintTEST\obj\Debug\PrintTEST.Properties.Resources.resources
+C:\Users\SEONGMIN\source\repos\PrintTEST\PrintTEST\obj\Debug\PrintTEST.csproj.GenerateResource.cache
+C:\Users\SEONGMIN\source\repos\PrintTEST\PrintTEST\obj\Debug\PrintTEST.csproj.CoreCompileInputs.cache
+C:\Users\SEONGMIN\source\repos\PrintTEST\PrintTEST\obj\Debug\PrintTEST.exe
+C:\Users\SEONGMIN\source\repos\PrintTEST\PrintTEST\obj\Debug\PrintTEST.pdb
+C:\Users\SEONGMIN\source\repos\PrintTEST\PrintTEST\bin\Debug\QrCodeGenerator.dll
+C:\Users\SEONGMIN\source\repos\PrintTEST\PrintTEST\bin\Debug\QrCodeGenerator.xml
+C:\Users\SEONGMIN\source\repos\PrintTEST\PrintTEST\obj\Debug\PrintTEST.csproj.CopyComplete

@@ -27,7 +27,8 @@ namespace DB_TEST
 
         private void button1_Click(object sender, EventArgs e)
         {
-            MessageBox.Show($"ID = {loginid}");
+            MessageBox.Show($"ID = {loginid}" +
+                $"\r\nname = {loginname}");
         }
     }
 }
