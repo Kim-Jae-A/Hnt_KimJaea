@@ -62,7 +62,7 @@ namespace DB_TEST
                     mainForm.ShowDialog();
                     /*Program.MainWindow();*/
                 }
-                else
+                else if((string)mdr["ID"] == null || pass != (string)mdr["PASSWORD"])
                 {
                     MessageBox.Show("아이디/비밀번호를 확인하세요.");
                 }
