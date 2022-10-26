@@ -14,7 +14,7 @@ namespace DB_TEST
         public static string password = "1234";
         public static string database = "login";
         public static string server = "localhost";
-        private SqlConnection conn = new SqlConnection($"SERVER={server}; DATABASE={database}; UID={uid}; PASSWORD={password}");
+        SqlConnection conn = new SqlConnection($"SERVER={server}; DATABASE={database}; UID={uid}; PASSWORD={password}");
         SqlCommand cmd = new SqlCommand();
         MainForm mainForm = new MainForm();
 
@@ -42,11 +42,12 @@ namespace DB_TEST
         public void SignUpQuery(string id, string pass, string name)
         {
             cmd.Connection = conn;
-            cmd.CommandText = $"INSERT INTO login_Member values('{id}','{pass}','{name}')"; ;
+            cmd.CommandText = $"INSERT INTO login_Member values('{id}','{pass}','{name}')";
             cmd.ExecuteNonQuery();
         }
         public void LoginQuery(string id, string pass)
         {
+            int check = 0;
             cmd.Connection = conn;
             cmd.CommandText = $"SELECT * FROM login_Member WHERE ID = '{id}'";
             //cmd.ExecuteNonQuery();
@@ -57,17 +58,40 @@ namespace DB_TEST
                 if (id == (string)mdr["ID"] && pass == (string)mdr["PASSWORD"])
                 {
                     MessageBox.Show("로그인 성공");
-                    string name = (string)mdr["NAME"];
-                    mainForm.UserCheck(id, name);
-                    mainForm.ShowDialog();
+                    check++;
+                    break;
                     /*Program.MainWindow();*/
                 }
-                else if((string)mdr["ID"] == null || pass != (string)mdr["PASSWORD"])
+                else if(id == null) //!= (string)mdr["ID"] || pass != (string)mdr["PASSWORD"])
+                {
+                    MessageBox.Show("아이디/비밀번호를 확인하세요.");
+                }
+                else
                 {
                     MessageBox.Show("아이디/비밀번호를 확인하세요.");
                 }
             }
+            string name = (string)mdr["NAME"];
             mdr.Close();
+            if (check != 0)
+            {
+                Loginlog_Query(id);
+                mainForm.UserCheck(id, name);
+                mainForm.ShowDialog();
+            }
+        }
+        public void Loginlog_Query(string id)
+        {
+            cmd.Connection = conn;
+            cmd.CommandText = $"INSERT INTO login_log values('{id}',CURRENT_TIMESTAMP)";
+            try
+            {
+                cmd.ExecuteNonQuery();
+            }
+            catch(Exception e)
+            {
+                MessageBox.Show($"{e}");
+            }
         }
     }
 }

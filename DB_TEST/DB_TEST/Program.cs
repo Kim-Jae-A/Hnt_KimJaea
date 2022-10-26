@@ -14,12 +14,13 @@ namespace DB_TEST
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             LoginForm login = new LoginForm();
+            //login.Show();
             Application.Run(login);
         }
 /*        public static void MainWindow()
         {
             MainForm main = new MainForm();
-            main.ShowDialog();
+            Application.Run(main);
         }*/
     }
 }
