@@ -47,38 +47,34 @@ namespace DB_TEST
         }
         public void LoginQuery(string id, string pass)
         {
-            int check = 0;
+            string name = "";
+            bool login = false;
             cmd.Connection = conn;
             cmd.CommandText = $"SELECT * FROM login_Member WHERE ID = '{id}'";
-            //cmd.ExecuteNonQuery();
+            cmd.ExecuteNonQuery();
 
             SqlDataReader mdr = cmd.ExecuteReader();
             while (mdr.Read())
             {
                 if (id == (string)mdr["ID"] && pass == (string)mdr["PASSWORD"])
                 {
-                    MessageBox.Show("로그인 성공");
-                    check++;
-                    break;
-                    /*Program.MainWindow();*/
-                }
-                else if(id == null) //!= (string)mdr["ID"] || pass != (string)mdr["PASSWORD"])
-                {
-                    MessageBox.Show("아이디/비밀번호를 확인하세요.");
-                }
-                else
-                {
-                    MessageBox.Show("아이디/비밀번호를 확인하세요.");
+                    login = true;
+                    name = (string)mdr["NAME"];
                 }
             }
-            string name = (string)mdr["NAME"];
             mdr.Close();
-            if (check != 0)
+            if (login)
             {
+                MessageBox.Show("로그인 성공");
                 Loginlog_Query(id);
                 mainForm.UserCheck(id, name);
                 mainForm.ShowDialog();
             }
+            else
+            {
+                MessageBox.Show("아이디/비밀번호를 확인하세요.");
+            }
+
         }
         public void Loginlog_Query(string id)
         {
@@ -91,6 +87,18 @@ namespace DB_TEST
             catch(Exception e)
             {
                 MessageBox.Show($"{e}");
+            }
+        }
+        public void Loginlog_view(string id)
+        {
+            string query = $"SELECT * FROM login_log where user_ID = '{id}'";
+            cmd.Connection = conn;
+            cmd.CommandText = query;
+            SqlDataReader mdr = cmd.ExecuteReader();
+
+            while (mdr.Read())
+            {
+
             }
         }
     }

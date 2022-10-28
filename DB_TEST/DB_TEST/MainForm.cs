@@ -27,8 +27,17 @@ namespace DB_TEST
 
         private void button1_Click(object sender, EventArgs e)
         {
-            MessageBox.Show($"ID = {loginid}" +
-                $"\r\nname = {loginname}");
+            UserImfor user = new UserImfor(loginid, loginname);
+            user.TopLevel = false;
+            this.Controls.Add(user);
+            user.StartPosition = FormStartPosition.Manual;
+            user.Location = new Point(550, 40);
+            user.Show();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

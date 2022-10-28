@@ -42,15 +42,16 @@ namespace DB_TEST
             // 
             this.textBox1.Location = new System.Drawing.Point(89, 3);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(312, 21);
+            this.textBox1.Size = new System.Drawing.Size(190, 21);
             this.textBox1.TabIndex = 0;
             // 
             // textBox2
             // 
             this.textBox2.Location = new System.Drawing.Point(89, 30);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(312, 21);
+            this.textBox2.Size = new System.Drawing.Size(190, 21);
             this.textBox2.TabIndex = 1;
+            this.textBox2.UseSystemPasswordChar = true;
             // 
             // label1
             // 
@@ -72,7 +73,7 @@ namespace DB_TEST
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(407, 3);
+            this.button1.Location = new System.Drawing.Point(294, 3);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(120, 75);
             this.button1.TabIndex = 4;
@@ -93,14 +94,14 @@ namespace DB_TEST
             // 
             this.textBox3.Location = new System.Drawing.Point(89, 57);
             this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(312, 21);
+            this.textBox3.Size = new System.Drawing.Size(190, 21);
             this.textBox3.TabIndex = 6;
             // 
             // SignUpForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(531, 81);
+            this.ClientSize = new System.Drawing.Size(419, 81);
             this.Controls.Add(this.textBox3);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.button1);

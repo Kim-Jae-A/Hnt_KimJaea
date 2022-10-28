@@ -157,3 +157,4 @@ C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\DB_TEST\DB_TEST\obj\Debug\DB_TEST
 C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\DB_TEST\DB_TEST\obj\Debug\DB_TEST.exe
 C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\DB_TEST\DB_TEST\obj\Debug\DB_TEST.pdb
 C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\DB_TEST\DB_TEST\obj\Debug\DB_TEST.MainForm.resources
+C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\DB_TEST\DB_TEST\obj\Debug\DB_TEST.UserImfor.resources
