@@ -17,26 +17,26 @@ namespace Client_Test
     public partial class Form1 : Form
     {
         Socket mainSock;
-        AsyncObject obj = new AsyncObject(4096);
+        AsyncObject obj = new AsyncObject(4096);   // 소켓 크기 설정
+        bool check = false;
 
         public Form1()
         {
             InitializeComponent();
-            Box_ServerIP.Text = "10.10.24.251";
-            Box_Port.Text = "5000";
-            mainSock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-
+            Box_ServerIP.Text = "10.10.24.251";     // 디폴트 IP
+            Box_Port.Text = "5000";                 // 디폴트 Port
+            mainSock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);  // Socket 설정
         }
 
-        private void Bt_Connect_Click(object sender, EventArgs e)
+        private void Bt_Connect_Click(object sender, EventArgs e)    // 연결 버튼 클릭 메소드
         {
-            mainSock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            //mainSock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             int i = 0;
             try
             {
-                IPAddress serverAddr = IPAddress.Parse($"{Box_ServerIP.Text}");
-                IPEndPoint clientEP = new IPEndPoint(serverAddr, Convert.ToInt32(Box_Port.Text));
-                mainSock.BeginConnect(clientEP, new AsyncCallback(ConnectCallback), mainSock);
+                IPAddress serverAddr = IPAddress.Parse($"{Box_ServerIP.Text}");                         // 설정한 서버 IP 에 맞게 IP 설정
+                IPEndPoint clientEP = new IPEndPoint(serverAddr, Convert.ToInt32(Box_Port.Text));       // 설정한 IP, Port 에 맞게 클라이언트로 서버 접속
+                mainSock.BeginConnect(clientEP, new AsyncCallback(ConnectCallback), mainSock);          // 접속한 서버 IP 에 맞게 소켓 연결
                 i++;
             }
             catch(Exception ex)
@@ -45,22 +45,23 @@ namespace Client_Test
                 mainSock.Close();
                 mainSock.Dispose();
             }
-            if(i != 0)
+            if(i != 0)  // 연결 성공시 실행
             {
                 MessageBox.Show("연결되었습니다.");
-                Thread thread = new Thread(Workthread);
-                thread.IsBackground = true;
-                thread.Start();
+                check = true;
+                Thread thread = new Thread(Workthread);    // 쓰레드 설정
+                thread.IsBackground = true;                // 쓰레드 백그라운드 셋팅
+                thread.Start();                            // 쓰레드 실행
             }
         }
-        void ConnectCallback(IAsyncResult ar)
+        void ConnectCallback(IAsyncResult ar)   //커넥트 콜백 메소드
         {
             try
             {
                 Socket client = (Socket)ar.AsyncState;
                 client.EndConnect(ar); 
                 obj.WorkingSocket = mainSock;
-                //mainSock.BeginReceive(obj.Buffer, 0, obj.BufferSize, 0, DataReceived, obj);
+                mainSock.BeginReceive(obj.Buffer, 0, obj.BufferSize, 0, DataReceived, obj);  // 비동기 리시브로 데이터 받아옴
                 //mainSock.BeginReceive(obj.Buffer, 0, 10, 0, DataReceived, obj);
             }
             catch (Exception ex)
@@ -84,7 +85,7 @@ namespace Client_Test
                 Array.Clear(Buffer, 0, BufferSize);
             }
         }
-        void DataReceived(IAsyncResult ar)
+        void DataReceived(IAsyncResult ar)        // 데이터 받아오는 리시브 메서드
         {
             AsyncObject obj = (AsyncObject)ar.AsyncState;
 
@@ -94,29 +95,32 @@ namespace Client_Test
 
             Array.Copy(obj.Buffer, 0, buffer, 0, received);
 
-            if (listBox1.InvokeRequired)
+            if (check)
             {
-                listBox1.Invoke(new MethodInvoker(delegate
+                if (listBox1.InvokeRequired)    // 받아온 데이터를 리스트 박스에 표시
+                {
+                    listBox1.Invoke(new MethodInvoker(delegate
+                    {
+                        listBox1.Items.Add(Encoding.Default.GetString(buffer));
+                    }));
+                    listBox1.Invoke(new MethodInvoker(delegate
+                    {
+                        listBox1.TopIndex = listBox1.Items.Count - 1;
+                    }));
+                }
+                else
                 {
                     listBox1.Items.Add(Encoding.Default.GetString(buffer));
-                }));
-                listBox1.Invoke(new MethodInvoker(delegate
-                {
                     listBox1.TopIndex = listBox1.Items.Count - 1;
-                }));
-            }
-            else
-            {
-                listBox1.Items.Add(Encoding.Default.GetString(buffer));
-                listBox1.TopIndex = listBox1.Items.Count - 1;
+                }
             }
         }
 
-        private void Bt_send_Click(object sender, EventArgs e)
+        private void Bt_send_Click(object sender, EventArgs e)  // Send 버튼 클릭 메소드
         {
             Send();
         }
-        public void Send()
+        public void Send()   // 서버로 데이터 보내는 메소드
         {
             int i = 0;
             try
@@ -135,14 +139,13 @@ namespace Client_Test
                 MessageBox.Show("메시지를 보냈습니다.");
             }
         }
-        private void Workthread()
-        {
-            //mainSock.BeginReceive
+        private void Workthread()   // 셋팅한 쓰레드가 시작되면 실행되는 함수
+        { 
             while (true)
             {
                 try
                 {
-                    mainSock.BeginReceive(obj.Buffer, 0, obj.BufferSize, 0, DataReceived, obj);
+                    mainSock.BeginReceive(obj.Buffer, 0, obj.BufferSize, 0, DataReceived, obj);  // 실시간으로 서버에서 보낸 데이터를 받는다.
                 }
                 catch (Exception ex)
                 {
