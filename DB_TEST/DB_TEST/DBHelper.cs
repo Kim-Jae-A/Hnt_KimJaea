@@ -10,11 +10,11 @@ namespace DB_TEST
 {
     class DBHelper
     {
-        public static string uid = "test";
-        public static string password = "1234";
+        public static string uid = "hnt";
+        public static string password = "12#hnt";
         public static string database = "login";
-        public static string server = "localhost";
-        SqlConnection conn = new SqlConnection($"SERVER={server}; DATABASE={database}; UID={uid}; PASSWORD={password}");
+        public static string server = "118.39.27.73,1433";
+        SqlConnection conn = new SqlConnection($"SERVER={server}; DATABASE={database}; UID={uid}; PASSWORD={password};");
         SqlCommand cmd = new SqlCommand();
         MainForm mainForm = new MainForm();
 
@@ -45,7 +45,7 @@ namespace DB_TEST
             cmd.CommandText = $"INSERT INTO login_Member values('{id}','{pass}','{name}')";
             cmd.ExecuteNonQuery();
         }
-        public void LoginQuery(string id, string pass)
+        public bool LoginQuery(string id, string pass)
         {
             string name = "";
             bool login = false;
@@ -74,7 +74,7 @@ namespace DB_TEST
             {
                 MessageBox.Show("아이디/비밀번호를 확인하세요.");
             }
-
+            return login;
         }
         public void Loginlog_Query(string id)
         {

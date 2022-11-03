@@ -4,23 +4,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace DB_TEST
+namespace Client_Test
 {
     static class Program
     {
+        /// <summary>
+        /// 해당 애플리케이션의 주 진입점입니다.
+        /// </summary>
         [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            LoginForm login = new LoginForm();
-            //login.Show();
-            Application.Run(login);
-        }
-
-        public static void ClosingPro()
-        {
-            Application.Exit();
+            Application.Run(new Form1());
         }
     }
 }

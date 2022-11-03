@@ -39,5 +39,10 @@ namespace DB_TEST
         {
 
         }
+
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Program.ClosingPro();
+        }
     }
 }
