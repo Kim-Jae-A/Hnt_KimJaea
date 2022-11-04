@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32929.386
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YJ_DATA_TEST", "YJ_DATA_TEST\YJ_DATA_TEST.csproj", "{F8DE8473-AD49-42C0-8B6F-2A64B5DF8D47}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F8DE8473-AD49-42C0-8B6F-2A64B5DF8D47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8DE8473-AD49-42C0-8B6F-2A64B5DF8D47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8DE8473-AD49-42C0-8B6F-2A64B5DF8D47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8DE8473-AD49-42C0-8B6F-2A64B5DF8D47}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7245EC72-1FDF-44CD-B7E5-BA07EAD6F78A}
+	EndGlobalSection
+EndGlobal

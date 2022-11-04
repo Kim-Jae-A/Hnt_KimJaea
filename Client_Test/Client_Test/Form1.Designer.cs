@@ -37,6 +37,8 @@ namespace Client_Test
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.Box_send = new System.Windows.Forms.TextBox();
             this.Bt_send = new System.Windows.Forms.Button();
+            this.Box_Hex_Code = new System.Windows.Forms.TextBox();
+            this.Bt_Hexcode = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // ServerIP
@@ -92,7 +94,7 @@ namespace Client_Test
             // 
             // Box_send
             // 
-            this.Box_send.Location = new System.Drawing.Point(19, 359);
+            this.Box_send.Location = new System.Drawing.Point(19, 358);
             this.Box_send.Name = "Box_send";
             this.Box_send.Size = new System.Drawing.Size(545, 21);
             this.Box_send.TabIndex = 6;
@@ -107,11 +109,31 @@ namespace Client_Test
             this.Bt_send.UseVisualStyleBackColor = true;
             this.Bt_send.Click += new System.EventHandler(this.Bt_send_Click);
             // 
+            // Box_Hex_Code
+            // 
+            this.Box_Hex_Code.Location = new System.Drawing.Point(19, 387);
+            this.Box_Hex_Code.Name = "Box_Hex_Code";
+            this.Box_Hex_Code.Size = new System.Drawing.Size(545, 21);
+            this.Box_Hex_Code.TabIndex = 8;
+            this.Box_Hex_Code.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Box_Hex_Code_KeyPress);
+            // 
+            // Bt_Hexcode
+            // 
+            this.Bt_Hexcode.Location = new System.Drawing.Point(578, 383);
+            this.Bt_Hexcode.Name = "Bt_Hexcode";
+            this.Bt_Hexcode.Size = new System.Drawing.Size(119, 30);
+            this.Bt_Hexcode.TabIndex = 9;
+            this.Bt_Hexcode.Text = "HexCodeSend";
+            this.Bt_Hexcode.UseVisualStyleBackColor = true;
+            this.Bt_Hexcode.Click += new System.EventHandler(this.Bt_Hexcode_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(717, 391);
+            this.ClientSize = new System.Drawing.Size(717, 422);
+            this.Controls.Add(this.Bt_Hexcode);
+            this.Controls.Add(this.Box_Hex_Code);
             this.Controls.Add(this.Bt_send);
             this.Controls.Add(this.Box_send);
             this.Controls.Add(this.listBox1);
@@ -137,6 +159,8 @@ namespace Client_Test
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.TextBox Box_send;
         private System.Windows.Forms.Button Bt_send;
+        private System.Windows.Forms.TextBox Box_Hex_Code;
+        private System.Windows.Forms.Button Bt_Hexcode;
     }
 }
 

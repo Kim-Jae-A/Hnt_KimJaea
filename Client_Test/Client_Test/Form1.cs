@@ -154,5 +154,34 @@ namespace Client_Test
                 Thread.Sleep(1);
             }
         }
+
+        private void Bt_Hexcode_Click(object sender, EventArgs e)
+        {
+            int i = 0;
+            try
+            {
+                int message = Convert.ToInt32(Box_Hex_Code.Text);
+                string hexmes = Convert.ToString(message, 16);
+                byte[] buff = Encoding.ASCII.GetBytes(hexmes);
+                mainSock.Send(buff, buff.Length, 0);
+                i++;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("" + ex);
+            }
+            if (i != 0)
+            {
+                MessageBox.Show("메시지를 보냈습니다.");
+            }
+        }
+
+        private void Box_Hex_Code_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!(char.IsDigit(e.KeyChar) || e.KeyChar == Convert.ToChar(Keys.Back)))
+            {
+                e.Handled = true;
+            }
+        }
     }
 }
