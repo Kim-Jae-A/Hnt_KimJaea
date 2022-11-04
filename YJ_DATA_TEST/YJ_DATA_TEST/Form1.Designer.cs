@@ -30,79 +30,48 @@ namespace YJ_DATA_TEST
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.Timer_Send = new System.Windows.Forms.Timer(this.components);
             this.listBox1 = new System.Windows.Forms.ListBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.Box_Test_Send = new System.Windows.Forms.TextBox();
-            this.Bt_Test_Send = new System.Windows.Forms.Button();
+            this.Timer_Reconn = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
-            // timer1
+            // Timer_Send
             // 
-            this.timer1.Enabled = true;
-            this.timer1.Interval = 5000;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.Timer_Send.Interval = 5000;
+            this.Timer_Send.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // listBox1
             // 
             this.listBox1.FormattingEnabled = true;
             this.listBox1.HorizontalScrollbar = true;
             this.listBox1.ItemHeight = 12;
-            this.listBox1.Location = new System.Drawing.Point(7, 38);
+            this.listBox1.Location = new System.Drawing.Point(7, 5);
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(496, 268);
             this.listBox1.TabIndex = 0;
             // 
-            // label1
+            // Timer_Reconn
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("굴림", 12F);
-            this.label1.Location = new System.Drawing.Point(10, 10);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(36, 16);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "test";
-            // 
-            // Box_Test_Send
-            // 
-            this.Box_Test_Send.Location = new System.Drawing.Point(49, 9);
-            this.Box_Test_Send.Name = "Box_Test_Send";
-            this.Box_Test_Send.Size = new System.Drawing.Size(394, 21);
-            this.Box_Test_Send.TabIndex = 2;
-            // 
-            // Bt_Test_Send
-            // 
-            this.Bt_Test_Send.Location = new System.Drawing.Point(449, 5);
-            this.Bt_Test_Send.Name = "Bt_Test_Send";
-            this.Bt_Test_Send.Size = new System.Drawing.Size(53, 31);
-            this.Bt_Test_Send.TabIndex = 3;
-            this.Bt_Test_Send.Text = "Send";
-            this.Bt_Test_Send.UseVisualStyleBackColor = true;
-            this.Bt_Test_Send.Click += new System.EventHandler(this.Bt_Test_Send_Click);
+            this.Timer_Reconn.Interval = 5000;
+            this.Timer_Reconn.Tick += new System.EventHandler(this.Timer_Reconn_Tick);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(509, 326);
-            this.Controls.Add(this.Bt_Test_Send);
-            this.Controls.Add(this.Box_Test_Send);
-            this.Controls.Add(this.label1);
+            this.ClientSize = new System.Drawing.Size(509, 280);
             this.Controls.Add(this.listBox1);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Timer Timer_Send;
         private System.Windows.Forms.ListBox listBox1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox Box_Test_Send;
-        private System.Windows.Forms.Button Bt_Test_Send;
+        private System.Windows.Forms.Timer Timer_Reconn;
     }
 }
 

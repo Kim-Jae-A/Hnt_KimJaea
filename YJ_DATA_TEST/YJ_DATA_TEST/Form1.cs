@@ -23,10 +23,10 @@ namespace YJ_DATA_TEST
         public Form1()
         {
             InitializeComponent();
-            mainSock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);  // Socket 설정
+            SocketSet();
             ConnServer();
-            Box_Test_Send.Text = "WR-001816,000000000000,v1.000,000,000,0.0000,0.0000,0.0000";       // Test 메세지
             helper.Connect();
+            Test();
         }
         private void timer1_Tick(object sender, EventArgs e)  // 5초마다 메시지 보냄
         {
@@ -42,25 +42,35 @@ namespace YJ_DATA_TEST
                 else if (i < 15)
                     msg += "#";
             }
-            listBox1.Items.Add(msg);
-            listBox1.TopIndex = listBox1.Items.Count - 1;
-            //Send(msg);
+            //listBox1.Items.Add(msg);
+            //listBox1.TopIndex = listBox1.Items.Count - 1;
+            Send(msg);
         }
         private void ConnServer()
         {
-            string serverip = "tcp.win-x.kr";            // 서버 아이피
-            string serverport = "50300";                 // 서버 포트
+            int i = 0;
+            //string serverip = "tcp.win-x.kr";            // 서버 아이피
+            //string serverport = "50300";                 // 서버 포트
+            string serverip = "10.10.24.64";            // 서버 아이피
+            string serverport = "5000";
             try
             {
                 IPAddress serverAddr = IPAddress.Parse($"{serverip}");                               // 설정한 서버 IP 에 맞게 IP 설정
                 IPEndPoint clientEP = new IPEndPoint(serverAddr, Convert.ToInt32(serverport));       // 설정한 IP, Port 에 맞게 클라이언트로 서버 접속
-                mainSock.BeginConnect(clientEP, new AsyncCallback(ConnectCallback), mainSock);       // 접속한 서버 IP 에 맞게 소켓 연결
+                mainSock.BeginConnect(clientEP, new AsyncCallback(ConnectCallback), mainSock);      // 접속한 서버 IP 에 맞게 소켓 연결
+                i++;
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"{ex}");
-                mainSock.Close();
-                mainSock.Dispose();
+            }
+            finally
+            {
+                if (i != 0)
+                {
+                    Timer_Reconn.Enabled = false;
+                    Timer_Send.Enabled = true;
+                }
             }
         }
         void ConnectCallback(IAsyncResult ar)   //커넥트 콜백 메소드
@@ -97,11 +107,8 @@ namespace YJ_DATA_TEST
         void DataReceived(IAsyncResult ar)        // 데이터 받아오는 리시브 메서드
         {
             AsyncObject obj = (AsyncObject)ar.AsyncState;
-
             int received = obj.WorkingSocket.EndReceive(ar);
-
             byte[] buffer = new byte[received];
-
             Array.Copy(obj.Buffer, 0, buffer, 0, received);
 
             if (listBox1.InvokeRequired)    // 받아온 데이터를 리스트 박스에 표시
@@ -121,24 +128,6 @@ namespace YJ_DATA_TEST
                 listBox1.TopIndex = listBox1.Items.Count - 1;
             }
         }
-        private void Bt_Test_Send_Click(object sender, EventArgs e)  //테스트 버튼 클릭
-        {
-            //Send(Box_Test_Send.Text);
-            string[] data = helper.Query();
-            string msg = "WR-1816,";
-            msg += $"{data[0]},";
-            msg += "v1.000,1,-99,";
-            for (int i = 1; i < data.Length; i++)
-            {
-                msg += data[i];
-                if (i < 3)
-                    msg += ",";
-                else if (i < 15)
-                    msg += "#";
-            }
-            listBox1.Items.Add(msg);
-            listBox1.TopIndex = listBox1.Items.Count - 1;
-        }
         public void Send(string msg)   // 서버로 데이터 보내는 메소드
         {
             try
@@ -149,8 +138,26 @@ namespace YJ_DATA_TEST
             }
             catch (Exception ex)
             {
+                Timer_Reconn.Enabled = true;
+                Timer_Send.Enabled = false;
                 MessageBox.Show("" + ex);
             }
+        }
+        public void Test()
+        {
+            string testmsg = "WR-001816,000000000000,v1.000,000,000,0.0000,0.0000,0.0000";
+            Send(testmsg);
+        }
+
+        private void Timer_Reconn_Tick(object sender, EventArgs e)
+        {
+            SocketSet();
+            ConnServer();
+            Test();
+        }
+        private void SocketSet()
+        {
+            mainSock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         }
     }
 }
