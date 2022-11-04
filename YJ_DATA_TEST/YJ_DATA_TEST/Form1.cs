@@ -62,14 +62,17 @@ namespace YJ_DATA_TEST
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"{ex}");
+                Console.WriteLine(ex);
             }
             finally
             {
                 if (i != 0)
                 {
                     Timer_Reconn.Enabled = false;
-                    Timer_Send.Enabled = true;
+                    Thread thread = new Thread(Workthread);    // 쓰레드 설정
+                    thread.IsBackground = true;                // 쓰레드 백그라운드 셋팅
+                    thread.Start();
+                    //Timer_Send.Enabled = true;
                 }
             }
         }
@@ -85,7 +88,7 @@ namespace YJ_DATA_TEST
             }
             catch (Exception ex)
             {
-                MessageBox.Show("" + ex);
+                Console.WriteLine(ex);
             }
         }
         public class AsyncObject
@@ -110,11 +113,12 @@ namespace YJ_DATA_TEST
             int received = obj.WorkingSocket.EndReceive(ar);
             byte[] buffer = new byte[received];
             Array.Copy(obj.Buffer, 0, buffer, 0, received);
-
+            
             if (listBox1.InvokeRequired)    // 받아온 데이터를 리스트 박스에 표시
             {
                 listBox1.Invoke(new MethodInvoker(delegate
                 {
+                    Send_Timer_ON();
                     listBox1.Items.Add(Encoding.Default.GetString(buffer));
                 }));
                 listBox1.Invoke(new MethodInvoker(delegate
@@ -124,6 +128,7 @@ namespace YJ_DATA_TEST
             }
             else
             {
+                Send_Timer_ON();
                 listBox1.Items.Add(Encoding.Default.GetString(buffer));
                 listBox1.TopIndex = listBox1.Items.Count - 1;
             }
@@ -140,7 +145,7 @@ namespace YJ_DATA_TEST
             {
                 Timer_Reconn.Enabled = true;
                 Timer_Send.Enabled = false;
-                MessageBox.Show("" + ex);
+                Console.WriteLine(ex);
             }
         }
         public void Test()
@@ -149,7 +154,7 @@ namespace YJ_DATA_TEST
             Send(testmsg);
         }
 
-        private void Timer_Reconn_Tick(object sender, EventArgs e)
+        private void Timer_Reconn_Tick(object sender, EventArgs e)     // 메세지 보내는데 실패하면 타이머 시작한 뒤 소켓 및 연결 재시도
         {
             SocketSet();
             ConnServer();
@@ -158,6 +163,25 @@ namespace YJ_DATA_TEST
         private void SocketSet()
         {
             mainSock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+        }
+        private void Send_Timer_ON()
+        {
+            Timer_Send.Enabled = true;
+        }
+        private void Workthread()   // 셋팅한 쓰레드가 시작되면 실행되는 함수
+        {
+            while (true)
+            {
+                try
+                {
+                    mainSock.BeginReceive(obj.Buffer, 0, obj.BufferSize, 0, DataReceived, obj);  // 실시간으로 서버에서 보낸 데이터를 받는다.
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
+                Thread.Sleep(1000);
+            }
         }
     }
 }

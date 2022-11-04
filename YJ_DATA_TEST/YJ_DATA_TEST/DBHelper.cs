@@ -25,7 +25,8 @@ namespace YJ_DATA_TEST
             }
             catch (SqlException ex)
             {
-                MessageBox.Show("연결실패 " + ex);
+                //MessageBox.Show("연결실패 " + ex);
+                Console.WriteLine(ex);
             }
         }
         public void DisConnect()
@@ -62,7 +63,7 @@ namespace YJ_DATA_TEST
             try { cmd.ExecuteNonQuery(); }
             catch(Exception ex)
             {
-                MessageBox.Show($"{ex}");
+                Console.WriteLine(ex);
             }
             SqlDataReader mdr = cmd.ExecuteReader();
             mdr.Read();

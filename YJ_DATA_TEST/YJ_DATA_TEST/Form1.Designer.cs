@@ -52,7 +52,7 @@ namespace YJ_DATA_TEST
             // 
             // Timer_Reconn
             // 
-            this.Timer_Reconn.Interval = 5000;
+            this.Timer_Reconn.Interval = 120000;
             this.Timer_Reconn.Tick += new System.EventHandler(this.Timer_Reconn_Tick);
             // 
             // Form1
