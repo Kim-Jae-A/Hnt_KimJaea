@@ -24,38 +24,28 @@ namespace YJ_DATA_TEST
         {
             InitializeComponent();
             SocketSet();
+
+            Thread.Sleep(1000);
             ConnServer();
+            
             helper.Connect();
+            
             Test();
         }
-        private void timer1_Tick(object sender, EventArgs e)  // 5초마다 메시지 보냄
-        {
-            string[] data = helper.Query();
-            string msg = "WR-1816,";
-            msg += $"{data[0]},";
-            msg += "v1.000,1,-99,";
-            for (int i = 1; i < data.Length; i++)
-            {
-                msg += data[i];
-                if (i < 3)
-                    msg += ",";
-                else if (i < 15)
-                    msg += "#";
-            }
-            //listBox1.Items.Add(msg);
-            //listBox1.TopIndex = listBox1.Items.Count - 1;
-            Send(msg);
-        }
+
         private void ConnServer()
         {
             int i = 0;
-            //string serverip = "tcp.win-x.kr";            // 서버 아이피
-            //string serverport = "50300";                 // 서버 포트
-            string serverip = "10.10.24.64";            // 서버 아이피
-            string serverport = "5000";
+            string serverip = "tcp.wim-x.kr";            // 서버 아이피
+            string serverport = "50300";                 // 서버 포트
+            //string serverip = "10.10.24.64";            // 서버 아이피
+            //string serverip = "192.168.1.100"; 
+            //string serverport = "5000";                 // 서버 포트
             try
             {
-                IPAddress serverAddr = IPAddress.Parse($"{serverip}");                               // 설정한 서버 IP 에 맞게 IP 설정
+                // 설정한 서버 IP 에 맞게 IP 설정
+                //IPAddress serverAddr = IPAddress.Parse($"{serverip}");
+                IPAddress serverAddr = Dns.GetHostAddresses(serverip)[0];
                 IPEndPoint clientEP = new IPEndPoint(serverAddr, Convert.ToInt32(serverport));       // 설정한 IP, Port 에 맞게 클라이언트로 서버 접속
                 mainSock.BeginConnect(clientEP, new AsyncCallback(ConnectCallback), mainSock);      // 접속한 서버 IP 에 맞게 소켓 연결
                 i++;
@@ -118,7 +108,8 @@ namespace YJ_DATA_TEST
             {
                 listBox1.Invoke(new MethodInvoker(delegate
                 {
-                    Send_Timer_ON();
+                    Timer_Send.Enabled = true;
+                    Timer_Reconn.Enabled = false;
                     listBox1.Items.Add(Encoding.Default.GetString(buffer));
                 }));
                 listBox1.Invoke(new MethodInvoker(delegate
@@ -128,7 +119,8 @@ namespace YJ_DATA_TEST
             }
             else
             {
-                Send_Timer_ON();
+                Timer_Send.Enabled = true;
+                Timer_Reconn.Enabled = false;
                 listBox1.Items.Add(Encoding.Default.GetString(buffer));
                 listBox1.TopIndex = listBox1.Items.Count - 1;
             }
@@ -140,6 +132,8 @@ namespace YJ_DATA_TEST
                 String message = msg;
                 byte[] buff = Encoding.ASCII.GetBytes(message);
                 mainSock.Send(buff, buff.Length, 0);
+                Timer_Send.Enabled = false;
+                Timer_Reconn.Enabled = true;
             }
             catch (Exception ex)
             {
@@ -153,7 +147,24 @@ namespace YJ_DATA_TEST
             string testmsg = "WR-001816,000000000000,v1.000,000,000,0.0000,0.0000,0.0000";
             Send(testmsg);
         }
-
+        private void timer1_Tick(object sender, EventArgs e)  // 5초마다 메시지 보냄
+        {
+            string[] data = helper.Query();
+            string msg = "WR-1816,";
+            msg += $"{data[0]},";
+            msg += "v1.000,1,-99,";
+            for (int i = 1; i < data.Length; i++)
+            {
+                msg += data[i];
+                if (i < 3)
+                    msg += ",";
+                else if (i < 15)
+                    msg += "#";
+            }
+            //listBox1.Items.Add(msg);
+            //listBox1.TopIndex = listBox1.Items.Count - 1;
+            Send(msg);
+        }
         private void Timer_Reconn_Tick(object sender, EventArgs e)     // 메세지 보내는데 실패하면 타이머 시작한 뒤 소켓 및 연결 재시도
         {
             SocketSet();
@@ -164,10 +175,7 @@ namespace YJ_DATA_TEST
         {
             mainSock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         }
-        private void Send_Timer_ON()
-        {
-            Timer_Send.Enabled = true;
-        }
+
         private void Workthread()   // 셋팅한 쓰레드가 시작되면 실행되는 함수
         {
             while (true)

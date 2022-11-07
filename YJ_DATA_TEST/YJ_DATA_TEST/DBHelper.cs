@@ -13,7 +13,8 @@ namespace YJ_DATA_TEST
         public static string uid = "hnt";
         public static string password = "12#hnt";
         public static string database = "PLC_YJFAB";
-        public static string server = "118.39.27.73,1433";
+        //public static string server = "118.39.27.73,1433";
+        public static string server = "106.241.185.138,5009";
         SqlConnection conn = new SqlConnection($"SERVER={server}; DATABASE={database}; UID={uid}; PASSWORD={password};");
         SqlCommand cmd = new SqlCommand();
 
@@ -35,11 +36,12 @@ namespace YJ_DATA_TEST
         }
         public string[] Query()
         {
-            string[] time = new string[16];
+            string[] query = new string[16];
             
             cmd.Connection = conn;
 
-            cmd.CommandText = "USE PLC_YJFAB"+                    //데이터 쿼리문
+            //데이터 쿼리문
+            cmd.CommandText = "USE PLC_YJFAB"+                    
                 "\r\nSELECT TOP(1) M1.DAY_EVENT, M1.VAL_SIGNAL3 AS CH1," +
                 "\r\nM1.VAL_SIGNAL4 AS CH2," +
                 "\r\nM1.VAL_SIGNAL5 AS CH3," +
@@ -60,6 +62,7 @@ namespace YJ_DATA_TEST
                 "\r\nLEFT JOIN MD0110_LOG AS M3 ON M1.DAY_EVENT = M3.DAY_EVENT" +
                 "\r\nWHERE M1.COD_DEVICE = 'YJ-002' AND M2.COD_DEVICE = 'YJ-003' AND M3.COD_DEVICE = 'YJ-004'" +
                 "\r\nORDER BY M1.DAY_EVENT DESC";
+
             try { cmd.ExecuteNonQuery(); }
             catch(Exception ex)
             {
@@ -67,15 +70,15 @@ namespace YJ_DATA_TEST
             }
             SqlDataReader mdr = cmd.ExecuteReader();
             mdr.Read();
-            time[0] += (DateTime)mdr["DAY_EVENT"];
-            time[0] = (DateTime.Parse(time[0]).ToUniversalTime().ToString("yyMMddHHmmss"));
-            for (int i = 1; i < time.Length; i++)
+            query[0] += (DateTime)mdr["DAY_EVENT"];
+            query[0] = (DateTime.Parse(query[0]).ToUniversalTime().ToString("yyMMddHHmmss"));
+            for (int i = 1; i < query.Length; i++)
             {
-                time[i] += string.Format("{0:0.00}", (double)mdr[$"CH{i}"]);
+                query[i] += string.Format("{0:0.00}", (double)mdr[$"CH{i}"]);
             }
             mdr.Close();
 
-            return time;
+            return query;
         }
     }
 }
