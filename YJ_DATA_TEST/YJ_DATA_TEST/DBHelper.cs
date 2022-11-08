@@ -27,7 +27,7 @@ namespace YJ_DATA_TEST
             catch (SqlException ex)
             {
                 //MessageBox.Show("연결실패 " + ex);
-                Console.WriteLine(ex);
+                Console.WriteLine($"{DateTime.Now}" + ex);
             }
         }
         public void DisConnect()
@@ -63,10 +63,13 @@ namespace YJ_DATA_TEST
                 "\r\nWHERE M1.COD_DEVICE = 'YJ-002' AND M2.COD_DEVICE = 'YJ-003' AND M3.COD_DEVICE = 'YJ-004'" +
                 "\r\nORDER BY M1.DAY_EVENT DESC";
 
-            try { cmd.ExecuteNonQuery(); }
+            try 
+            { 
+                cmd.ExecuteNonQuery(); 
+            }
             catch(Exception ex)
             {
-                Console.WriteLine(ex);
+                Console.WriteLine($"{DateTime.Now}" + ex);
             }
             SqlDataReader mdr = cmd.ExecuteReader();
             mdr.Read();

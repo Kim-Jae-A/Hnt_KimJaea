@@ -52,7 +52,7 @@ namespace YJ_DATA_TEST
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                Console.WriteLine($"{DateTime.Now}"+ ex);
             }
             finally
             {
@@ -78,7 +78,7 @@ namespace YJ_DATA_TEST
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                Console.WriteLine($"{DateTime.Now}" + ex);
             }
         }
         public class AsyncObject
@@ -139,7 +139,7 @@ namespace YJ_DATA_TEST
             {
                 Timer_Reconn.Enabled = true;
                 Timer_Send.Enabled = false;
-                Console.WriteLine(ex);
+                Console.WriteLine($"{DateTime.Now}" + ex);
             }
         }
         public void Test()
@@ -186,7 +186,7 @@ namespace YJ_DATA_TEST
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex);
+                    Console.WriteLine($"{DateTime.Now}" + ex);
                 }
                 Thread.Sleep(1000);
             }
