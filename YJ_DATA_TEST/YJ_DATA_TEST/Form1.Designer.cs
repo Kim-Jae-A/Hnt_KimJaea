@@ -47,7 +47,7 @@ namespace YJ_DATA_TEST
             this.listBox1.ItemHeight = 12;
             this.listBox1.Location = new System.Drawing.Point(4, 5);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(266, 268);
+            this.listBox1.Size = new System.Drawing.Size(294, 268);
             this.listBox1.TabIndex = 0;
             // 
             // Timer_Reconn
@@ -59,7 +59,7 @@ namespace YJ_DATA_TEST
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(274, 277);
+            this.ClientSize = new System.Drawing.Size(302, 277);
             this.Controls.Add(this.listBox1);
             this.Name = "Form1";
             this.Text = "YJ_PLC_DATA_SENDING";

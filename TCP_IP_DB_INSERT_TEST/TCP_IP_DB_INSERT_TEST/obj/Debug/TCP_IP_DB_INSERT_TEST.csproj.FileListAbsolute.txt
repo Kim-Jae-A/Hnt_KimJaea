@@ -1,0 +1,10 @@
+C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\TCP_IP_DB_INSERT_TEST\TCP_IP_DB_INSERT_TEST\bin\Debug\TCP_IP_DB_INSERT_TEST.exe.config
+C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\TCP_IP_DB_INSERT_TEST\TCP_IP_DB_INSERT_TEST\bin\Debug\TCP_IP_DB_INSERT_TEST.exe
+C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\TCP_IP_DB_INSERT_TEST\TCP_IP_DB_INSERT_TEST\bin\Debug\TCP_IP_DB_INSERT_TEST.pdb
+C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\TCP_IP_DB_INSERT_TEST\TCP_IP_DB_INSERT_TEST\obj\Debug\TCP_IP_DB_INSERT_TEST.csproj.AssemblyReference.cache
+C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\TCP_IP_DB_INSERT_TEST\TCP_IP_DB_INSERT_TEST\obj\Debug\TCP_IP_DB_INSERT_TEST.Form1.resources
+C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\TCP_IP_DB_INSERT_TEST\TCP_IP_DB_INSERT_TEST\obj\Debug\TCP_IP_DB_INSERT_TEST.Properties.Resources.resources
+C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\TCP_IP_DB_INSERT_TEST\TCP_IP_DB_INSERT_TEST\obj\Debug\TCP_IP_DB_INSERT_TEST.csproj.GenerateResource.cache
+C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\TCP_IP_DB_INSERT_TEST\TCP_IP_DB_INSERT_TEST\obj\Debug\TCP_IP_DB_INSERT_TEST.csproj.CoreCompileInputs.cache
+C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\TCP_IP_DB_INSERT_TEST\TCP_IP_DB_INSERT_TEST\obj\Debug\TCP_IP_DB_INSERT_TEST.exe
+C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\TCP_IP_DB_INSERT_TEST\TCP_IP_DB_INSERT_TEST\obj\Debug\TCP_IP_DB_INSERT_TEST.pdb
