@@ -111,10 +111,11 @@ namespace YJ_DATA_TEST
                     Timer_Send.Enabled = true;
                     Timer_Reconn.Enabled = false;
                     listBox1.Items.Add(Encoding.Default.GetString(buffer));
-                }));
-                listBox1.Invoke(new MethodInvoker(delegate
-                {
                     listBox1.TopIndex = listBox1.Items.Count - 1;
+                    if(listBox1.Items.Count > 1000)
+                    {
+                        listBox1.Items.Clear();
+                    }
                 }));
             }
             else
@@ -123,6 +124,10 @@ namespace YJ_DATA_TEST
                 Timer_Reconn.Enabled = false;
                 listBox1.Items.Add(Encoding.Default.GetString(buffer));
                 listBox1.TopIndex = listBox1.Items.Count - 1;
+                if (listBox1.Items.Count > 1000)
+                {
+                    listBox1.Items.Clear();
+                }
             }
         }
         public void Send(string msg)   // 서버로 데이터 보내는 메소드

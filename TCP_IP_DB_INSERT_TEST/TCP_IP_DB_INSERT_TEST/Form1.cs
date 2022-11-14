@@ -28,7 +28,7 @@ namespace TCP_IP_DB_INSERT_TEST
             ConnServer();
             helper.Connect();
         }
-        private void ConnServer()
+        private void ConnServer()  // tcp/ip 통신 설정
         {
             int i = 0;
             string serverip = "10.10.24.64";            // 서버 아이피
@@ -56,7 +56,7 @@ namespace TCP_IP_DB_INSERT_TEST
                 }
             }
         }
-        private void SocketSet()
+        private void SocketSet()     // 소켓 셋팅
         {
             mainSock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         }
@@ -75,7 +75,7 @@ namespace TCP_IP_DB_INSERT_TEST
                 Console.WriteLine($"{DateTime.Now}" + ex);
             }
         }
-        public class AsyncObject
+        public class AsyncObject  // 버퍼 생성클래스
         {
             public byte[] Buffer;
             public Socket WorkingSocket;
