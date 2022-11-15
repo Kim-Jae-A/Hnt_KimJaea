@@ -1,0 +1,13 @@
+C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\Modbus_Test\Modbus_Test\bin\Debug\Modbus_Test.exe.config
+C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\Modbus_Test\Modbus_Test\bin\Debug\Modbus_Test.exe
+C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\Modbus_Test\Modbus_Test\bin\Debug\Modbus_Test.pdb
+C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\Modbus_Test\Modbus_Test\bin\Debug\NModbus4.dll
+C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\Modbus_Test\Modbus_Test\bin\Debug\NModbus4.xml
+C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\Modbus_Test\Modbus_Test\obj\Debug\Modbus_Test.csproj.AssemblyReference.cache
+C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\Modbus_Test\Modbus_Test\obj\Debug\Modbus_Test.Form1.resources
+C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\Modbus_Test\Modbus_Test\obj\Debug\Modbus_Test.Properties.Resources.resources
+C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\Modbus_Test\Modbus_Test\obj\Debug\Modbus_Test.csproj.GenerateResource.cache
+C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\Modbus_Test\Modbus_Test\obj\Debug\Modbus_Test.csproj.CoreCompileInputs.cache
+C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\Modbus_Test\Modbus_Test\obj\Debug\Modbus_Test.csproj.CopyComplete
+C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\Modbus_Test\Modbus_Test\obj\Debug\Modbus_Test.exe
+C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\Modbus_Test\Modbus_Test\obj\Debug\Modbus_Test.pdb
