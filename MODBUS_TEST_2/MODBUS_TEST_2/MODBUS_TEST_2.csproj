@@ -49,16 +49,53 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="DBHelper.cs" />
+    <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Sensor4.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Sensor4.Designer.cs">
+      <DependentUpon>Sensor4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Sensor3.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Sensor3.Designer.cs">
+      <DependentUpon>Sensor3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Sensor2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Sensor2.Designer.cs">
+      <DependentUpon>Sensor2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Sensor1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Sensor1.Designer.cs">
+      <DependentUpon>Sensor1.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sensor4.resx">
+      <DependentUpon>Sensor4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sensor3.resx">
+      <DependentUpon>Sensor3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sensor2.resx">
+      <DependentUpon>Sensor2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sensor1.resx">
+      <DependentUpon>Sensor1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

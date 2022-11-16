@@ -15,30 +15,30 @@ using System.Globalization;
 
 namespace MODBUS_TEST_2
 {
-    public partial class Form1 : Form
+    public partial class Sensor3 : Form
     {
         int check = 0;
-        Socket mainSock;
+        Socket Sensor3_Sock;
         AsyncObject obj = new AsyncObject(99999);   // 소켓 크기 설정
-        Thread thread_Tem;
+        Thread thread;
+        public float per;
+        public float tem;
 
-        public Form1()
+        public Sensor3()
         {
             InitializeComponent();
             SocketSet();
-            Thread.Sleep(1000);
             ConnServer();
         }
         private void SocketSet()
         {
-            mainSock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            Sensor3_Sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         }
 
         private void ConnServer()
-        {
-            int i = 0;         
+        {       
             // 서버 아이피
-            string serverip = "10.10.24.251";
+            string serverip = "10.10.24.253";
             // 서버 포트
             int serverport = 5000;
             try
@@ -47,7 +47,7 @@ namespace MODBUS_TEST_2
                 IPAddress serverAddr = IPAddress.Parse($"{serverip}");
                 //IPAddress serverAddr = Dns.GetHostAddresses(serverip)[0];
                 IPEndPoint clientEP = new IPEndPoint(serverAddr, serverport);      // 설정한 IP, Port 에 맞게 클라이언트로 서버 접속
-                mainSock.BeginConnect(clientEP, new AsyncCallback(ConnectCallback), mainSock);      // 접속한 서버 IP 에 맞게 소켓 연결
+                Sensor3_Sock.BeginConnect(clientEP, new AsyncCallback(ConnectCallback), Sensor3_Sock);      // 접속한 서버 IP 에 맞게 소켓 연결
             }
             catch (Exception ex)
             {
@@ -55,9 +55,9 @@ namespace MODBUS_TEST_2
             }
             finally
             { 
-                thread_Tem = new Thread(Workthread_RESIVE);    // 쓰레드 설정                                           
-                thread_Tem.IsBackground = true;                // 쓰레드 백그라운드 셋팅
-                thread_Tem.Start();
+                thread = new Thread(Workthread_RESIVE);    // 쓰레드 설정                                           
+                thread.IsBackground = true;                // 쓰레드 백그라운드 셋팅
+                thread.Start();
                 timer1.Enabled = true;
                 timer2.Enabled = true;
             }
@@ -68,7 +68,7 @@ namespace MODBUS_TEST_2
             {
                 Socket client = (Socket)ar.AsyncState;
                 client.EndConnect(ar);
-                obj.WorkingSocket = mainSock;
+                obj.WorkingSocket = Sensor3_Sock;
             }
             catch (Exception ex)
             {
@@ -105,7 +105,7 @@ namespace MODBUS_TEST_2
             {
                 String message = msg;
                 byte[] buff = HexToByte(message);
-                mainSock.Send(buff, buff.Length, 0);
+                Sensor3_Sock.Send(buff, buff.Length, 0);
             }
             catch (Exception ex)
             {
@@ -119,7 +119,7 @@ namespace MODBUS_TEST_2
             {
                 try
                 {
-                    mainSock.BeginReceive(obj.Buffer, 0, obj.BufferSize, 0, DataReceived, obj);  // 실시간으로 서버에서 보낸 데이터를 받는다.
+                    Sensor3_Sock.BeginReceive(obj.Buffer, 0, obj.BufferSize, 0, DataReceived, obj);  // 실시간으로 서버에서 보낸 데이터를 받는다.
                 }
                 catch (Exception ex)
                 {
@@ -127,20 +127,9 @@ namespace MODBUS_TEST_2
                 }
                 finally
                 {
-                    Thread.Sleep(1);
+                    Thread.Sleep(1000);
                 }
             }
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            check = 0;
-            Send("01030037000275C5");  // 온도 명령어
-        }
-        private void button2_Click(object sender, EventArgs e)
-        {
-            check = 1;
-            Send("010300350002D405"); // 농도 명령어
         }
 
         public byte[] HexToByte(string strHex)
@@ -185,33 +174,19 @@ namespace MODBUS_TEST_2
         {
             if (check == 0)
             {
-                if (listBox1.InvokeRequired)    // 받아온 데이터를 리스트 박스에 표시
+                Tx_Tem.Invoke(new MethodInvoker(delegate
                 {
-                    listBox1.Invoke(new MethodInvoker(delegate
-                    {
-                        listBox1.Items.Add(HextoFloat(Convert_Tem(ByteToHex(buffer))));
-                        listBox1.TopIndex = listBox1.Items.Count - 1;
-                        if (listBox1.Items.Count > 1000)
-                        {
-                            listBox1.Items.Clear();
-                        }
-                    }));
-                }
+                    tem = HextoFloat(Convert_Tem(ByteToHex(buffer)));
+                    Tx_Tem.Text = HextoFloat(Convert_Tem(ByteToHex(buffer))).ToString("0.0");
+                }));  
             }
             else
             {
-                if (listBox2.InvokeRequired)    // 받아온 데이터를 리스트 박스에 표시
+                Tx_Per.Invoke(new MethodInvoker(delegate
                 {
-                    listBox2.Invoke(new MethodInvoker(delegate
-                    {
-                        listBox2.Items.Add(HextoFloat(Convert_Tem(ByteToHex(buffer))));
-                        listBox2.TopIndex = listBox2.Items.Count - 1;
-                        if (listBox2.Items.Count > 1000)
-                        {
-                            listBox2.Items.Clear();
-                        }
-                    }));
-                }
+                    per = HextoFloat(Convert_Tem(ByteToHex(buffer)));
+                    Tx_Per.Text = HextoFloat(Convert_Tem(ByteToHex(buffer))).ToString("P1",CultureInfo.InvariantCulture);
+                }));
             }
         }
 
