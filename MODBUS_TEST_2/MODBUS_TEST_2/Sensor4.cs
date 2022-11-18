@@ -71,7 +71,7 @@ namespace MODBUS_TEST_2
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"{DateTime.Now}" + ex);
+                Console.WriteLine($"{DateTime.Now} " + ex);
             }
         }
         public class AsyncObject
@@ -108,7 +108,7 @@ namespace MODBUS_TEST_2
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"{DateTime.Now}" + ex);
+                Console.WriteLine($"{DateTime.Now} " + ex);
             }
         }
 
@@ -122,7 +122,7 @@ namespace MODBUS_TEST_2
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"{DateTime.Now}" + ex);
+                    Console.WriteLine($"{DateTime.Now} " + ex);
                 }
                 finally
                 {

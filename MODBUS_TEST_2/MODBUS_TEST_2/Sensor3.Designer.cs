@@ -120,11 +120,11 @@ namespace MODBUS_TEST_2
         #endregion
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.Timer timer2;
         private System.Windows.Forms.Label label3;
         public System.Windows.Forms.TextBox Tx_Tem;
         public System.Windows.Forms.TextBox Tx_Per;
+        public System.Windows.Forms.Timer timer2;
+        public System.Windows.Forms.Timer timer1;
     }
 }
 

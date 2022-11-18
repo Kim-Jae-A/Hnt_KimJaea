@@ -64,5 +64,28 @@ namespace MODBUS_TEST_2
         {
             helper.Query(sen1.tem, sen2.tem, sen3.tem, sen4.tem, sen1.per, sen2.per, sen3.per, sen4.per);
         }
+
+        private void Bt_Setting_Click(object sender, EventArgs e)
+        {
+            int x = Convert.ToInt32(Tx_TimeSet.Text);
+            int set = x * 1000;
+            timer1.Interval = set + 150;
+            sen1.timer1.Interval = set;
+            sen1.timer2.Interval = set + 150;
+            sen2.timer1.Interval = set;
+            sen2.timer2.Interval = set + 150;
+            sen3.timer1.Interval = set;
+            sen3.timer2.Interval = set + 150;
+            sen4.timer1.Interval = set;
+            sen4.timer2.Interval = set + 150;
+        }
+
+        private void Tx_TimeSet_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if(!(char.IsDigit(e.KeyChar) || e.KeyChar == Convert.ToChar(Keys.Back)))
+            {
+                e.Handled = true;
+            }
+        }
     }
 }
