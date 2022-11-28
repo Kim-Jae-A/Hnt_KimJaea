@@ -69,7 +69,6 @@ namespace MODBUS_TEST_2
         {
             int x = Convert.ToInt32(Tx_TimeSet.Text);
             int set = x * 1000;
-            timer1.Interval = set + 150;
             sen1.timer1.Interval = set;
             sen1.timer2.Interval = set + 150;
             sen2.timer1.Interval = set;
@@ -78,6 +77,7 @@ namespace MODBUS_TEST_2
             sen3.timer2.Interval = set + 150;
             sen4.timer1.Interval = set;
             sen4.timer2.Interval = set + 150;
+            timer1.Interval = set + 160;
         }
 
         private void Tx_TimeSet_KeyPress(object sender, KeyPressEventArgs e)

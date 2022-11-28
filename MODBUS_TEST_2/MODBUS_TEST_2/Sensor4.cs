@@ -36,9 +36,10 @@ namespace MODBUS_TEST_2
         }
 
         private void ConnServer()
-        {       
+        {
             // 서버 아이피
-            string serverip = "10.10.24.250";
+            // string serverip = "10.10.24.250";
+            string serverip = "192.168.0.104";
             // 서버 포트
             int serverport = 5000;
             try

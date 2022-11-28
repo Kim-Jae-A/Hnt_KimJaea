@@ -12,7 +12,9 @@ namespace MODBUS_TEST_2
         public static string uid = "hnt";
         public static string password = "12#hnt";
         public static string database = "SF_JNFAB";
-        public static string server = "118.39.27.73,1433";
+        public static string server = "58.234.148.135,1433";
+        //public static string server = "118.39.27.73,1500";
+
         SqlConnection conn = new SqlConnection($"SERVER={server}; DATABASE={database}; UID={uid}; PASSWORD={password};");
         SqlCommand cmd = new SqlCommand();
 
@@ -49,5 +51,4 @@ namespace MODBUS_TEST_2
             }
         }
     }
-
 }

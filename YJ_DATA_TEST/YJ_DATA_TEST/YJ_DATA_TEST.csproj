@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{F8DE8473-AD49-42C0-8B6F-2A64B5DF8D47}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>YJ_DATA_TEST</RootNamespace>
     <AssemblyName>YJ_DATA_TEST</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>

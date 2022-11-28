@@ -36,9 +36,10 @@ namespace MODBUS_TEST_2
         }
 
         private void ConnServer()
-        {       
+        {
             // 서버 아이피
-            string serverip = "10.10.24.251";
+            // string serverip = "10.10.24.251";
+            string serverip = "192.168.0.101";
             // 서버 포트
             int serverport = 5000;
             try
@@ -62,7 +63,7 @@ namespace MODBUS_TEST_2
                 timer2.Enabled = true;
             }
         }
-        void ConnectCallback(IAsyncResult ar)   //커넥트 콜백 메소드
+        void ConnectCallback(IAsyncResult ar)   // 콜백 메소드
         {
             try
             {
@@ -202,7 +203,6 @@ namespace MODBUS_TEST_2
             check = 1;
             Send("010300350002D405"); // 농도 명령어
             timer1.Enabled = true;
-        }
-        
+        }  
     }
 }
