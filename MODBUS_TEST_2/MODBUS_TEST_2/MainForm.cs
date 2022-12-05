@@ -67,6 +67,10 @@ namespace MODBUS_TEST_2
 
         private void Bt_Setting_Click(object sender, EventArgs e)
         {
+            if(Tx_TimeSet.Text == "")
+            {
+                Tx_TimeSet.Text = "0";
+            }
             int x = Convert.ToInt32(Tx_TimeSet.Text);
             int set = x * 1000;
             sen1.timer1.Interval = set;

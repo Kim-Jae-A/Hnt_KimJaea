@@ -39,7 +39,7 @@ namespace MODBUS_TEST_2
         {       
             // 서버 아이피
             // string serverip = "10.10.24.253";
-            string serverip = "192.168.0.103";
+            string serverip = "192.168.0.6";
             // 서버 포트
             int serverport = 5000;
             try
