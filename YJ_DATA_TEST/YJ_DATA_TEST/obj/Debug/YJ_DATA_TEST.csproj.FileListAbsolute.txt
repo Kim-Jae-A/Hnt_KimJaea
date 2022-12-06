@@ -8,3 +8,12 @@ C:\Users\SEONGMIN\source\repos\YJ_DATA_TEST\YJ_DATA_TEST\obj\Debug\YJ_DATA_TEST.
 C:\Users\SEONGMIN\source\repos\YJ_DATA_TEST\YJ_DATA_TEST\obj\Debug\YJ_DATA_TEST.csproj.CoreCompileInputs.cache
 C:\Users\SEONGMIN\source\repos\YJ_DATA_TEST\YJ_DATA_TEST\obj\Debug\YJ_DATA_TEST.exe
 C:\Users\SEONGMIN\source\repos\YJ_DATA_TEST\YJ_DATA_TEST\obj\Debug\YJ_DATA_TEST.pdb
+C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\YJ_DATA_TEST\YJ_DATA_TEST\bin\Debug\YJ_DATA_TEST.exe.config
+C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\YJ_DATA_TEST\YJ_DATA_TEST\bin\Debug\YJ_DATA_TEST.exe
+C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\YJ_DATA_TEST\YJ_DATA_TEST\bin\Debug\YJ_DATA_TEST.pdb
+C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\YJ_DATA_TEST\YJ_DATA_TEST\obj\Debug\YJ_DATA_TEST.Form1.resources
+C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\YJ_DATA_TEST\YJ_DATA_TEST\obj\Debug\YJ_DATA_TEST.Properties.Resources.resources
+C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\YJ_DATA_TEST\YJ_DATA_TEST\obj\Debug\YJ_DATA_TEST.csproj.GenerateResource.cache
+C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\YJ_DATA_TEST\YJ_DATA_TEST\obj\Debug\YJ_DATA_TEST.csproj.CoreCompileInputs.cache
+C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\YJ_DATA_TEST\YJ_DATA_TEST\obj\Debug\YJ_DATA_TEST.exe
+C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\YJ_DATA_TEST\YJ_DATA_TEST\obj\Debug\YJ_DATA_TEST.pdb

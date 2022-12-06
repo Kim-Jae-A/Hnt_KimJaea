@@ -72,7 +72,7 @@ namespace MODBUS_TEST_2
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(39, 27);
             this.label2.TabIndex = 2;
-            this.label2.Text = "초";
+            this.label2.Text = "분";
             // 
             // Bt_Setting
             // 

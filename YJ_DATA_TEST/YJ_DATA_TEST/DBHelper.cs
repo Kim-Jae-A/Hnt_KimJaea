@@ -10,10 +10,13 @@ namespace YJ_DATA_TEST
 {
     class DBHelper
     {
+        //public static string uid = "sa";
+        //public static string password = "hntadmin";
         public static string uid = "hnt";
         public static string password = "12#hnt";
         public static string database = "PLC_YJFAB";
         public static string server = "106.241.185.138,5009";
+        //public static string server = "118.39.27.73,1500";
         SqlConnection conn = new SqlConnection($"SERVER={server}; DATABASE={database}; UID={uid}; PASSWORD={password};");
         SqlCommand cmd = new SqlCommand();
 

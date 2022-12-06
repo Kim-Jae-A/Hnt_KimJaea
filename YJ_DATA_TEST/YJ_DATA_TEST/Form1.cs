@@ -17,8 +17,9 @@ namespace YJ_DATA_TEST
     public partial class Form1 : Form
     {
         Socket mainSock;
-        AsyncObject obj = new AsyncObject(99999);   // 소켓 크기 설정
+        AsyncObject obj = new AsyncObject(9999);   // 소켓 크기 설정
         DBHelper helper = new DBHelper();
+        string checkmsg = "";
 
         public Form1()
         {
@@ -142,6 +143,7 @@ namespace YJ_DATA_TEST
             }
             catch (Exception ex)
             {
+                mainSock.Close();
                 Timer_Reconn.Enabled = true;
                 Timer_Send.Enabled = false;
                 Console.WriteLine($"{DateTime.Now}" + ex);
@@ -166,12 +168,19 @@ namespace YJ_DATA_TEST
                 else if (i < 15)
                     msg += "#";
             }
-            //listBox1.Items.Add(msg);
-            //listBox1.TopIndex = listBox1.Items.Count - 1;
-            Send(msg);
+            if (msg != checkmsg)
+            {
+                Send(msg);
+                checkmsg = msg;
+            }
+            else
+            {
+                Console.WriteLine("중복된 데이터입니다.");
+            }
         }
         private void Timer_Reconn_Tick(object sender, EventArgs e)     // 메세지 보내는데 실패하면 타이머 시작한 뒤 소켓 및 연결 재시도
-        {
+        {    
+            obj.ClearBuffer();
             SocketSet();
             ConnServer();
             Test();

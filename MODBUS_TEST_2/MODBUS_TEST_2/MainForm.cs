@@ -72,7 +72,7 @@ namespace MODBUS_TEST_2
                 Tx_TimeSet.Text = "0";
             }
             int x = Convert.ToInt32(Tx_TimeSet.Text);
-            int set = x * 1000;
+            int set = x * 60000;
             sen1.timer1.Interval = set;
             sen1.timer2.Interval = set + 150;
             sen2.timer1.Interval = set;
