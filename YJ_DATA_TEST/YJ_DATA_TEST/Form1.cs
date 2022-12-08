@@ -53,7 +53,7 @@ namespace YJ_DATA_TEST
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"{DateTime.Now}"+ ex);
+                Console.WriteLine($"{DateTime.Now} "+ ex);
             }
             finally
             {
@@ -79,7 +79,7 @@ namespace YJ_DATA_TEST
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"{DateTime.Now}" + ex);
+                Console.WriteLine($"{DateTime.Now} " + ex);
             }
         }
         public class AsyncObject
@@ -146,7 +146,7 @@ namespace YJ_DATA_TEST
                 mainSock.Close();
                 Timer_Reconn.Enabled = true;
                 Timer_Send.Enabled = false;
-                Console.WriteLine($"{DateTime.Now}" + ex);
+                Console.WriteLine($"{DateTime.Now} " + ex);
             }
         }
         public void Test()
@@ -179,11 +179,21 @@ namespace YJ_DATA_TEST
             }
         }
         private void Timer_Reconn_Tick(object sender, EventArgs e)     // 메세지 보내는데 실패하면 타이머 시작한 뒤 소켓 및 연결 재시도
-        {    
-            obj.ClearBuffer();
-            SocketSet();
-            ConnServer();
-            Test();
+        {
+            try
+            {
+                obj.ClearBuffer();
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"{DateTime.Now} " + ex);
+            }
+            finally
+            {
+                SocketSet();
+                ConnServer();
+                Test();
+            }
         }
         private void SocketSet()
         {
@@ -200,7 +210,7 @@ namespace YJ_DATA_TEST
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"{DateTime.Now}" + ex);
+                    Console.WriteLine($"{DateTime.Now} " + ex);
                 }
                 Thread.Sleep(1000);
             }

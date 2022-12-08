@@ -69,7 +69,7 @@ namespace MODBUS_TEST_2
         {
             if(Tx_TimeSet.Text == "")
             {
-                Tx_TimeSet.Text = "0";
+                Tx_TimeSet.Text = "5";
             }
             int x = Convert.ToInt32(Tx_TimeSet.Text);
             int set = x * 60000;

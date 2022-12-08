@@ -17,3 +17,4 @@ C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\YJ_DATA_TEST\YJ_DATA_TEST\obj\Deb
 C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\YJ_DATA_TEST\YJ_DATA_TEST\obj\Debug\YJ_DATA_TEST.csproj.CoreCompileInputs.cache
 C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\YJ_DATA_TEST\YJ_DATA_TEST\obj\Debug\YJ_DATA_TEST.exe
 C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\YJ_DATA_TEST\YJ_DATA_TEST\obj\Debug\YJ_DATA_TEST.pdb
+C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\YJ_DATA_TEST\YJ_DATA_TEST\obj\Debug\YJ_DATA_TEST.csproj.AssemblyReference.cache
