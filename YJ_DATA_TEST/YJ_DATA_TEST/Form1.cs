@@ -210,6 +210,7 @@ namespace YJ_DATA_TEST
                 }
                 catch (Exception ex)
                 {
+                    obj.ClearBuffer();
                     Console.WriteLine($"{DateTime.Now} " + ex);
                 }
                 Thread.Sleep(1000);
