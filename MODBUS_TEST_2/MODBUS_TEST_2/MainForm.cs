@@ -72,6 +72,7 @@ namespace MODBUS_TEST_2
                 Tx_TimeSet.Text = "5";
             }
             int x = Convert.ToInt32(Tx_TimeSet.Text);
+            //int set = x * 1000;
             int set = x * 60000;
             sen1.timer1.Interval = set;
             sen1.timer2.Interval = set + 150;
@@ -81,7 +82,7 @@ namespace MODBUS_TEST_2
             sen3.timer2.Interval = set + 150;
             sen4.timer1.Interval = set;
             sen4.timer2.Interval = set + 150;
-            timer1.Interval = set + 160;
+            timer1.Interval = set + 200;
         }
 
         private void Tx_TimeSet_KeyPress(object sender, KeyPressEventArgs e)
@@ -90,6 +91,27 @@ namespace MODBUS_TEST_2
             {
                 e.Handled = true;
             }
+        }
+
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+            if (Tx_TimeSet.Text == "")
+            {
+                Tx_TimeSet.Text = "5";
+            }
+            int x = Convert.ToInt32(Tx_TimeSet.Text);
+            //int set = x * 1000;
+            int set = x * 60000;
+            sen1.timer1.Interval = set;
+            sen1.timer2.Interval = set + 150;
+            sen2.timer1.Interval = set;
+            sen2.timer2.Interval = set + 150;
+            sen3.timer1.Interval = set;
+            sen3.timer2.Interval = set + 150;
+            sen4.timer1.Interval = set;
+            sen4.timer2.Interval = set + 150;
+            timer1.Interval = set + 200;
+            timer2.Enabled = false;
         }
     }
 }

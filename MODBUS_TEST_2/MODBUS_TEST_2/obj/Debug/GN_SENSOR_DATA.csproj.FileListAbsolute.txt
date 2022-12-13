@@ -1,7 +1,6 @@
 C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\MODBUS_TEST_2\MODBUS_TEST_2\bin\Debug\GN_SENSOR_DATA.exe.config
 C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\MODBUS_TEST_2\MODBUS_TEST_2\bin\Debug\GN_SENSOR_DATA.exe
 C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\MODBUS_TEST_2\MODBUS_TEST_2\bin\Debug\GN_SENSOR_DATA.pdb
-C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\MODBUS_TEST_2\MODBUS_TEST_2\obj\Debug\GN_SENSOR_DATA.csproj.AssemblyReference.cache
 C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\MODBUS_TEST_2\MODBUS_TEST_2\obj\Debug\MODBUS_TEST_2.MainForm.resources
 C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\MODBUS_TEST_2\MODBUS_TEST_2\obj\Debug\MODBUS_TEST_2.Sensor4.resources
 C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\MODBUS_TEST_2\MODBUS_TEST_2\obj\Debug\MODBUS_TEST_2.Sensor3.resources

@@ -17,10 +17,11 @@ namespace MODBUS_TEST_2
 {
     public partial class Sensor2 : Form
     {
-        int check = 0;
+        int check = 1;
+        int check_per = 1;
         Socket Sensor2_Sock;
         AsyncObject obj = new AsyncObject(99999);   // 소켓 크기 설정
-        Thread thread;
+        //Thread thread;
         public float per;
         public float tem;
 
@@ -56,9 +57,9 @@ namespace MODBUS_TEST_2
             }
             finally
             { 
-                thread = new Thread(Workthread_RESIVE);    // 쓰레드 설정                                           
+                /*thread = new Thread(Workthread_RESIVE);    // 쓰레드 설정                                           
                 thread.IsBackground = true;                // 쓰레드 백그라운드 셋팅
-                thread.Start();
+                thread.Start();*/
                 timer1.Enabled = true;
                 timer2.Enabled = true;
             }
@@ -94,11 +95,24 @@ namespace MODBUS_TEST_2
         }
         void DataReceived(IAsyncResult ar)        // 데이터 받아오는 리시브 메서드
         {
-            AsyncObject obj = (AsyncObject)ar.AsyncState;
-            int received = obj.WorkingSocket.EndReceive(ar);
-            byte[] buffer = new byte[received];
-            Array.Copy(obj.Buffer, 0, buffer, 0, received);
-            ListBoxChoice(buffer);        
+            if (check == 0)
+            {
+                AsyncObject obj = (AsyncObject)ar.AsyncState;
+                int received = obj.WorkingSocket.EndReceive(ar);
+                byte[] buffer = new byte[received];
+                Array.Copy(obj.Buffer, 0, buffer, 0, received);
+                TemWrite(buffer);
+                check = 1;
+            }
+            if (check_per == 0)
+            {
+                AsyncObject obj = (AsyncObject)ar.AsyncState;
+                int received = obj.WorkingSocket.EndReceive(ar);
+                byte[] buffer = new byte[received];
+                Array.Copy(obj.Buffer, 0, buffer, 0, received);
+                PerWrite(buffer);
+                check_per = 1;
+            }
         }
         public void Send(string msg)   // 서버로 데이터 보내는 메소드
         {
@@ -114,7 +128,7 @@ namespace MODBUS_TEST_2
             }
         }
 
-        private void Workthread_RESIVE()   // 셋팅한 쓰레드가 시작되면 실행되는 함수
+        /*private void Workthread_RESIVE()   // 셋팅한 쓰레드가 시작되면 실행되는 함수
         {
             while (true)
             {
@@ -124,6 +138,7 @@ namespace MODBUS_TEST_2
                 }
                 catch (Exception ex)
                 {
+                    obj.ClearBuffer();
                     Console.WriteLine($"{DateTime.Now}" + ex);
                 }
                 finally
@@ -131,7 +146,7 @@ namespace MODBUS_TEST_2
                     Thread.Sleep(1000);
                 }
             }
-        }
+        }*/
 
         public byte[] HexToByte(string strHex)
         {
@@ -170,39 +185,59 @@ namespace MODBUS_TEST_2
             return f;
         }
 
-
-        public void ListBoxChoice(byte[] buffer)
+        public void TemWrite(byte[] buffer)
         {
-            if (check == 0)
+            Tx_Tem.Invoke(new MethodInvoker(delegate
             {
-                Tx_Tem.Invoke(new MethodInvoker(delegate
-                {
-                    tem = HextoFloat(Convert_Tem(ByteToHex(buffer)));
-                    Tx_Tem.Text = HextoFloat(Convert_Tem(ByteToHex(buffer))).ToString("0.0");
-                }));  
-            }
-            else
+                tem = HextoFloat(Convert_Tem(ByteToHex(buffer)));
+                Tx_Tem.Text = HextoFloat(Convert_Tem(ByteToHex(buffer))).ToString("0.0");
+            }));
+        }
+        public void PerWrite(byte[] buffer)
+        {
+            Tx_Per.Invoke(new MethodInvoker(delegate
             {
-                Tx_Per.Invoke(new MethodInvoker(delegate
-                {
-                    per = HextoFloat(Convert_Tem(ByteToHex(buffer)));
-                    Tx_Per.Text = HextoFloat(Convert_Tem(ByteToHex(buffer))).ToString("P1",CultureInfo.InvariantCulture);
-                }));
-            }
+                per = HextoFloat(Convert_Tem(ByteToHex(buffer)));
+                Tx_Per.Text = HextoFloat(Convert_Tem(ByteToHex(buffer))).ToString("P1", CultureInfo.InvariantCulture);
+            }));
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
             check = 0;
-            Send("01030037000275C5");  // 온도 명령어
-            timer1.Enabled = false;
+            Send("01030037000275C5");  // 온도 명령어 
+            try
+            {
+                Sensor2_Sock.BeginReceive(obj.Buffer, 0, obj.BufferSize, 0, DataReceived, obj);  // 실시간으로 서버에서 보낸 데이터를 받는다.
+            }
+            catch (Exception ex)
+            {
+                obj.ClearBuffer();
+                Console.WriteLine($"{DateTime.Now}" + ex);
+            }
+            finally
+            {
+                timer1.Enabled = false;
+            }
         }
 
         private void timer2_Tick(object sender, EventArgs e)
         {
-            check = 1;
+            check_per = 0;
             Send("010300350002D405"); // 농도 명령어
-            timer1.Enabled = true;
+            try
+            {
+                Sensor2_Sock.BeginReceive(obj.Buffer, 0, obj.BufferSize, 0, DataReceived, obj);  // 실시간으로 서버에서 보낸 데이터를 받는다.
+            }
+            catch (Exception ex)
+            {
+                obj.ClearBuffer();
+                Console.WriteLine($"{DateTime.Now}" + ex);
+            }
+            finally
+            {
+                timer1.Enabled = true;
+            }
         }
     }
 }
