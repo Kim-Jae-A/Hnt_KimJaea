@@ -61,12 +61,9 @@ namespace MODBUS_TEST_2
             // 
             // timer1
             // 
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // timer2
             // 
-            this.timer2.Interval = 150;
-            this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
             // 
             // Tx_Tem
             // 

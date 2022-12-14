@@ -39,7 +39,6 @@ namespace MODBUS_TEST_2
         private void ConnServer()
         {       
             // 서버 아이피
-            // string serverip = "10.10.24.253";
             string serverip = "192.168.0.6";
             // 서버 포트
             int serverport = 5000;
@@ -56,12 +55,12 @@ namespace MODBUS_TEST_2
                 Console.WriteLine($"{DateTime.Now}" + ex);
             }
             finally
-            { 
+            {
                 /*thread = new Thread(Workthread_RESIVE);    // 쓰레드 설정                                           
                 thread.IsBackground = true;                // 쓰레드 백그라운드 셋팅
-                thread.Start();*/
+                thread.Start();
                 timer1.Enabled = true;
-                timer2.Enabled = true;
+                timer2.Enabled = true;*/
             }
         }
         void ConnectCallback(IAsyncResult ar)   //커넥트 콜백 메소드
@@ -185,25 +184,16 @@ namespace MODBUS_TEST_2
             return f;
         }
 
-
         public void TemWrite(byte[] buffer)
         {
-            Tx_Tem.Invoke(new MethodInvoker(delegate
-            {
-                tem = HextoFloat(Convert_Tem(ByteToHex(buffer)));
-                Tx_Tem.Text = HextoFloat(Convert_Tem(ByteToHex(buffer))).ToString("0.0");
-            }));
+            tem = HextoFloat(Convert_Tem(ByteToHex(buffer)));
         }
         public void PerWrite(byte[] buffer)
         {
-            Tx_Per.Invoke(new MethodInvoker(delegate
-            {
-                per = HextoFloat(Convert_Tem(ByteToHex(buffer)));
-                Tx_Per.Text = HextoFloat(Convert_Tem(ByteToHex(buffer))).ToString("P1", CultureInfo.InvariantCulture);
-            }));
+            per = HextoFloat(Convert_Tem(ByteToHex(buffer)));
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
+        public void Tem_Send()
         {
             check = 0;
             Send("01030037000275C5");  // 온도 명령어
@@ -216,16 +206,11 @@ namespace MODBUS_TEST_2
                 obj.ClearBuffer();
                 Console.WriteLine($"{DateTime.Now} " + ex);
             }
-            finally
-            {
-                timer1.Enabled = false;
-            }
         }
-
-        private void timer2_Tick(object sender, EventArgs e)
+        public void Per_Send()
         {
             check_per = 0;
-            Send("010300350002D405"); // 농도 명령어  
+            Send("010300350002D405"); // 농도 명령어
             try
             {
                 Sensor3_Sock.BeginReceive(obj.Buffer, 0, obj.BufferSize, 0, DataReceived, obj);  // 실시간으로 서버에서 보낸 데이터를 받는다.
@@ -234,10 +219,6 @@ namespace MODBUS_TEST_2
             {
                 obj.ClearBuffer();
                 Console.WriteLine($"{DateTime.Now} " + ex);
-            }
-            finally
-            {
-                timer1.Enabled = true;
             }
         }
     }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Globalization;
 
 namespace MODBUS_TEST_2
 {
@@ -26,6 +27,7 @@ namespace MODBUS_TEST_2
             Sensor4_Load();
             helper.Connect();
             InitializeComponent();
+            helper.Query(sen1.tem, sen2.tem, sen3.tem, sen4.tem, sen1.per, sen2.per, sen3.per, sen4.per);
         }
         private void Sensor1_Load()
         {
@@ -34,6 +36,10 @@ namespace MODBUS_TEST_2
             sen1.StartPosition = FormStartPosition.Manual;
             sen1.Location = new Point(5, 20);
             sen1.Show();
+            sen1.Per_Send();
+            sen1.Tx_Per.Text = PerWrite(sen1.per);
+            sen1.Tem_Send();
+            sen1.Tx_Tem.Text = TemWrite(sen1.tem);
         }
         private void Sensor2_Load()
         {
@@ -42,6 +48,10 @@ namespace MODBUS_TEST_2
             sen2.StartPosition = FormStartPosition.Manual;
             sen2.Location = new Point(300, 20);
             sen2.Show();
+            sen2.Per_Send();
+            sen2.Tx_Per.Text = PerWrite(sen2.per);
+            sen2.Tem_Send();
+            sen2.Tx_Tem.Text = TemWrite(sen2.tem);
         }
         private void Sensor3_Load()
         {
@@ -50,6 +60,10 @@ namespace MODBUS_TEST_2
             sen3.StartPosition = FormStartPosition.Manual;
             sen3.Location = new Point(5, 200);
             sen3.Show();
+            sen3.Per_Send();
+            sen3.Tx_Per.Text = PerWrite(sen3.per);
+            sen3.Tem_Send();
+            sen3.Tx_Tem.Text = TemWrite(sen3.tem);
         }
         private void Sensor4_Load()
         {
@@ -58,10 +72,34 @@ namespace MODBUS_TEST_2
             sen4.StartPosition = FormStartPosition.Manual;
             sen4.Location = new Point(300, 200);
             sen4.Show();
+            sen4.Per_Send();
+            sen4.Tx_Per.Text = PerWrite(sen4.per);
+            sen4.Tem_Send();
+            sen4.Tx_Tem.Text = TemWrite(sen4.tem);
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
+            sen1.Per_Send();
+            sen1.Tx_Per.Text = PerWrite(sen1.per);
+            sen1.Tem_Send();
+            sen1.Tx_Tem.Text = TemWrite(sen1.tem);
+
+            sen2.Per_Send();
+            sen2.Tx_Per.Text = PerWrite(sen2.per);
+            sen2.Tem_Send();
+            sen2.Tx_Tem.Text = TemWrite(sen2.tem);
+
+            sen3.Per_Send();
+            sen3.Tx_Per.Text = PerWrite(sen3.per);
+            sen3.Tem_Send();
+            sen3.Tx_Tem.Text = TemWrite(sen3.tem);
+
+            sen4.Per_Send();
+            sen4.Tx_Per.Text = PerWrite(sen4.per);
+            sen4.Tem_Send();
+            sen4.Tx_Tem.Text = TemWrite(sen4.tem);
+
             helper.Query(sen1.tem, sen2.tem, sen3.tem, sen4.tem, sen1.per, sen2.per, sen3.per, sen4.per);
         }
 
@@ -72,17 +110,8 @@ namespace MODBUS_TEST_2
                 Tx_TimeSet.Text = "5";
             }
             int x = Convert.ToInt32(Tx_TimeSet.Text);
-            //int set = x * 1000;
             int set = x * 60000;
-            sen1.timer1.Interval = set;
-            sen1.timer2.Interval = set + 150;
-            sen2.timer1.Interval = set;
-            sen2.timer2.Interval = set + 150;
-            sen3.timer1.Interval = set;
-            sen3.timer2.Interval = set + 150;
-            sen4.timer1.Interval = set;
-            sen4.timer2.Interval = set + 150;
-            timer1.Interval = set + 200;
+            timer1.Interval = set;
         }
 
         private void Tx_TimeSet_KeyPress(object sender, KeyPressEventArgs e)
@@ -92,26 +121,19 @@ namespace MODBUS_TEST_2
                 e.Handled = true;
             }
         }
-
-        private void timer2_Tick(object sender, EventArgs e)
+        public string TemWrite(float x)
         {
-            if (Tx_TimeSet.Text == "")
-            {
-                Tx_TimeSet.Text = "5";
-            }
-            int x = Convert.ToInt32(Tx_TimeSet.Text);
-            //int set = x * 1000;
-            int set = x * 60000;
-            sen1.timer1.Interval = set;
-            sen1.timer2.Interval = set + 150;
-            sen2.timer1.Interval = set;
-            sen2.timer2.Interval = set + 150;
-            sen3.timer1.Interval = set;
-            sen3.timer2.Interval = set + 150;
-            sen4.timer1.Interval = set;
-            sen4.timer2.Interval = set + 150;
-            timer1.Interval = set + 200;
-            timer2.Enabled = false;
+            string tem_con;
+            tem_con = x.ToString("0.0");
+
+            return tem_con;
+        }
+        public string PerWrite(float x)
+        {
+            string per_con;
+            per_con = x.ToString("P1", CultureInfo.InvariantCulture);
+
+            return per_con;
         }
     }
 }

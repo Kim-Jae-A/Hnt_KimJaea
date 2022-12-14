@@ -29,11 +29,8 @@ namespace MODBUS_TEST_2
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.Tx_Tem = new System.Windows.Forms.TextBox();
             this.Tx_Per = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -43,7 +40,7 @@ namespace MODBUS_TEST_2
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("굴림", 18F);
-            this.label1.Location = new System.Drawing.Point(39, 56);
+            this.label1.Location = new System.Drawing.Point(34, 45);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(58, 24);
             this.label1.TabIndex = 3;
@@ -53,40 +50,29 @@ namespace MODBUS_TEST_2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("굴림", 18F);
-            this.label2.Location = new System.Drawing.Point(187, 56);
+            this.label2.Location = new System.Drawing.Point(164, 45);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(58, 24);
             this.label2.TabIndex = 4;
             this.label2.Text = "농도";
             // 
-            // timer1
-            // 
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // timer2
-            // 
-            this.timer2.Interval = 150;
-            this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
-            // 
             // Tx_Tem
             // 
             this.Tx_Tem.Font = new System.Drawing.Font("굴림", 15F);
-            this.Tx_Tem.Location = new System.Drawing.Point(14, 101);
-            this.Tx_Tem.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.Tx_Tem.Location = new System.Drawing.Point(12, 81);
             this.Tx_Tem.Name = "Tx_Tem";
             this.Tx_Tem.ReadOnly = true;
-            this.Tx_Tem.Size = new System.Drawing.Size(121, 30);
+            this.Tx_Tem.Size = new System.Drawing.Size(106, 30);
             this.Tx_Tem.TabIndex = 5;
             this.Tx_Tem.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // Tx_Per
             // 
             this.Tx_Per.Font = new System.Drawing.Font("굴림", 15F);
-            this.Tx_Per.Location = new System.Drawing.Point(157, 101);
-            this.Tx_Per.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.Tx_Per.Location = new System.Drawing.Point(137, 81);
             this.Tx_Per.Name = "Tx_Per";
             this.Tx_Per.ReadOnly = true;
-            this.Tx_Per.Size = new System.Drawing.Size(132, 30);
+            this.Tx_Per.Size = new System.Drawing.Size(116, 30);
             this.Tx_Per.TabIndex = 6;
             this.Tx_Per.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -94,7 +80,7 @@ namespace MODBUS_TEST_2
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("굴림", 20F);
-            this.label3.Location = new System.Drawing.Point(111, 11);
+            this.label3.Location = new System.Drawing.Point(97, 9);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(82, 27);
             this.label3.TabIndex = 7;
@@ -102,16 +88,15 @@ namespace MODBUS_TEST_2
             // 
             // Sensor2
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(317, 164);
+            this.ClientSize = new System.Drawing.Size(277, 131);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.Tx_Per);
             this.Controls.Add(this.Tx_Tem);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "Sensor2";
             this.Text = "Form1";
             this.ResumeLayout(false);
@@ -125,8 +110,6 @@ namespace MODBUS_TEST_2
         private System.Windows.Forms.Label label3;
         public System.Windows.Forms.TextBox Tx_Tem;
         public System.Windows.Forms.TextBox Tx_Per;
-        public System.Windows.Forms.Timer timer1;
-        public System.Windows.Forms.Timer timer2;
     }
 }
 
