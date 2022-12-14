@@ -27,6 +27,7 @@ namespace MODBUS_TEST_2
             Sensor4_Load();
             helper.Connect();
             InitializeComponent();
+            Tx_TimeSet.Text = GN_SENSOR_DATA.Properties.Settings.Default.TimeSetting;
             helper.Query(sen1.tem, sen2.tem, sen3.tem, sen4.tem, sen1.per, sen2.per, sen3.per, sen4.per);
         }
         private void Sensor1_Load()
@@ -73,7 +74,7 @@ namespace MODBUS_TEST_2
             sen4.Location = new Point(300, 200);
             sen4.Show();
             sen4.Per_Send();
-            sen4.Tx_Per.Text = PerWrite(sen4.per);
+            sen4.Tx_Per.Text = TemWrite(sen4.per);
             sen4.Tem_Send();
             sen4.Tx_Tem.Text = TemWrite(sen4.tem);
         }
@@ -96,7 +97,7 @@ namespace MODBUS_TEST_2
             sen3.Tx_Tem.Text = TemWrite(sen3.tem);
 
             sen4.Per_Send();
-            sen4.Tx_Per.Text = PerWrite(sen4.per);
+            sen4.Tx_Per.Text = TemWrite(sen4.per);
             sen4.Tem_Send();
             sen4.Tx_Tem.Text = TemWrite(sen4.tem);
 
@@ -105,13 +106,18 @@ namespace MODBUS_TEST_2
 
         private void Bt_Setting_Click(object sender, EventArgs e)
         {
-            if(Tx_TimeSet.Text == "")
+            if(Tx_TimeSet.Text == "" || Tx_TimeSet.Text == "0")
             {
-                Tx_TimeSet.Text = "5";
+                Tx_TimeSet.Text = GN_SENSOR_DATA.Properties.Settings.Default.TimeSetting;
             }
             int x = Convert.ToInt32(Tx_TimeSet.Text);
             int set = x * 60000;
             timer1.Interval = set;
+
+            GN_SENSOR_DATA.Properties.Settings.Default.TimeSetting = Tx_TimeSet.Text;
+            GN_SENSOR_DATA.Properties.Settings.Default.Save();
+
+            MessageBox.Show("설정되었습니다.");
         }
 
         private void Tx_TimeSet_KeyPress(object sender, KeyPressEventArgs e)

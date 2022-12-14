@@ -22,5 +22,17 @@ namespace GN_SENSOR_DATA.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public string TimeSetting {
+            get {
+                return ((string)(this["TimeSetting"]));
+            }
+            set {
+                this["TimeSetting"] = value;
+            }
+        }
     }
 }

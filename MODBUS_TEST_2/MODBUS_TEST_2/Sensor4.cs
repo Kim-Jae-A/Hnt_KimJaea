@@ -17,8 +17,7 @@ namespace MODBUS_TEST_2
 {
     public partial class Sensor4 : Form
     {
-        int check = 1;
-        int check_per = 1;
+        int check = 2;
         Socket Sensor4_Sock;
         AsyncObject obj = new AsyncObject(99999);   // 소켓 크기 설정
         //Thread thread;
@@ -93,23 +92,19 @@ namespace MODBUS_TEST_2
         }
         void DataReceived(IAsyncResult ar)        // 데이터 받아오는 리시브 메서드
         {
+            AsyncObject obj = (AsyncObject)ar.AsyncState;
+            int received = obj.WorkingSocket.EndReceive(ar);
+            byte[] buffer = new byte[received];
+            Array.Copy(obj.Buffer, 0, buffer, 0, received);
             if (check == 0)
             {
-                AsyncObject obj = (AsyncObject)ar.AsyncState;
-                int received = obj.WorkingSocket.EndReceive(ar);
-                byte[] buffer = new byte[received];
-                Array.Copy(obj.Buffer, 0, buffer, 0, received);
                 TemWrite(buffer);
-                check = 1;
+                check = 2;
             }
-            if (check_per == 0)
+            else if (check == 1)
             {
-                AsyncObject obj = (AsyncObject)ar.AsyncState;
-                int received = obj.WorkingSocket.EndReceive(ar);
-                byte[] buffer = new byte[received];
-                Array.Copy(obj.Buffer, 0, buffer, 0, received);
                 PerWrite(buffer);
-                check_per = 1;
+                check = 2;
             }
         }
         public void Send(string msg)   // 서버로 데이터 보내는 메소드
@@ -208,7 +203,7 @@ namespace MODBUS_TEST_2
         }
         public void Per_Send()
         {
-            check_per = 0;
+            check = 1;
             Send("010300350002D405"); // 농도 명령어
             try
             {
