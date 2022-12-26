@@ -1,9 +1,0 @@
-﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="GN_SENSOR_DATA.Properties" GeneratedClassName="Settings">
-  <Profiles />
-  <Settings>
-    <Setting Name="TimeSetting" Type="System.String" Scope="User">
-      <Value Profile="(Default)">5</Value>
-    </Setting>
-  </Settings>
-</SettingsFile>

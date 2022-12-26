@@ -30,15 +30,9 @@ namespace YJ_DATA_TEST
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.Timer_Send = new System.Windows.Forms.Timer(this.components);
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.Timer_Reconn = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
-            // 
-            // Timer_Send
-            // 
-            this.Timer_Send.Interval = 5000;
-            this.Timer_Send.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // listBox1
             // 
@@ -68,8 +62,6 @@ namespace YJ_DATA_TEST
         }
 
         #endregion
-
-        private System.Windows.Forms.Timer Timer_Send;
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.Timer Timer_Reconn;
     }
