@@ -17,7 +17,7 @@ namespace YJ_DATA_TEST
     public partial class Form1 : Form
     {
         Socket mainSock;
-        AsyncObject obj = new AsyncObject(9999);   // 소켓 크기 설정
+        AsyncObject obj = new AsyncObject(99999);   // 소켓 크기 설정
         DBHelper helper = new DBHelper();
         string checkmsg = "";
         bool check = false;
@@ -33,7 +33,7 @@ namespace YJ_DATA_TEST
             {
                 ConnServer();
             }
-            Thread.Sleep(1000);
+            //Thread.Sleep(1000);
         }
 
         private void ConnServer()
@@ -165,6 +165,7 @@ namespace YJ_DATA_TEST
             try
             {
                 mainSock.Close();
+                SocketSet();
             }
             catch(Exception ex)
             {
@@ -172,7 +173,6 @@ namespace YJ_DATA_TEST
             }
             finally
             {
-                SocketSet();
                 IPmating();
                 if (check == true)
                 {
@@ -201,7 +201,7 @@ namespace YJ_DATA_TEST
                     //obj.ClearBuffer();
                     Console.WriteLine($"{DateTime.Now} " + ex);
                     Timer_Reconn.Enabled = true;
-                    Thread.Sleep(120000);
+                    Thread.Sleep(125000);
                 }
                 finally
                 {

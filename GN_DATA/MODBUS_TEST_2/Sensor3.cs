@@ -17,7 +17,6 @@ namespace MODBUS_TEST_2
 {
     public partial class Sensor3 : Form
     {
-        int check = 2;
         Socket Sensor3_Sock;
         AsyncObject obj = new AsyncObject(99999);   // 소켓 크기 설정
         //Thread thread;
@@ -98,16 +97,16 @@ namespace MODBUS_TEST_2
             int received = obj.WorkingSocket.EndReceive(ar);
             byte[] buffer = new byte[received];
             Array.Copy(obj.Buffer, 0, buffer, 0, received);
-            if (check == 0)
-            {
-                TemWrite(buffer);
-                check = 2;
-            }
-            else if (check == 1)
-            {
-                PerWrite(buffer);
-                check = 2;
-            }
+            TemWrite(buffer);
+        }
+
+        void DataReceived_per(IAsyncResult ar)        // 데이터 받아오는 리시브 메서드
+        {
+            AsyncObject obj = (AsyncObject)ar.AsyncState;
+            int received = obj.WorkingSocket.EndReceive(ar);
+            byte[] buffer = new byte[received];
+            Array.Copy(obj.Buffer, 0, buffer, 0, received);
+            PerWrite(buffer);
         }
         public void Send(string msg)   // 서버로 데이터 보내는 메소드
         {
@@ -193,7 +192,6 @@ namespace MODBUS_TEST_2
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            check = 0;
             Send("01030037000275C5");  // 온도 명령어
             try
             {
@@ -212,11 +210,10 @@ namespace MODBUS_TEST_2
 
         private void timer2_Tick(object sender, EventArgs e)
         {
-            check = 1;
             Send("010300350002D405"); // 농도 명령어  
             try
             {
-                Sensor3_Sock.BeginReceive(obj.Buffer, 0, obj.BufferSize, 0, DataReceived, obj);  // 실시간으로 서버에서 보낸 데이터를 받는다.
+                Sensor3_Sock.BeginReceive(obj.Buffer, 0, obj.BufferSize, 0, DataReceived_per, obj);  // 실시간으로 서버에서 보낸 데이터를 받는다.
             }
             catch (Exception ex)
             {

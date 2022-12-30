@@ -65,15 +65,23 @@ namespace MODBUS_TEST_2
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            helper.Query(sen1.tem, sen2.tem, sen3.tem, sen4.tem, sen1.per, sen2.per, sen3.per, sen4.per);
-            sen1.Tx_Per.Text = PerWrite(sen1.per);
-            sen1.Tx_Tem.Text = TemWrite(sen1.tem);
-            sen2.Tx_Per.Text = PerWrite(sen2.per);
-            sen2.Tx_Tem.Text = TemWrite(sen2.tem);
-            sen3.Tx_Per.Text = PerWrite(sen3.per);
-            sen3.Tx_Tem.Text = TemWrite(sen3.tem);
-            sen4.Tx_Per.Text = TemWrite(sen4.per);
-            sen4.Tx_Tem.Text = TemWrite(sen4.tem);
+            if (sen4.per != 0 || sen4.tem != 0)
+            { 
+                helper.Query(sen1.tem, sen2.tem, sen3.tem, sen4.tem, sen1.per, sen2.per, sen3.per, sen4.per);
+                sen1.Tx_Per.Text = PerWrite(sen1.per);
+                sen1.Tx_Tem.Text = TemWrite(sen1.tem);
+                sen2.Tx_Per.Text = PerWrite(sen2.per);
+                sen2.Tx_Tem.Text = TemWrite(sen2.tem);
+                sen3.Tx_Per.Text = PerWrite(sen3.per);
+                sen3.Tx_Tem.Text = TemWrite(sen3.tem);
+                sen4.Tx_Per.Text = TemWrite(sen4.per);
+                sen4.Tx_Tem.Text = TemWrite(sen4.tem);
+            }
+            else
+            {
+                System.Threading.Thread.Sleep(3000);
+                Application.Restart();
+            }
         }
 
         private void Bt_Setting_Click(object sender, EventArgs e)
@@ -99,14 +107,14 @@ namespace MODBUS_TEST_2
             int x = Convert.ToInt32(Tx_TimeSet.Text);
             //int set = x * 1000;
             int set = x * 60000;
-            sen1.timer1.Interval = set - 2000;
-            sen2.timer1.Interval = set - 2000;
-            sen3.timer1.Interval = set - 2000;
-            sen4.timer1.Interval = set - 2000;
-            sen1.timer2.Interval = set - 1000;
-            sen2.timer2.Interval = set - 1000;
-            sen3.timer2.Interval = set - 1000;
-            sen4.timer2.Interval = set - 1000;
+            sen1.timer1.Interval = set - 5000;
+            sen2.timer1.Interval = set - 5000;
+            sen3.timer1.Interval = set - 5000;
+            sen4.timer1.Interval = set - 5000;
+            sen1.timer2.Interval = set - 3000;
+            sen2.timer2.Interval = set - 3000;
+            sen3.timer2.Interval = set - 3000;
+            sen4.timer2.Interval = set - 3000;
             timer1.Interval = set;
         }
         private void timer2_Tick(object sender, EventArgs e)
@@ -116,11 +124,11 @@ namespace MODBUS_TEST_2
         }
         private void LodingData()
         {
-            int set = 2000;
-            sen1.timer1.Interval = set - 1000;
-            sen2.timer1.Interval = set - 1000;
-            sen3.timer1.Interval = set - 1000;
-            sen4.timer1.Interval = set - 1000;
+            int set = 3000;
+            sen1.timer1.Interval = set - 1200;
+            sen2.timer1.Interval = set - 1200;
+            sen3.timer1.Interval = set - 1200;
+            sen4.timer1.Interval = set - 1200;
             sen1.timer2.Interval = set - 700;            
             sen2.timer2.Interval = set - 700;            
             sen3.timer2.Interval = set - 700;            
