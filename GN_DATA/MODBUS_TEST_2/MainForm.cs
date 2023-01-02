@@ -80,7 +80,6 @@ namespace MODBUS_TEST_2
             else
             {
                 System.Threading.Thread.Sleep(3000);
-                Application.Restart();
             }
         }
 

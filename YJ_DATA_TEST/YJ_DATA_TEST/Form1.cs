@@ -164,7 +164,7 @@ namespace YJ_DATA_TEST
         {
             try
             {
-                mainSock.Close();
+                mainSock.Dispose();
                 SocketSet();
             }
             catch(Exception ex)
