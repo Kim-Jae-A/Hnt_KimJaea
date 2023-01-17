@@ -12,6 +12,8 @@ using MesSystem;
 
 // Zebra GT800 프린트에서만 테스트 해봄
 // 용지 크기는 3.5 * 2 cm 사이즈임
+// ZPL 언어 사용함
+
 namespace PrintTEST
 {
     public partial class Form1 : Form
