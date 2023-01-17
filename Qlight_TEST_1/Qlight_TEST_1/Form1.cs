@@ -28,6 +28,10 @@ namespace DH_LED_Controller
             QLightAPI.SetTTL(TTL);
             QLightAPI.SetScanInterval(0);
         }
+        private void Form1_Leave(object sender, EventArgs e)
+        {
+            QLightAPI.DisconnectAndClearAllConnection();
+        }
         private static DateTime Delay(int MS)
         {
             DateTime ThisMoment = DateTime.Now;
@@ -53,60 +57,12 @@ namespace DH_LED_Controller
                 listBox1.Items.Add(listvalues);
             }
         }
-        private async void button1_Click(object sender, EventArgs e)
-        {
-            bool check;
-            if (textBox1.Text == "")
-            {
-                check = await QLightAPI.ConnectGatewayLAN("192.168.0.245", 32177);
-            }
-            else
-            {
-                check = await QLightAPI.ConnectGatewayLAN(textBox1.Text, 32177);
-            }
-            //check = await QLightAPI.ConnectGatewayLAN("192.168.0.245", 32177);
-            if (check)
-            {
-                MessageBox.Show("연결성공");
-                if (textBox1.Text == "")
-                {
-                    Get_GroupID("192.168.0.245");
-                }
-                else
-                {
-                    Get_GroupID(textBox1.Text);
-                }
-            }
-            else
-                MessageBox.Show("연결실패");
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            FindMac();
-        }
-
-        private void Form1_Leave(object sender, EventArgs e)
-        {
-            QLightAPI.DisconnectAndClearAllConnection();
-        }
         public async void Get_GroupID(string ipadd)
         {
             GatewayInfo gatewayinfo = await QLightAPI.GetInfoGatewayLAN(ipadd);
             groupid = gatewayinfo.GroupId;
         }
-        private void button3_Click(object sender, EventArgs e)
-        {
-            listBox1.Items.Clear(); 
-            QLightAPI.SearchRouters();
-            Delay(1000);
-            List<ushort> list = QLightAPI.GetRouterListGroupId(groupid);
-            for (int i = 0; i < list.Count(); i++)
-            {
-                listBox1.Items.Add(list[i]);
-            }
-            listBox1.Items.Add(list.Count());
-        }
+
         public void LED_ON()
         {
             List<ushort> list = QLightAPI.GetRouterListGroupId(groupid);
@@ -137,11 +93,55 @@ namespace DH_LED_Controller
                 LEDState.OFF,
                 LEDState.OFF);
         }
-        private void button4_Click(object sender, EventArgs e)
+        private async void button1_Click(object sender, EventArgs e)  // 커넥트 버튼
+        {
+            bool check;
+
+            if (textBox1.Text == "")
+                check = await QLightAPI.ConnectGatewayLAN("192.168.0.245", 32177);
+            else
+                check = await QLightAPI.ConnectGatewayLAN(textBox1.Text, 32177);
+
+            if (check)
+            {
+                MessageBox.Show("연결성공");
+                if (textBox1.Text == "")
+                    Get_GroupID("192.168.0.245");
+                else
+                    Get_GroupID(textBox1.Text);
+            }
+            else
+                MessageBox.Show("연결실패");
+        }
+
+        private void button2_Click(object sender, EventArgs e)   // 맥 찾기
+        {
+            FindMac();
+        }
+        private void button3_Click(object sender, EventArgs e)  // 라우터 찾기
+        {
+            try
+            {
+                listBox1.Items.Clear();
+                QLightAPI.SearchRouters();
+                Delay(1000);
+                List<ushort> list = QLightAPI.GetRouterListGroupId(groupid);
+                for (int i = 0; i < list.Count(); i++)
+                {
+                    listBox1.Items.Add(list[i]);
+                }
+                listBox1.Items.Add("총 " + list.Count() + "개");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("" + ex);
+            }
+        }
+        private void button4_Click(object sender, EventArgs e)  // LED 온
         {
             LED_ON();
         }
-        private void button5_Click(object sender, EventArgs e)
+        private void button5_Click(object sender, EventArgs e)  // LED 끄기
         {
             LED_OFF();
         }
