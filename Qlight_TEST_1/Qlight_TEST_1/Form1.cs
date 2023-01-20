@@ -46,15 +46,18 @@ namespace DH_LED_Controller
         }
         public async void FindMac()
         {
+            comboBox1.Items.Clear();
+            listBox1.Items.Clear();
             Dictionary<string, string> list = await QLightAPI.FindMacGateways();
             Delay(1000);
             foreach (string listkey in list.Keys)
             {
                 listBox1.Items.Add(listkey);
             }
-            foreach (string listvalues in list.Values)
+            foreach (string listvalues in list.Values)  // ip
             {
                 listBox1.Items.Add(listvalues);
+                comboBox1.Items.Add(listvalues);
             }
         }
         public async void Get_GroupID(string ipadd)
@@ -97,23 +100,22 @@ namespace DH_LED_Controller
         {
             bool check;
 
-            if (textBox1.Text == "")
+            if (comboBox1.Text == "")
                 check = await QLightAPI.ConnectGatewayLAN("192.168.0.245", 32177);
             else
-                check = await QLightAPI.ConnectGatewayLAN(textBox1.Text, 32177);
+                check = await QLightAPI.ConnectGatewayLAN(comboBox1.Text, 32177);
 
             if (check)
             {
                 MessageBox.Show("연결성공");
-                if (textBox1.Text == "")
+                if (comboBox1.Text == "")
                     Get_GroupID("192.168.0.245");
                 else
-                    Get_GroupID(textBox1.Text);
+                    Get_GroupID(comboBox1.Text);
             }
             else
                 MessageBox.Show("연결실패");
         }
-
         private void button2_Click(object sender, EventArgs e)   // 맥 찾기
         {
             FindMac();
