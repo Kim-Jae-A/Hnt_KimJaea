@@ -38,6 +38,10 @@ namespace DH_LED_Controller
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.button6 = new System.Windows.Forms.Button();
+            this.button7 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -54,9 +58,9 @@ namespace DH_LED_Controller
             // 
             this.listBox1.FormattingEnabled = true;
             this.listBox1.ItemHeight = 12;
-            this.listBox1.Location = new System.Drawing.Point(12, 40);
+            this.listBox1.Location = new System.Drawing.Point(12, 64);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(410, 232);
+            this.listBox1.Size = new System.Drawing.Size(411, 208);
             this.listBox1.TabIndex = 2;
             // 
             // button2
@@ -116,11 +120,52 @@ namespace DH_LED_Controller
             this.comboBox1.Size = new System.Drawing.Size(240, 20);
             this.comboBox1.TabIndex = 8;
             // 
+            // comboBox2
+            // 
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Location = new System.Drawing.Point(86, 38);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(337, 20);
+            this.comboBox2.TabIndex = 9;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(28, 41);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(41, 12);
+            this.label2.TabIndex = 10;
+            this.label2.Text = "Router";
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(222, 312);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(200, 28);
+            this.button6.TabIndex = 11;
+            this.button6.Text = "LED_ALL_ON";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(12, 312);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(200, 28);
+            this.button7.TabIndex = 12;
+            this.button7.Text = "QueryTEST";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(435, 316);
+            this.ClientSize = new System.Drawing.Size(435, 346);
+            this.Controls.Add(this.button7);
+            this.Controls.Add(this.button6);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.comboBox2);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
@@ -149,6 +194,10 @@ namespace DH_LED_Controller
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button button7;
     }
 }
 
