@@ -162,24 +162,7 @@ namespace YJ_DATA_TEST
         }
         private void Timer_Reconn_Tick(object sender, EventArgs e)     // 메세지 보내는데 실패하면 타이머 시작한 뒤 소켓 및 연결 재시도
         {
-            try
-            {
-                mainSock.Dispose();
-                SocketSet();
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine($"{DateTime.Now} " + ex);
-            }
-            finally
-            {
-                IPmating();
-                if (check == true)
-                {
-                    ConnServer();
-                }
-                Test();
-            }
+
         }
         private void SocketSet()
         {
@@ -202,10 +185,6 @@ namespace YJ_DATA_TEST
                     Console.WriteLine($"{DateTime.Now} " + ex);
                     Timer_Reconn.Enabled = true;
                     Thread.Sleep(125000);
-                }
-                finally
-                {
-                    
                 }
             }
         }

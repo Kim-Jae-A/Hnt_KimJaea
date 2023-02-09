@@ -1,4 +1,11 @@
-﻿using System;
+﻿#region < HEADER AREA >
+// *---------------------------------------------------------------------------------------------*
+//   경광등 제어 폼
+//   수정날짜 : 2023-02-01  
+// *---------------------------------------------------------------------------------------------*
+#endregion
+#region  < using 선언 >
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,15 +15,20 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using QLightRFLibrary;
+#endregion
 
 namespace DH_LED_Controller
 {
     public partial class Form1 : Form
     {
+        #region  < 전역 변수 설정 >
         const int SENDNUM = 1;
         const int TTL = 8;
         ushort groupid;
         DBHelper helper = new DBHelper();
+        int macCount;
+        string[] macIP;
+        #endregion
 
         public Form1()
         {
@@ -57,30 +69,41 @@ namespace DH_LED_Controller
             }
             return DateTime.Now;
         }
+
         public async void FindMac()  // 맥 찾기 함수
         {
             comboBox1.Items.Clear();
             listBox1.Items.Clear();
+            macCount = 0;         
             Dictionary<string, string> list = await QLightAPI.FindMacGateways();  // 게이트 웨이 맥 주소 찾아서 리스트업
             Delay(1000);
             foreach (string listkey in list.Keys)       // Mac 값
             {
                 listBox1.Items.Add(listkey);
+                macCount++;
             }
+
+            macIP = new string[macCount];
+            int i = 0;
             foreach (string listvalues in list.Values)  // ip 값
             {
+                macIP[i] = listvalues;
                 listBox1.Items.Add(listvalues);  // 확인용
                 comboBox1.Items.Add(listvalues);  // 콤보 박스에 값 넣기
+                i++;
             }
+            Conn_IP();
         }
+
         public async void Get_GroupID(string ipadd)
         {
             GatewayInfo gatewayinfo = await QLightAPI.GetInfoGatewayLAN(ipadd);  //  연결된 게이트웨이의 정보 받아오기
             groupid = gatewayinfo.GroupId;                                       //  정보 중 그룹아이디 값 받기
         }
 
-        public void LED_ON()
+        public void LED_ON() //string node)
         {
+            #region <같은 그룹아이디 내 모든 경광등 켜기(주석) >
             /*List<ushort> list = QLightAPI.GetRouterListGroupId(groupid);  // 그룹에 맞는 라우터들 찾기
             ushort[] nodeid = new ushort[list.Count()];
             for (int i = 0; i < nodeid.Length; i++)
@@ -93,6 +116,8 @@ namespace DH_LED_Controller
                 LEDState.OFF,
                 LEDState.OFF,
                 LEDState.OFF);*/
+            #endregion
+
             ushort list;
             if (comboBox2.Text != "")  // 콤보 박스가 빈칸 이 아니면
             {
@@ -102,6 +127,7 @@ namespace DH_LED_Controller
             {
                 comboBox2.SelectedIndex = 0;  // 콤보 박스의 첫번째 항목을 기본으로 설정
                 list = ushort.Parse(comboBox2.Text);  // 콤보 박스에 선택한 라우터 Nodeid 정보를 저장
+                //list = ushort.Parse(node);
             }
             ushort[] nodeid = new ushort[1];  
             nodeid[0] = list;   // 콤보 박스의 NodeID 정보를 배열 형태로 저장
@@ -133,7 +159,24 @@ namespace DH_LED_Controller
                 LEDState.OFF,
                 LEDState.OFF);
         }
-        private async void button1_Click(object sender, EventArgs e)  // 커넥트 버튼
+
+        public async void Conn_IP()
+        {
+            bool check;
+
+            for (int i = 0; i < macCount; i++)
+            {
+                check = await QLightAPI.ConnectGatewayLAN(macIP[i], 32177);  // 아이피 콤보 박스 값이 있으니 그 아이피로 연결 시도
+
+                if (check) // 연결 성공 여부 확인
+                    MessageBox.Show($"{macIP[i]} 연결성공");
+                else
+                    MessageBox.Show($"{macIP[i]} 연결실패");
+            }          
+        }
+
+        #region < 버튼 클릭 이벤트>
+        private async void bt_conn_Click(object sender, EventArgs e)
         {
             bool check;
 
@@ -153,11 +196,13 @@ namespace DH_LED_Controller
             else
                 MessageBox.Show("연결실패");
         }
-        private void button2_Click(object sender, EventArgs e)   // 맥 찾기
+
+        private void bt_FIndMac_Click(object sender, EventArgs e)
         {
             FindMac();
         }
-        private void button3_Click(object sender, EventArgs e)  // 라우터 찾기
+
+        private void bt_FindRouter_Click(object sender, EventArgs e)
         {
             try
             {
@@ -167,14 +212,27 @@ namespace DH_LED_Controller
                 // 라우터 찾기 함수
                 QLightAPI.SearchRouters();
                 Delay(1000);
-
                 // 현재 연결된 게이트웨이의 그룹 아이디인 라우터들을 검색하여 리스트에 저장
-                List<ushort> list = QLightAPI.GetRouterListGroupId(groupid);
-                for (int i = 0; i < list.Count(); i++)
+                //List<ushort> list = QLightAPI.GetRouterListGroupId(groupid);
+
+                /*for (int i = 0; i < list.Count(); i++)
                 {
                     listBox1.Items.Add(list[i]);  // 확인용
                     comboBox2.Items.Add(list[i]); // 콤보 박스에 하나씩 매칭
+                }*/
+
+                Dictionary<ushort, ushort> list = QLightAPI.GetAllRouterList();
+
+                foreach (ushort listkey in list.Keys)       // NODE ID
+                {
+                    listBox1.Items.Add(listkey);
                 }
+
+                /*foreach (ushort listValues in list.Values)       // GROUP ID
+                {
+                    listBox1.Items.Add(listValues);
+                }*/
+
                 listBox1.Items.Add("총 " + list.Count() + "개");  // 확인용 (검색된 라우터 총 갯수 표시)
             }
             catch (Exception ex)
@@ -182,26 +240,38 @@ namespace DH_LED_Controller
                 MessageBox.Show("" + ex);
             }
         }
-        private void button4_Click(object sender, EventArgs e)  // LED 온
+
+        private void bt_LEDON_Click(object sender, EventArgs e)
         {
             LED_ON();
         }
-        private void button5_Click(object sender, EventArgs e)  // LED 끄기
+
+        private void bt_LEDOFF_Click(object sender, EventArgs e)
         {
             LED_OFF();
         }
 
-        private void button6_Click(object sender, EventArgs e)  //  모든 LED 켜기
+        private void bt_LEDALLON_Click(object sender, EventArgs e)
         {
             // 현재 연결된 게이트웨이의 그룹 아이디 정보를 가지고 그 그룹에 맞는 모든 라우터들을 검색 후 리스트로 저장
-            List<ushort> list = QLightAPI.GetRouterListGroupId(groupid); 
+
+            /*List<ushort> list = QLightAPI.GetRouterListGroupId(groupid);
             ushort[] nodeid = new ushort[list.Count()];
+
             for (int i = 0; i < nodeid.Length; i++)
             {
                 // Nodeid 배열에 리스트(모든 라우터)들을 하나씩 매칭 
                 nodeid[i] = list[i];
+            }*/
+            Dictionary<ushort, ushort> list = QLightAPI.GetAllRouterList();
+            ushort[] nodeid = new ushort[list.Keys.Count()];
+            int i = 0;
+            foreach (ushort listkey in list.Keys)       // NODE ID
+            {
+                nodeid[i] = listkey;
+                i++;
             }
-            
+
             // 같은 그룹의 모든 라우터들의 LED ON (빨간색)
             QLightAPI.ControlRoutersLED(nodeid,
                 LEDState.ON,
@@ -209,14 +279,1100 @@ namespace DH_LED_Controller
                 LEDState.OFF,
                 LEDState.OFF,
                 LEDState.OFF);
+            for(i = 0; i < nodeid.Length; i++)
+            {
+                RED_LIGHT(Convert.ToString(nodeid[i]));
+            }
         }
+        #endregion
 
-        private void button7_Click(object sender, EventArgs e)
+        private void bt_QueryTEST_Click(object sender, EventArgs e)
         {
             listBox1.Items.Clear();
             string[] testid;
-            testid = helper.Query("77");
+            testid = helper.Query("1234");
             listBox1.Items.Add(testid[2]);
+            RED_LIGHT(testid[2]);
+/*            BLUE_LIGHT("1105");
+            GREEN_LIGHT("1201");
+            OFF_LIGHT("1203");*/
+        }
+
+        #region < UI 색 제어 함수 >
+
+        #region < 빨간색 >
+        private void RED_LIGHT(string node)  // UI 상에서 빨간색으로 표시하는 함수
+        {
+            switch (node)
+            {
+                #region < 11그룹 버튼 빨간색 ON >
+                case "1101":
+                    LED_1101.BackColor = Color.Red;
+                    break;
+                case "1102":
+                    LED_1102.BackColor = Color.Red;
+                    break;
+                case "1103":
+                    LED_1103.BackColor = Color.Red;
+                    break;
+                case "1104":
+                    LED_1104.BackColor = Color.Red;
+                    break;
+                case "1105":
+                    LED_1105.BackColor = Color.Red;
+                    break;
+                case "1106":
+                    LED_1106.BackColor = Color.Red;
+                    break;
+                case "1107":
+                    LED_1107.BackColor = Color.Red;
+                    break;
+                case "1108":
+                    LED_1108.BackColor = Color.Red;
+                    break;
+                case "1109":
+                    LED_1109.BackColor = Color.Red;
+                    break;
+                case "1110":
+                    LED_1110.BackColor = Color.Red;
+                    break;
+                case "1111":
+                    LED_1111.BackColor = Color.Red;
+                    break;
+                case "1112":
+                    LED_1112.BackColor = Color.Red;
+                    break;
+                case "1113":
+                    LED_1113.BackColor = Color.Red;
+                    break;
+                case "1114":
+                    LED_1114.BackColor = Color.Red;
+                    break;
+                case "1115":
+                    LED_1115.BackColor = Color.Red;
+                    break;
+                case "1116":
+                    LED_1116.BackColor = Color.Red;
+                    break;
+                case "1117":
+                    LED_1117.BackColor = Color.Red;
+                    break;
+                #endregion
+                #region < 12그룹 버튼 빨간색 ON >
+                case "1201":
+                    LED_1201.BackColor = Color.Red;
+                    break;
+                case "1202":
+                    LED_1202.BackColor = Color.Red;
+                    break;
+                case "1203":
+                    LED_1203.BackColor = Color.Red;
+                    break;
+                case "1204":
+                    LED_1204.BackColor = Color.Red;
+                    break;
+                case "1205":
+                    LED_1205.BackColor = Color.Red;
+                    break;
+                case "1206":
+                    LED_1206.BackColor = Color.Red;
+                    break;
+                case "1207":
+                    LED_1207.BackColor = Color.Red;
+                    break;
+                case "1208":
+                    LED_1208.BackColor = Color.Red;
+                    break;
+                case "1209":
+                    LED_1209.BackColor = Color.Red;
+                    break;
+                case "1210":
+                    LED_1210.BackColor = Color.Red;
+                    break;
+                case "1211":
+                    LED_1211.BackColor = Color.Red;
+                    break;
+                case "1212":
+                    LED_1212.BackColor = Color.Red;
+                    break;
+                case "1213":
+                    LED_1213.BackColor = Color.Red;
+                    break;
+                case "1214":
+                    LED_1214.BackColor = Color.Red;
+                    break;
+                case "1215":
+                    LED_1215.BackColor = Color.Red;
+                    break;
+                case "1216":
+                    LED_1216.BackColor = Color.Red;
+                    break;
+                case "1217":
+                    LED_1217.BackColor = Color.Red;
+                    break;
+                case "1218":
+                    LED_1218.BackColor = Color.Red;
+                    break;
+                case "1219":
+                    LED_1219.BackColor = Color.Red;
+                    break;
+                case "1220":
+                    LED_1220.BackColor = Color.Red;
+                    break;
+                case "1221":
+                    LED_1221.BackColor = Color.Red;
+                    break;
+                case "1222":
+                    LED_1222.BackColor = Color.Red;
+                    break;
+                case "1224":
+                    LED_1224.BackColor = Color.Red;
+                    break;
+                #endregion
+                #region < 13그룹 버튼 빨간색 ON >
+                case "1301":
+                    LED_1301.BackColor = Color.Red;
+                    break;
+                case "1302":
+                    LED_1302.BackColor = Color.Red;
+                    break;
+                case "1303":
+                    LED_1303.BackColor = Color.Red;
+                    break;
+                case "1304":
+                    LED_1304.BackColor = Color.Red;
+                    break;
+                case "1305":
+                    LED_1305.BackColor = Color.Red;
+                    break;
+                case "1306":
+                    LED_1306.BackColor = Color.Red;
+                    break;
+                case "1307":
+                    LED_1307.BackColor = Color.Red;
+                    break;
+                case "1308":
+                    LED_1308.BackColor = Color.Red;
+                    break;
+                case "1309":
+                    LED_1309.BackColor = Color.Red;
+                    break;
+                case "1310":
+                    LED_1310.BackColor = Color.Red;
+                    break;
+                case "1311":
+                    LED_1311.BackColor = Color.Red;
+                    break;
+                case "1312":
+                    LED_1312.BackColor = Color.Red;
+                    break;
+                case "1313":
+                    LED_1313.BackColor = Color.Red;
+                    break;
+                case "1314":
+                    LED_1314.BackColor = Color.Red;
+                    break;
+                case "1315":
+                    LED_1315.BackColor = Color.Red;
+                    break;
+                case "1316":
+                    LED_1316.BackColor = Color.Red;
+                    break;
+                case "1317":
+                    LED_1317.BackColor = Color.Red;
+                    break;
+                case "1318":
+                    LED_1318.BackColor = Color.Red;
+                    break;
+                case "1319":
+                    LED_1319.BackColor = Color.Red;
+                    break;
+                case "1320":
+                    LED_1320.BackColor = Color.Red;
+                    break;
+                #endregion
+                #region < 14그룹 버튼 빨간색 ON >
+                case "1401":
+                    LED_1401.BackColor = Color.Red;
+                    break;
+                case "1402":
+                    LED_1402.BackColor = Color.Red;
+                    break;
+                case "1403":
+                    LED_1403.BackColor = Color.Red;
+                    break;
+                case "1404":
+                    LED_1404.BackColor = Color.Red;
+                    break;
+                case "1405":
+                    LED_1405.BackColor = Color.Red;
+                    break;
+                case "1406":
+                    LED_1406.BackColor = Color.Red;
+                    break;
+                case "1407":
+                    LED_1407.BackColor = Color.Red;
+                    break;
+                case "1408":
+                    LED_1408.BackColor = Color.Red;
+                    break;
+                case "1409":
+                    LED_1409.BackColor = Color.Red;
+                    break;
+                case "1410":
+                    LED_1410.BackColor = Color.Red;
+                    break;
+                case "1411":
+                    LED_1411.BackColor = Color.Red;
+                    break;
+                case "1412":
+                    LED_1412.BackColor = Color.Red;
+                    break;
+                case "1413":
+                    LED_1413.BackColor = Color.Red;
+                    break;
+                case "1414":
+                    LED_1414.BackColor = Color.Red;
+                    break;
+                case "1415":
+                    LED_1415.BackColor = Color.Red;
+                    break;
+                case "1416":
+                    LED_1416.BackColor = Color.Red;
+                    break;
+                case "1417":
+                    LED_1417.BackColor = Color.Red;
+                    break;
+                case "1418":
+                    LED_1418.BackColor = Color.Red;
+                    break;
+                case "1419":
+                    LED_1419.BackColor = Color.Red;
+                    break;
+                case "1420":
+                    LED_1420.BackColor = Color.Red;
+                    break;
+                case "1421":
+                    LED_1421.BackColor = Color.Red;
+                    break;
+                case "1422":
+                    LED_1422.BackColor = Color.Red;
+                    break;
+                    #endregion
+            }
+        }
+        #endregion
+        #region < 파란색 >
+        private void BLUE_LIGHT(string node)  // UI 상에서 파란색으로 표시하는 함수
+        {
+            switch (node)
+            {
+                #region < 11그룹 버튼 파란색 ON >
+                case "1101":
+                    LED_1101.BackColor = Color.Blue;
+                    break;
+                case "1102":
+                    LED_1102.BackColor = Color.Blue;
+                    break;
+                case "1103":
+                    LED_1103.BackColor = Color.Blue;
+                    break;
+                case "1104":
+                    LED_1104.BackColor = Color.Blue;
+                    break;
+                case "1105":
+                    LED_1105.BackColor = Color.Blue;
+                    break;
+                case "1106":
+                    LED_1106.BackColor = Color.Blue;
+                    break;
+                case "1107":
+                    LED_1107.BackColor = Color.Blue;
+                    break;
+                case "1108":
+                    LED_1108.BackColor = Color.Blue;
+                    break;
+                case "1109":
+                    LED_1109.BackColor = Color.Blue;
+                    break;
+                case "1110":
+                    LED_1110.BackColor = Color.Blue;
+                    break;
+                case "1111":
+                    LED_1111.BackColor = Color.Blue;
+                    break;
+                case "1112":
+                    LED_1112.BackColor = Color.Blue;
+                    break;
+                case "1113":
+                    LED_1113.BackColor = Color.Blue;
+                    break;
+                case "1114":
+                    LED_1114.BackColor = Color.Blue;
+                    break;
+                case "1115":
+                    LED_1115.BackColor = Color.Blue;
+                    break;
+                case "1116":
+                    LED_1116.BackColor = Color.Blue;
+                    break;
+                case "1117":
+                    LED_1117.BackColor = Color.Blue;
+                    break;
+                #endregion
+                #region < 12그룹 버튼 파란색 ON >
+                case "1201":
+                    LED_1201.BackColor = Color.Blue;
+                    break;
+                case "1202":
+                    LED_1202.BackColor = Color.Blue;
+                    break;
+                case "1203":
+                    LED_1203.BackColor = Color.Blue;
+                    break;
+                case "1204":
+                    LED_1204.BackColor = Color.Blue;
+                    break;
+                case "1205":
+                    LED_1205.BackColor = Color.Blue;
+                    break;
+                case "1206":
+                    LED_1206.BackColor = Color.Blue;
+                    break;
+                case "1207":
+                    LED_1207.BackColor = Color.Blue;
+                    break;
+                case "1208":
+                    LED_1208.BackColor = Color.Blue;
+                    break;
+                case "1209":
+                    LED_1209.BackColor = Color.Blue;
+                    break;
+                case "1210":
+                    LED_1210.BackColor = Color.Blue;
+                    break;
+                case "1211":
+                    LED_1211.BackColor = Color.Blue;
+                    break;
+                case "1212":
+                    LED_1212.BackColor = Color.Blue;
+                    break;
+                case "1213":
+                    LED_1213.BackColor = Color.Blue;
+                    break;
+                case "1214":
+                    LED_1214.BackColor = Color.Blue;
+                    break;
+                case "1215":
+                    LED_1215.BackColor = Color.Blue;
+                    break;
+                case "1216":
+                    LED_1216.BackColor = Color.Blue;
+                    break;
+                case "1217":
+                    LED_1217.BackColor = Color.Blue;
+                    break;
+                case "1218":
+                    LED_1218.BackColor = Color.Blue;
+                    break;
+                case "1219":
+                    LED_1219.BackColor = Color.Blue;
+                    break;
+                case "1220":
+                    LED_1220.BackColor = Color.Blue;
+                    break;
+                case "1221":
+                    LED_1221.BackColor = Color.Blue;
+                    break;
+                case "1222":
+                    LED_1222.BackColor = Color.Blue;
+                    break;
+                case "1224":
+                    LED_1224.BackColor = Color.Blue;
+                    break;
+                #endregion
+                #region < 13그룹 버튼 파란색 ON >
+                case "1301":
+                    LED_1301.BackColor = Color.Blue;
+                    break;
+                case "1302":
+                    LED_1302.BackColor = Color.Blue;
+                    break;
+                case "1303":
+                    LED_1303.BackColor = Color.Blue;
+                    break;
+                case "1304":
+                    LED_1304.BackColor = Color.Blue;
+                    break;
+                case "1305":
+                    LED_1305.BackColor = Color.Blue;
+                    break;
+                case "1306":
+                    LED_1306.BackColor = Color.Blue;
+                    break;
+                case "1307":
+                    LED_1307.BackColor = Color.Blue;
+                    break;
+                case "1308":
+                    LED_1308.BackColor = Color.Blue;
+                    break;
+                case "1309":
+                    LED_1309.BackColor = Color.Blue;
+                    break;
+                case "1310":
+                    LED_1310.BackColor = Color.Blue;
+                    break;
+                case "1311":
+                    LED_1311.BackColor = Color.Blue;
+                    break;
+                case "1312":
+                    LED_1312.BackColor = Color.Blue;
+                    break;
+                case "1313":
+                    LED_1313.BackColor = Color.Blue;
+                    break;
+                case "1314":
+                    LED_1314.BackColor = Color.Blue;
+                    break;
+                case "1315":
+                    LED_1315.BackColor = Color.Blue;
+                    break;
+                case "1316":
+                    LED_1316.BackColor = Color.Blue;
+                    break;
+                case "1317":
+                    LED_1317.BackColor = Color.Blue;
+                    break;
+                case "1318":
+                    LED_1318.BackColor = Color.Blue;
+                    break;
+                case "1319":
+                    LED_1319.BackColor = Color.Blue;
+                    break;
+                case "1320":
+                    LED_1320.BackColor = Color.Blue;
+                    break;
+                #endregion
+                #region < 14그룹 버튼 파란색 ON >
+                case "1401":
+                    LED_1401.BackColor = Color.Blue;
+                    break;
+                case "1402":
+                    LED_1402.BackColor = Color.Blue;
+                    break;
+                case "1403":
+                    LED_1403.BackColor = Color.Blue;
+                    break;
+                case "1404":
+                    LED_1404.BackColor = Color.Blue;
+                    break;
+                case "1405":
+                    LED_1405.BackColor = Color.Blue;
+                    break;
+                case "1406":
+                    LED_1406.BackColor = Color.Blue;
+                    break;
+                case "1407":
+                    LED_1407.BackColor = Color.Blue;
+                    break;
+                case "1408":
+                    LED_1408.BackColor = Color.Blue;
+                    break;
+                case "1409":
+                    LED_1409.BackColor = Color.Blue;
+                    break;
+                case "1410":
+                    LED_1410.BackColor = Color.Blue;
+                    break;
+                case "1411":
+                    LED_1411.BackColor = Color.Blue;
+                    break;
+                case "1412":
+                    LED_1412.BackColor = Color.Blue;
+                    break;
+                case "1413":
+                    LED_1413.BackColor = Color.Blue;
+                    break;
+                case "1414":
+                    LED_1414.BackColor = Color.Blue;
+                    break;
+                case "1415":
+                    LED_1415.BackColor = Color.Blue;
+                    break;
+                case "1416":
+                    LED_1416.BackColor = Color.Blue;
+                    break;
+                case "1417":
+                    LED_1417.BackColor = Color.Blue;
+                    break;
+                case "1418":
+                    LED_1418.BackColor = Color.Blue;
+                    break;
+                case "1419":
+                    LED_1419.BackColor = Color.Blue;
+                    break;
+                case "1420":
+                    LED_1420.BackColor = Color.Blue;
+                    break;
+                case "1421":
+                    LED_1421.BackColor = Color.Blue;
+                    break;
+                case "1422":
+                    LED_1422.BackColor = Color.Blue;
+                    break;
+                    #endregion
+            }
+        }
+        #endregion
+        #region < 초록색 >
+        private void GREEN_LIGHT(string node)  // UI 상에서 초록색으로 표시하는 함수
+        {
+            switch (node)
+            {
+                #region < 11그룹 버튼 초록색 ON >
+                case "1101":
+                    LED_1101.BackColor = Color.Green;
+                    break;
+                case "1102":
+                    LED_1102.BackColor = Color.Green;
+                    break;
+                case "1103":
+                    LED_1103.BackColor = Color.Green;
+                    break;
+                case "1104":
+                    LED_1104.BackColor = Color.Green;
+                    break;
+                case "1105":
+                    LED_1105.BackColor = Color.Green;
+                    break;
+                case "1106":
+                    LED_1106.BackColor = Color.Green;
+                    break;
+                case "1107":
+                    LED_1107.BackColor = Color.Green;
+                    break;
+                case "1108":
+                    LED_1108.BackColor = Color.Green;
+                    break;
+                case "1109":
+                    LED_1109.BackColor = Color.Green;
+                    break;
+                case "1110":
+                    LED_1110.BackColor = Color.Green;
+                    break;
+                case "1111":
+                    LED_1111.BackColor = Color.Green;
+                    break;
+                case "1112":
+                    LED_1112.BackColor = Color.Green;
+                    break;
+                case "1113":
+                    LED_1113.BackColor = Color.Green;
+                    break;
+                case "1114":
+                    LED_1114.BackColor = Color.Green;
+                    break;
+                case "1115":
+                    LED_1115.BackColor = Color.Green;
+                    break;
+                case "1116":
+                    LED_1116.BackColor = Color.Green;
+                    break;
+                case "1117":
+                    LED_1117.BackColor = Color.Green;
+                    break;
+                #endregion
+                #region < 12그룹 버튼 초록색 ON >
+                case "1201":
+                    LED_1201.BackColor = Color.Green;
+                    break;
+                case "1202":
+                    LED_1202.BackColor = Color.Green;
+                    break;
+                case "1203":
+                    LED_1203.BackColor = Color.Green;
+                    break;
+                case "1204":
+                    LED_1204.BackColor = Color.Green;
+                    break;
+                case "1205":
+                    LED_1205.BackColor = Color.Green;
+                    break;
+                case "1206":
+                    LED_1206.BackColor = Color.Green;
+                    break;
+                case "1207":
+                    LED_1207.BackColor = Color.Green;
+                    break;
+                case "1208":
+                    LED_1208.BackColor = Color.Green;
+                    break;
+                case "1209":
+                    LED_1209.BackColor = Color.Green;
+                    break;
+                case "1210":
+                    LED_1210.BackColor = Color.Green;
+                    break;
+                case "1211":
+                    LED_1211.BackColor = Color.Green;
+                    break;
+                case "1212":
+                    LED_1212.BackColor = Color.Green;
+                    break;
+                case "1213":
+                    LED_1213.BackColor = Color.Green;
+                    break;
+                case "1214":
+                    LED_1214.BackColor = Color.Green;
+                    break;
+                case "1215":
+                    LED_1215.BackColor = Color.Green;
+                    break;
+                case "1216":
+                    LED_1216.BackColor = Color.Green;
+                    break;
+                case "1217":
+                    LED_1217.BackColor = Color.Green;
+                    break;
+                case "1218":
+                    LED_1218.BackColor = Color.Green;
+                    break;
+                case "1219":
+                    LED_1219.BackColor = Color.Green;
+                    break;
+                case "1220":
+                    LED_1220.BackColor = Color.Green;
+                    break;
+                case "1221":
+                    LED_1221.BackColor = Color.Green;
+                    break;
+                case "1222":
+                    LED_1222.BackColor = Color.Green;
+                    break;
+                case "1224":
+                    LED_1224.BackColor = Color.Green;
+                    break;
+                #endregion
+                #region < 13그룹 버튼 초록색 ON >
+                case "1301":
+                    LED_1301.BackColor = Color.Green;
+                    break;
+                case "1302":
+                    LED_1302.BackColor = Color.Green;
+                    break;
+                case "1303":
+                    LED_1303.BackColor = Color.Green;
+                    break;
+                case "1304":
+                    LED_1304.BackColor = Color.Green;
+                    break;
+                case "1305":
+                    LED_1305.BackColor = Color.Green;
+                    break;
+                case "1306":
+                    LED_1306.BackColor = Color.Green;
+                    break;
+                case "1307":
+                    LED_1307.BackColor = Color.Green;
+                    break;
+                case "1308":
+                    LED_1308.BackColor = Color.Green;
+                    break;
+                case "1309":
+                    LED_1309.BackColor = Color.Green;
+                    break;
+                case "1310":
+                    LED_1310.BackColor = Color.Green;
+                    break;
+                case "1311":
+                    LED_1311.BackColor = Color.Green;
+                    break;
+                case "1312":
+                    LED_1312.BackColor = Color.Green;
+                    break;
+                case "1313":
+                    LED_1313.BackColor = Color.Green;
+                    break;
+                case "1314":
+                    LED_1314.BackColor = Color.Green;
+                    break;
+                case "1315":
+                    LED_1315.BackColor = Color.Green;
+                    break;
+                case "1316":
+                    LED_1316.BackColor = Color.Green;
+                    break;
+                case "1317":
+                    LED_1317.BackColor = Color.Green;
+                    break;
+                case "1318":
+                    LED_1318.BackColor = Color.Green;
+                    break;
+                case "1319":
+                    LED_1319.BackColor = Color.Green;
+                    break;
+                case "1320":
+                    LED_1320.BackColor = Color.Green;
+                    break;
+                #endregion
+                #region < 14그룹 버튼 초록색 ON >
+                case "1401":
+                    LED_1401.BackColor = Color.Green;
+                    break;
+                case "1402":
+                    LED_1402.BackColor = Color.Green;
+                    break;
+                case "1403":
+                    LED_1403.BackColor = Color.Green;
+                    break;
+                case "1404":
+                    LED_1404.BackColor = Color.Green;
+                    break;
+                case "1405":
+                    LED_1405.BackColor = Color.Green;
+                    break;
+                case "1406":
+                    LED_1406.BackColor = Color.Green;
+                    break;
+                case "1407":
+                    LED_1407.BackColor = Color.Green;
+                    break;
+                case "1408":
+                    LED_1408.BackColor = Color.Green;
+                    break;
+                case "1409":
+                    LED_1409.BackColor = Color.Green;
+                    break;
+                case "1410":
+                    LED_1410.BackColor = Color.Green;
+                    break;
+                case "1411":
+                    LED_1411.BackColor = Color.Green;
+                    break;
+                case "1412":
+                    LED_1412.BackColor = Color.Green;
+                    break;
+                case "1413":
+                    LED_1413.BackColor = Color.Green;
+                    break;
+                case "1414":
+                    LED_1414.BackColor = Color.Green;
+                    break;
+                case "1415":
+                    LED_1415.BackColor = Color.Green;
+                    break;
+                case "1416":
+                    LED_1416.BackColor = Color.Green;
+                    break;
+                case "1417":
+                    LED_1417.BackColor = Color.Green;
+                    break;
+                case "1418":
+                    LED_1418.BackColor = Color.Green;
+                    break;
+                case "1419":
+                    LED_1419.BackColor = Color.Green;
+                    break;
+                case "1420":
+                    LED_1420.BackColor = Color.Green;
+                    break;
+                case "1421":
+                    LED_1421.BackColor = Color.Green;
+                    break;
+                case "1422":
+                    LED_1422.BackColor = Color.Green;
+                    break;
+                    #endregion
+            }
+        }
+        #endregion
+        #region < 표시 끄기 >
+        private void OFF_LIGHT(string node)  // UI 상에서 표시된 색 OFF
+        {
+            switch (node)
+            {
+                #region < 11그룹 버튼 색 표시 OFF >
+                case "1101":
+                    LED_1101.BackColor = Color.Transparent;
+                    break;
+                case "1102":
+                    LED_1102.BackColor = Color.Transparent;
+                    break;
+                case "1103":
+                    LED_1103.BackColor = Color.Transparent;
+                    break;
+                case "1104":
+                    LED_1104.BackColor = Color.Transparent;
+                    break;
+                case "1105":
+                    LED_1105.BackColor = Color.Transparent;
+                    break;
+                case "1106":
+                    LED_1106.BackColor = Color.Transparent;
+                    break;
+                case "1107":
+                    LED_1107.BackColor = Color.Transparent;
+                    break;
+                case "1108":
+                    LED_1108.BackColor = Color.Transparent;
+                    break;
+                case "1109":
+                    LED_1109.BackColor = Color.Transparent;
+                    break;
+                case "1110":
+                    LED_1110.BackColor = Color.Transparent;
+                    break;
+                case "1111":
+                    LED_1111.BackColor = Color.Transparent;
+                    break;
+                case "1112":
+                    LED_1112.BackColor = Color.Transparent;
+                    break;
+                case "1113":
+                    LED_1113.BackColor = Color.Transparent;
+                    break;
+                case "1114":
+                    LED_1114.BackColor = Color.Transparent;
+                    break;
+                case "1115":
+                    LED_1115.BackColor = Color.Transparent;
+                    break;
+                case "1116":
+                    LED_1116.BackColor = Color.Transparent;
+                    break;
+                case "1117":
+                    LED_1117.BackColor = Color.Transparent;
+                    break;
+                #endregion
+                #region < 12그룹 버튼 색 표시 OFF >
+                case "1201":
+                    LED_1201.BackColor = Color.Transparent;
+                    break;
+                case "1202":
+                    LED_1202.BackColor = Color.Transparent;
+                    break;
+                case "1203":
+                    LED_1203.BackColor = Color.Transparent;
+                    break;
+                case "1204":
+                    LED_1204.BackColor = Color.Transparent;
+                    break;
+                case "1205":
+                    LED_1205.BackColor = Color.Transparent;
+                    break;
+                case "1206":
+                    LED_1206.BackColor = Color.Transparent;
+                    break;
+                case "1207":
+                    LED_1207.BackColor = Color.Transparent;
+                    break;
+                case "1208":
+                    LED_1208.BackColor = Color.Transparent;
+                    break;
+                case "1209":
+                    LED_1209.BackColor = Color.Transparent;
+                    break;
+                case "1210":
+                    LED_1210.BackColor = Color.Transparent;
+                    break;
+                case "1211":
+                    LED_1211.BackColor = Color.Transparent;
+                    break;
+                case "1212":
+                    LED_1212.BackColor = Color.Transparent;
+                    break;
+                case "1213":
+                    LED_1213.BackColor = Color.Transparent;
+                    break;
+                case "1214":
+                    LED_1214.BackColor = Color.Transparent;
+                    break;
+                case "1215":
+                    LED_1215.BackColor = Color.Transparent;
+                    break;
+                case "1216":
+                    LED_1216.BackColor = Color.Transparent;
+                    break;
+                case "1217":
+                    LED_1217.BackColor = Color.Transparent;
+                    break;
+                case "1218":
+                    LED_1218.BackColor = Color.Transparent;
+                    break;
+                case "1219":
+                    LED_1219.BackColor = Color.Transparent;
+                    break;
+                case "1220":
+                    LED_1220.BackColor = Color.Transparent;
+                    break;
+                case "1221":
+                    LED_1221.BackColor = Color.Transparent;
+                    break;
+                case "1222":
+                    LED_1222.BackColor = Color.Transparent;
+                    break;
+                case "1224":
+                    LED_1224.BackColor = Color.Transparent;
+                    break;
+                #endregion
+                #region < 13그룹 버튼 색 표시 OFF >
+                case "1301":
+                    LED_1301.BackColor = Color.Transparent;
+                    break;
+                case "1302":
+                    LED_1302.BackColor = Color.Transparent;
+                    break;
+                case "1303":
+                    LED_1303.BackColor = Color.Transparent;
+                    break;
+                case "1304":
+                    LED_1304.BackColor = Color.Transparent;
+                    break;
+                case "1305":
+                    LED_1305.BackColor = Color.Transparent;
+                    break;
+                case "1306":
+                    LED_1306.BackColor = Color.Transparent;
+                    break;
+                case "1307":
+                    LED_1307.BackColor = Color.Transparent;
+                    break;
+                case "1308":
+                    LED_1308.BackColor = Color.Transparent;
+                    break;
+                case "1309":
+                    LED_1309.BackColor = Color.Transparent;
+                    break;
+                case "1310":
+                    LED_1310.BackColor = Color.Transparent;
+                    break;
+                case "1311":
+                    LED_1311.BackColor = Color.Transparent;
+                    break;
+                case "1312":
+                    LED_1312.BackColor = Color.Transparent;
+                    break;
+                case "1313":
+                    LED_1313.BackColor = Color.Transparent;
+                    break;
+                case "1314":
+                    LED_1314.BackColor = Color.Transparent;
+                    break;
+                case "1315":
+                    LED_1315.BackColor = Color.Transparent;
+                    break;
+                case "1316":
+                    LED_1316.BackColor = Color.Transparent;
+                    break;
+                case "1317":
+                    LED_1317.BackColor = Color.Transparent;
+                    break;
+                case "1318":
+                    LED_1318.BackColor = Color.Transparent;
+                    break;
+                case "1319":
+                    LED_1319.BackColor = Color.Transparent;
+                    break;
+                case "1320":
+                    LED_1320.BackColor = Color.Transparent;
+                    break;
+                #endregion
+                #region < 14그룹 버튼 색 표시 OFF >
+                case "1401":
+                    LED_1401.BackColor = Color.Transparent;
+                    break;
+                case "1402":
+                    LED_1402.BackColor = Color.Transparent;
+                    break;
+                case "1403":
+                    LED_1403.BackColor = Color.Transparent;
+                    break;
+                case "1404":
+                    LED_1404.BackColor = Color.Transparent;
+                    break;
+                case "1405":
+                    LED_1405.BackColor = Color.Transparent;
+                    break;
+                case "1406":
+                    LED_1406.BackColor = Color.Transparent;
+                    break;
+                case "1407":
+                    LED_1407.BackColor = Color.Transparent;
+                    break;
+                case "1408":
+                    LED_1408.BackColor = Color.Transparent;
+                    break;
+                case "1409":
+                    LED_1409.BackColor = Color.Transparent;
+                    break;
+                case "1410":
+                    LED_1410.BackColor = Color.Transparent;
+                    break;
+                case "1411":
+                    LED_1411.BackColor = Color.Transparent;
+                    break;
+                case "1412":
+                    LED_1412.BackColor = Color.Transparent;
+                    break;
+                case "1413":
+                    LED_1413.BackColor = Color.Transparent;
+                    break;
+                case "1414":
+                    LED_1414.BackColor = Color.Transparent;
+                    break;
+                case "1415":
+                    LED_1415.BackColor = Color.Transparent;
+                    break;
+                case "1416":
+                    LED_1416.BackColor = Color.Transparent;
+                    break;
+                case "1417":
+                    LED_1417.BackColor = Color.Transparent;
+                    break;
+                case "1418":
+                    LED_1418.BackColor = Color.Transparent;
+                    break;
+                case "1419":
+                    LED_1419.BackColor = Color.Transparent;
+                    break;
+                case "1420":
+                    LED_1420.BackColor = Color.Transparent;
+                    break;
+                case "1421":
+                    LED_1421.BackColor = Color.Transparent;
+                    break;
+                case "1422":
+                    LED_1422.BackColor = Color.Transparent;
+                    break;
+                    #endregion
+            }
+        }
+        #endregion
+
+        #endregion
+
+        private void bt_LED_ALL_OFF_Click(object sender, EventArgs e)
+        {
+            Dictionary<ushort, ushort> list = QLightAPI.GetAllRouterList();
+            ushort[] nodeid = new ushort[list.Keys.Count()];
+            int i = 0;
+            foreach (ushort listkey in list.Keys)       // NODE ID
+            {
+                nodeid[i] = listkey;
+                i++;
+            }
+
+            // 같은 그룹의 모든 라우터들의 LED ON (빨간색)
+            QLightAPI.ControlRoutersLED(nodeid,
+                LEDState.OFF,
+                LEDState.OFF,
+                LEDState.OFF,
+                LEDState.OFF,
+                LEDState.OFF);
+            for (i = 0; i < nodeid.Length; i++)
+            {
+                OFF_LIGHT(Convert.ToString(nodeid[i]));
+            }
         }
     }
 }

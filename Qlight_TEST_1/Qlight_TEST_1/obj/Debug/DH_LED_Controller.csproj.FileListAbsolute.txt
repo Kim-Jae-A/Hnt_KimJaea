@@ -23,4 +23,3 @@ C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\Qlight_TEST_1\Qlight_TEST_1\obj\D
 C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\Qlight_TEST_1\Qlight_TEST_1\obj\Debug\DH_LED_Controller.csproj.CopyComplete
 C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\Qlight_TEST_1\Qlight_TEST_1\obj\Debug\DH_LED_Controller.exe
 C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\Qlight_TEST_1\Qlight_TEST_1\obj\Debug\DH_LED_Controller.pdb
-C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\Qlight_TEST_1\Qlight_TEST_1\obj\Debug\DH_LED_Controller.csproj.AssemblyReference.cache
