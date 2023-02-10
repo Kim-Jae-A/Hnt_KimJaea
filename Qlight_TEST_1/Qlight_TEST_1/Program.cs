@@ -14,6 +14,16 @@ namespace DH_LED_Controller
         [STAThread]
         static void Main()
         {
+            // 프로그램 중복 실행 방지
+            System.Diagnostics.Process[] processes = null;
+            string strCurrentProcess = System.Diagnostics.Process.GetCurrentProcess().ProcessName.ToUpper();
+            processes = System.Diagnostics.Process.GetProcessesByName(strCurrentProcess);
+            if(processes.Length > 1)
+            {
+                MessageBox.Show(string.Format($"{System.Diagnostics.Process.GetCurrentProcess().ProcessName} 프로그램이 이미 실행 중입니다."));
+                return;
+            }
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());

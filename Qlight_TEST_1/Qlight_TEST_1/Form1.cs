@@ -52,11 +52,13 @@ namespace DH_LED_Controller
             // 빠른 제어를 원한다면 이 값을 0으로 설정하여 스캔하지 않도록 합니다.
             QLightAPI.SetScanInterval(0);
         }
+
         private void Form1_Leave(object sender, EventArgs e)
         {
             helper.DisConnect();
             QLightAPI.DisconnectAndClearAllConnection();   // 모든 연결을 해제
         }
+
         private static DateTime Delay(int MS)  // 딜레이 걸어주는 함수
         {
             DateTime ThisMoment = DateTime.Now;
@@ -72,7 +74,7 @@ namespace DH_LED_Controller
 
         public async void FindMac()  // 맥 찾기 함수
         {
-            comboBox1.Items.Clear();
+            //comboBox1.Items.Clear();
             listBox1.Items.Clear();
             macCount = 0;         
             Dictionary<string, string> list = await QLightAPI.FindMacGateways();  // 게이트 웨이 맥 주소 찾아서 리스트업
@@ -89,10 +91,27 @@ namespace DH_LED_Controller
             {
                 macIP[i] = listvalues;
                 listBox1.Items.Add(listvalues);  // 확인용
-                comboBox1.Items.Add(listvalues);  // 콤보 박스에 값 넣기
+                //comboBox1.Items.Add(listvalues);  // 콤보 박스에 값 넣기
                 i++;
             }
             Conn_IP();
+        }
+
+        public async void Conn_IP()
+        {
+            bool check;
+
+            for (int i = 0; i < macCount; i++)
+            {
+                check = await QLightAPI.ConnectGatewayLAN(macIP[i], 32177);  // 아이피 콤보 박스 값이 있으니 그 아이피로 연결 시도
+
+                if (check) // 연결 성공 여부 확인
+                    MessageBox.Show($"{macIP[i]} 연결성공");
+                else
+                    MessageBox.Show($"{macIP[i]} 연결실패");
+            }
+            AddRouters();
+            QLightAPI.SearchRouters();
         }
 
         public async void Get_GroupID(string ipadd)
@@ -101,23 +120,8 @@ namespace DH_LED_Controller
             groupid = gatewayinfo.GroupId;                                       //  정보 중 그룹아이디 값 받기
         }
 
-        public void LED_ON() //string node)
+        /*public void LED_ON()
         {
-            #region <같은 그룹아이디 내 모든 경광등 켜기(주석) >
-            /*List<ushort> list = QLightAPI.GetRouterListGroupId(groupid);  // 그룹에 맞는 라우터들 찾기
-            ushort[] nodeid = new ushort[list.Count()];
-            for (int i = 0; i < nodeid.Length; i++)
-            {
-                nodeid[i] = list[i];
-            }
-            QLightAPI.ControlRoutersLED(nodeid,
-                LEDState.ON,
-                LEDState.OFF,
-                LEDState.OFF,
-                LEDState.OFF,
-                LEDState.OFF);*/
-            #endregion
-
             ushort list;
             if (comboBox2.Text != "")  // 콤보 박스가 빈칸 이 아니면
             {
@@ -139,10 +143,40 @@ namespace DH_LED_Controller
                 LEDState.OFF,
                 LEDState.OFF,
                 LEDState.OFF);
+        }*/
+
+        public void LED_ON(string[] node)
+        {
+            ushort[] nodeid = new ushort[1];
+            nodeid[0] = ushort.Parse(node[2]);
+
+            if (Convert.ToInt32(node[1]) <= 0)
+            {
+                QLightAPI.ControlRoutersLED(nodeid,
+                 LEDState.ON,
+                 LEDState.OFF,
+                 LEDState.OFF,
+                 LEDState.OFF,
+                 LEDState.OFF);
+
+                RED_LIGHT(node[2]);
+            }
+            else
+            {
+                QLightAPI.ControlRoutersLED(nodeid,
+                 LEDState.OFF,
+                 LEDState.OFF,
+                 LEDState.ON,
+                 LEDState.OFF,
+                 LEDState.OFF);
+
+                GREEN_LIGHT(node[2]);
+            }
         }
+
         public void LED_OFF()
         {
-            // 현재 연결된 게이트웨이의 그룹 아이디 정보를 가지고 그 그룹에 맞는 모든 라우터들을 검색 후 리스트로 저장
+            /*// 현재 연결된 게이트웨이의 그룹 아이디 정보를 가지고 그 그룹에 맞는 모든 라우터들을 검색 후 리스트로 저장
             List<ushort> list = QLightAPI.GetRouterListGroupId(groupid);  
             ushort[] nodeid = new ushort[list.Count()];
             for (int i = 0; i < nodeid.Length; i++)
@@ -157,45 +191,149 @@ namespace DH_LED_Controller
                 LEDState.OFF,
                 LEDState.OFF,
                 LEDState.OFF,
-                LEDState.OFF);
-        }
+                LEDState.OFF);*/
 
-        public async void Conn_IP()
-        {
-            bool check;
+            Dictionary<ushort, ushort> list = QLightAPI.GetAllRouterList();
+            ushort[] nodeid = new ushort[list.Keys.Count()];
+            int i = 0;
 
-            for (int i = 0; i < macCount; i++)
+            foreach (ushort listkey in list.Keys)       // NODE ID
             {
-                check = await QLightAPI.ConnectGatewayLAN(macIP[i], 32177);  // 아이피 콤보 박스 값이 있으니 그 아이피로 연결 시도
+                nodeid[i] = listkey;
+                i++;
+            }
 
-                if (check) // 연결 성공 여부 확인
-                    MessageBox.Show($"{macIP[i]} 연결성공");
-                else
-                    MessageBox.Show($"{macIP[i]} 연결실패");
-            }          
+            // 모든 경광등 전원 OFF
+            QLightAPI.ControlRoutersLED(nodeid,
+                LEDState.OFF,
+                LEDState.OFF,
+                LEDState.OFF,
+                LEDState.OFF,
+                LEDState.OFF);
+
+            for (i = 0; i < nodeid.Length; i++)
+            {
+                OFF_LIGHT(Convert.ToString(nodeid[i]));
+            }
         }
+
+        #region < 경광등 정보 >
+        public void AddRouters()  // 경광등 아이디 정보
+        {
+            #region < 11그룹 라우터 >
+            QLightAPI.AddRouterListManually(1101, 11);
+            QLightAPI.AddRouterListManually(1102, 11);
+            QLightAPI.AddRouterListManually(1103, 11);
+            QLightAPI.AddRouterListManually(1104, 11);
+            QLightAPI.AddRouterListManually(1105, 11);
+            QLightAPI.AddRouterListManually(1106, 11);
+            QLightAPI.AddRouterListManually(1107, 11);
+            QLightAPI.AddRouterListManually(1108, 11);
+            QLightAPI.AddRouterListManually(1109, 11);
+            QLightAPI.AddRouterListManually(1110, 11);
+            QLightAPI.AddRouterListManually(1111, 11);
+            QLightAPI.AddRouterListManually(1112, 11);
+            QLightAPI.AddRouterListManually(1113, 11);
+            QLightAPI.AddRouterListManually(1114, 11);
+            QLightAPI.AddRouterListManually(1115, 11);
+            QLightAPI.AddRouterListManually(1116, 11);
+            QLightAPI.AddRouterListManually(1117, 11);
+            #endregion
+            #region < 12그룹 라우터 >
+            QLightAPI.AddRouterListManually(1201, 12);
+            QLightAPI.AddRouterListManually(1202, 12);
+            QLightAPI.AddRouterListManually(1203, 12);
+            QLightAPI.AddRouterListManually(1204, 12);
+            QLightAPI.AddRouterListManually(1205, 12);
+            QLightAPI.AddRouterListManually(1206, 12);
+            QLightAPI.AddRouterListManually(1207, 12);
+            QLightAPI.AddRouterListManually(1208, 12);
+            QLightAPI.AddRouterListManually(1209, 12);
+            QLightAPI.AddRouterListManually(1210, 12);
+            QLightAPI.AddRouterListManually(1211, 12);
+            QLightAPI.AddRouterListManually(1212, 12);
+            QLightAPI.AddRouterListManually(1213, 12);
+            QLightAPI.AddRouterListManually(1214, 12);
+            QLightAPI.AddRouterListManually(1215, 12);
+            QLightAPI.AddRouterListManually(1216, 12);
+            QLightAPI.AddRouterListManually(1217, 12);
+            QLightAPI.AddRouterListManually(1218, 12);
+            QLightAPI.AddRouterListManually(1219, 12);
+            QLightAPI.AddRouterListManually(1220, 12);
+            QLightAPI.AddRouterListManually(1221, 12);
+            QLightAPI.AddRouterListManually(1222, 12);
+            QLightAPI.AddRouterListManually(1224, 12);
+            #endregion
+            #region < 13그룹 라우터 >
+            QLightAPI.AddRouterListManually(1301, 13);
+            QLightAPI.AddRouterListManually(1302, 13);
+            QLightAPI.AddRouterListManually(1303, 13);
+            QLightAPI.AddRouterListManually(1304, 13);
+            QLightAPI.AddRouterListManually(1305, 13);
+            QLightAPI.AddRouterListManually(1306, 13);
+            QLightAPI.AddRouterListManually(1307, 13);
+            QLightAPI.AddRouterListManually(1308, 13);
+            QLightAPI.AddRouterListManually(1309, 13);
+            QLightAPI.AddRouterListManually(1310, 13);
+            QLightAPI.AddRouterListManually(1311, 13);
+            QLightAPI.AddRouterListManually(1312, 13);
+            QLightAPI.AddRouterListManually(1313, 13);
+            QLightAPI.AddRouterListManually(1314, 13);
+            QLightAPI.AddRouterListManually(1315, 13);
+            QLightAPI.AddRouterListManually(1316, 13);
+            QLightAPI.AddRouterListManually(1317, 13);
+            QLightAPI.AddRouterListManually(1318, 13);
+            QLightAPI.AddRouterListManually(1319, 13);
+            QLightAPI.AddRouterListManually(1320, 13);
+            #endregion
+            #region < 14그룹 라우터 >
+            QLightAPI.AddRouterListManually(1401, 14);
+            QLightAPI.AddRouterListManually(1402, 14);
+            QLightAPI.AddRouterListManually(1403, 14);
+            QLightAPI.AddRouterListManually(1404, 14);
+            QLightAPI.AddRouterListManually(1405, 14);
+            QLightAPI.AddRouterListManually(1406, 14);
+            QLightAPI.AddRouterListManually(1407, 14);
+            QLightAPI.AddRouterListManually(1408, 14);
+            QLightAPI.AddRouterListManually(1409, 14);
+            QLightAPI.AddRouterListManually(1410, 14);
+            QLightAPI.AddRouterListManually(1411, 14);
+            QLightAPI.AddRouterListManually(1412, 14);
+            QLightAPI.AddRouterListManually(1413, 14);
+            QLightAPI.AddRouterListManually(1414, 14);
+            QLightAPI.AddRouterListManually(1415, 14);
+            QLightAPI.AddRouterListManually(1416, 14);
+            QLightAPI.AddRouterListManually(1417, 14);
+            QLightAPI.AddRouterListManually(1418, 14);
+            QLightAPI.AddRouterListManually(1419, 14);
+            QLightAPI.AddRouterListManually(1420, 14);
+            QLightAPI.AddRouterListManually(1421, 14);
+            QLightAPI.AddRouterListManually(1422, 14);
+            #endregion
+        }
+        #endregion
 
         #region < 버튼 클릭 이벤트>
-        private async void bt_conn_Click(object sender, EventArgs e)
-        {
-            bool check;
+        /*        private async void bt_conn_Click(object sender, EventArgs e)
+                {
+                    *//*bool check;
 
-            if (comboBox1.Text == "")  // 아이피 설정 콤보 박스가 빈칸이면
-                check = await QLightAPI.ConnectGatewayLAN("192.168.0.237", 32177); // 일단 임시로 설정해둔 아이피로 연결 시도
-            else
-                check = await QLightAPI.ConnectGatewayLAN(comboBox1.Text, 32177);  // 아이피 콤보 박스 값이 있으니 그 아이피로 연결 시도
+                    if (comboBox1.Text == "")  // 아이피 설정 콤보 박스가 빈칸이면
+                        check = await QLightAPI.ConnectGatewayLAN("192.168.0.237", 32177); // 일단 임시로 설정해둔 아이피로 연결 시도
+                    else
+                        check = await QLightAPI.ConnectGatewayLAN(comboBox1.Text, 32177);  // 아이피 콤보 박스 값이 있으니 그 아이피로 연결 시도
 
-            if (check) // 연결 성공 여부 확인
-            {
-                MessageBox.Show("연결성공");
-                if (comboBox1.Text == "")  // 연결이 성공 했을 때 아이피 콤보박스가 빈칸이면
-                    Get_GroupID("192.168.0.237");  // 임시로 설정해둔 아이피로 그룹 아이디 값 받아오기
-                else
-                    Get_GroupID(comboBox1.Text);  // 아이피 콤보 박스 값으로 그룹 아이디 값 받아오기
-            }
-            else
-                MessageBox.Show("연결실패");
-        }
+                    if (check) // 연결 성공 여부 확인
+                    {
+                        MessageBox.Show("연결성공");
+                        if (comboBox1.Text == "")  // 연결이 성공 했을 때 아이피 콤보박스가 빈칸이면
+                            Get_GroupID("192.168.0.237");  // 임시로 설정해둔 아이피로 그룹 아이디 값 받아오기
+                        else
+                            Get_GroupID(comboBox1.Text);  // 아이피 콤보 박스 값으로 그룹 아이디 값 받아오기
+                    }
+                    else
+                        MessageBox.Show("연결실패");*//*
+                }*/
 
         private void bt_FIndMac_Click(object sender, EventArgs e)
         {
@@ -207,11 +345,11 @@ namespace DH_LED_Controller
             try
             {
                 listBox1.Items.Clear();
-                comboBox2.Items.Clear();
+                //comboBox2.Items.Clear();
 
                 // 라우터 찾기 함수
-                QLightAPI.SearchRouters();
-                Delay(1000);
+                //QLightAPI.SearchRouters();
+                //Delay(1000);
                 // 현재 연결된 게이트웨이의 그룹 아이디인 라우터들을 검색하여 리스트에 저장
                 //List<ushort> list = QLightAPI.GetRouterListGroupId(groupid);
 
@@ -243,7 +381,7 @@ namespace DH_LED_Controller
 
         private void bt_LEDON_Click(object sender, EventArgs e)
         {
-            LED_ON();
+            //LED_ON();
         }
 
         private void bt_LEDOFF_Click(object sender, EventArgs e)
@@ -263,6 +401,7 @@ namespace DH_LED_Controller
                 // Nodeid 배열에 리스트(모든 라우터)들을 하나씩 매칭 
                 nodeid[i] = list[i];
             }*/
+
             Dictionary<ushort, ushort> list = QLightAPI.GetAllRouterList();
             ushort[] nodeid = new ushort[list.Keys.Count()];
             int i = 0;
@@ -274,30 +413,53 @@ namespace DH_LED_Controller
 
             // 같은 그룹의 모든 라우터들의 LED ON (빨간색)
             QLightAPI.ControlRoutersLED(nodeid,
+                LEDState.OFF,
+                LEDState.OFF,
                 LEDState.ON,
+                LEDState.OFF,
+                LEDState.OFF);
+
+            for(i = 0; i < nodeid.Length; i++)
+            {
+                GREEN_LIGHT(Convert.ToString(nodeid[i]));
+            }
+        }
+
+        private void bt_LED_ALL_OFF_Click(object sender, EventArgs e)
+        {
+            Dictionary<ushort, ushort> list = QLightAPI.GetAllRouterList();
+            ushort[] nodeid = new ushort[list.Keys.Count()];
+            int i = 0;
+
+            foreach (ushort listkey in list.Keys)       // NODE ID
+            {
+                nodeid[i] = listkey;
+                i++;
+            }
+
+            // 같은 그룹의 모든 라우터들의 LED ON (빨간색)
+            QLightAPI.ControlRoutersLED(nodeid,
+                LEDState.OFF,
                 LEDState.OFF,
                 LEDState.OFF,
                 LEDState.OFF,
                 LEDState.OFF);
-            for(i = 0; i < nodeid.Length; i++)
+
+            for (i = 0; i < nodeid.Length; i++)
             {
-                RED_LIGHT(Convert.ToString(nodeid[i]));
+                OFF_LIGHT(Convert.ToString(nodeid[i]));
             }
         }
         #endregion
 
-        private void bt_QueryTEST_Click(object sender, EventArgs e)
+        private void bt_QueryTEST_Click(object sender, EventArgs e)  // 테스트용
         {
             listBox1.Items.Clear();
             string[] testid;
-            testid = helper.Query("1234");
+            testid = helper.Query("TEST");
+            LED_ON(testid);
             listBox1.Items.Add(testid[2]);
-            RED_LIGHT(testid[2]);
-/*            BLUE_LIGHT("1105");
-            GREEN_LIGHT("1201");
-            OFF_LIGHT("1203");*/
         }
-
         #region < UI 색 제어 함수 >
 
         #region < 빨간색 >
@@ -1350,29 +1512,5 @@ namespace DH_LED_Controller
         #endregion
 
         #endregion
-
-        private void bt_LED_ALL_OFF_Click(object sender, EventArgs e)
-        {
-            Dictionary<ushort, ushort> list = QLightAPI.GetAllRouterList();
-            ushort[] nodeid = new ushort[list.Keys.Count()];
-            int i = 0;
-            foreach (ushort listkey in list.Keys)       // NODE ID
-            {
-                nodeid[i] = listkey;
-                i++;
-            }
-
-            // 같은 그룹의 모든 라우터들의 LED ON (빨간색)
-            QLightAPI.ControlRoutersLED(nodeid,
-                LEDState.OFF,
-                LEDState.OFF,
-                LEDState.OFF,
-                LEDState.OFF,
-                LEDState.OFF);
-            for (i = 0; i < nodeid.Length; i++)
-            {
-                OFF_LIGHT(Convert.ToString(nodeid[i]));
-            }
-        }
     }
 }

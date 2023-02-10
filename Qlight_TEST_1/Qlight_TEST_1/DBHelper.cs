@@ -59,9 +59,15 @@ namespace DH_LED_Controller
 
             // 품명 품번 그룹ID 노드ID 찾는 쿼리문
             // WHERE 절에는 품번이 같은 항목만 검색하게 하는 조건
-            cmd.CommandText = "SELECT COD_ITEM, NAM_ITEM, COM_WARE, COM_SAVE FROM BP0100_ITEMS"+
-                $"\r\nWHERE NAM_ITEM LIKE '{num}'";
+            /*cmd.CommandText = "SELECT COD_ITEM, COM_WARE, COM_SAVE FROM BP0100_ITEMS" +
+                $"\r\nWHERE NAM_ITEM LIKE '{num}'";*/
 
+            cmd.CommandText = "SELECT a.COD_ITEM, a.COM_WARE, a.COM_SAVE, QTY_JG, MON_JG "+
+                              "\r\nFROM BP0100_ITEMS AS a" +
+                              "\r\nLEFT OUTER JOIN IN1000_JG_TBL AS b" +
+                              "\r\nON a.COD_ITEM = b.COD_ITEM" +
+                              $"\r\nWHERE b.COD_ITEM LIKE '{num}'" +
+                              "\r\nORDER BY MON_JG DESC";
             try
             {
                 cmd.ExecuteNonQuery();
@@ -70,13 +76,15 @@ namespace DH_LED_Controller
             {
                 Console.WriteLine($"{DateTime.Now} " + ex);
             }
+
             SqlDataReader mdr = cmd.ExecuteReader();
+
             try
-            {               
+            {
                 mdr.Read();
-                query[0] += (String)mdr["NAM_ITEM"];   // 품번코드
-                query[1] += (String)mdr["COM_WARE"];   // 경광등 그룹아이디
-                query[2] += (String)mdr["COM_SAVE"];   // 경광등 노드아이디
+                query[0] = (String)mdr["COD_ITEM"];   // 품명 코드
+                query[1] = Convert.ToString((Decimal)mdr["QTY_JG"]);     // 제품 재고
+                query[2] = (String)mdr["COM_SAVE"];   // 경광등 노드아이디
             }
             catch (Exception ex)
             {
