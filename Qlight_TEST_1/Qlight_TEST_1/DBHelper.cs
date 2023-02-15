@@ -35,7 +35,6 @@ namespace DH_LED_Controller
             }
             catch (SqlException ex)
             {
-                //MessageBox.Show("연결실패 " + ex);
                 Console.WriteLine($"{DateTime.Now} " + ex);
             }
         }
@@ -47,7 +46,6 @@ namespace DH_LED_Controller
             }
             catch (SqlException ex)
             {
-                //MessageBox.Show("연결실패 " + ex);
                 Console.WriteLine($"{DateTime.Now} " + ex);
             }
         }
@@ -66,7 +64,7 @@ namespace DH_LED_Controller
                               "\r\nFROM BP0100_ITEMS AS a" +
                               "\r\nLEFT OUTER JOIN IN1000_JG_TBL AS b" +
                               "\r\nON a.COD_ITEM = b.COD_ITEM" +
-                              $"\r\nWHERE b.COD_ITEM LIKE '{num}'" +
+                              $"\r\nWHERE a.COD_ITEM LIKE '{num}'" +
                               "\r\nORDER BY MON_JG DESC";
             try
             {
@@ -83,8 +81,8 @@ namespace DH_LED_Controller
             {
                 mdr.Read();
                 query[0] = (String)mdr["COD_ITEM"];   // 품명 코드
-                query[1] = Convert.ToString((Decimal)mdr["QTY_JG"]);     // 제품 재고
-                query[2] = (String)mdr["COM_SAVE"];   // 경광등 노드아이디
+                query[1] = (String)mdr["COM_SAVE"];   // 경광등 노드아이디
+                query[2] = Convert.ToString((Decimal)mdr["QTY_JG"]);     // 제품 재고
             }
             catch (Exception ex)
             {

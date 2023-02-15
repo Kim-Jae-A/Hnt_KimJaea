@@ -29,6 +29,7 @@ namespace MODBUS_TEST_2
             SocketSet();
             ConnServer();
         }
+
         private void SocketSet()
         {
             Sensor1_Sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);

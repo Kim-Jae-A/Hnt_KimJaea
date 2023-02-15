@@ -37,3 +37,4 @@ C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\GN_DATA\MODBUS_TEST_2\obj\Release
 C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\GN_DATA\MODBUS_TEST_2\obj\Release\GN_SENSOR_DATA.csproj.CoreCompileInputs.cache
 C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\GN_DATA\MODBUS_TEST_2\obj\Release\GN_SENSOR_DATA.exe
 C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\GN_DATA\MODBUS_TEST_2\obj\Release\GN_SENSOR_DATA.pdb
+C:\Users\SEONGMIN\Documents\GitHub\Hnt_KimJaea\GN_DATA\MODBUS_TEST_2\obj\Release\GN_SENSOR_DATA.csproj.AssemblyReference.cache

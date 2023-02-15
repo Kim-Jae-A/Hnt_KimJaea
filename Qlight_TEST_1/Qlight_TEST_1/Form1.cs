@@ -75,13 +75,13 @@ namespace DH_LED_Controller
         public async void FindMac()  // 맥 찾기 함수
         {
             //comboBox1.Items.Clear();
-            listBox1.Items.Clear();
+            //listBox1.Items.Clear();
             macCount = 0;         
             Dictionary<string, string> list = await QLightAPI.FindMacGateways();  // 게이트 웨이 맥 주소 찾아서 리스트업
             Delay(1000);
             foreach (string listkey in list.Keys)       // Mac 값
             {
-                listBox1.Items.Add(listkey);
+                //listBox1.Items.Add(listkey);
                 macCount++;
             }
 
@@ -90,7 +90,7 @@ namespace DH_LED_Controller
             foreach (string listvalues in list.Values)  // ip 값
             {
                 macIP[i] = listvalues;
-                listBox1.Items.Add(listvalues);  // 확인용
+                //listBox1.Items.Add(listvalues);  // 확인용
                 //comboBox1.Items.Add(listvalues);  // 콤보 박스에 값 넣기
                 i++;
             }
@@ -148,9 +148,9 @@ namespace DH_LED_Controller
         public void LED_ON(string[] node)
         {
             ushort[] nodeid = new ushort[1];
-            nodeid[0] = ushort.Parse(node[2]);
+            nodeid[0] = ushort.Parse(node[1]);
 
-            if (Convert.ToInt32(node[1]) <= 0)
+            if (Convert.ToInt32(node[2]) <= 0)
             {
                 QLightAPI.ControlRoutersLED(nodeid,
                  LEDState.ON,
@@ -159,7 +159,7 @@ namespace DH_LED_Controller
                  LEDState.OFF,
                  LEDState.OFF);
 
-                RED_LIGHT(node[2]);
+                RED_LIGHT(node[1]);
             }
             else
             {
@@ -170,7 +170,7 @@ namespace DH_LED_Controller
                  LEDState.OFF,
                  LEDState.OFF);
 
-                GREEN_LIGHT(node[2]);
+                GREEN_LIGHT(node[1]);
             }
         }
 
@@ -335,16 +335,16 @@ namespace DH_LED_Controller
                         MessageBox.Show("연결실패");*//*
                 }*/
 
-        private void bt_FIndMac_Click(object sender, EventArgs e)
+        /*private void bt_FIndMac_Click(object sender, EventArgs e)
         {
             FindMac();
-        }
+        }*/
 
-        private void bt_FindRouter_Click(object sender, EventArgs e)
+        /*private void bt_FindRouter_Click(object sender, EventArgs e)
         {
             try
             {
-                listBox1.Items.Clear();
+                //listBox1.Items.Clear();
                 //comboBox2.Items.Clear();
 
                 // 라우터 찾기 함수
@@ -353,35 +353,38 @@ namespace DH_LED_Controller
                 // 현재 연결된 게이트웨이의 그룹 아이디인 라우터들을 검색하여 리스트에 저장
                 //List<ushort> list = QLightAPI.GetRouterListGroupId(groupid);
 
-                /*for (int i = 0; i < list.Count(); i++)
+                *//*for (int i = 0; i < list.Count(); i++)
                 {
                     listBox1.Items.Add(list[i]);  // 확인용
                     comboBox2.Items.Add(list[i]); // 콤보 박스에 하나씩 매칭
-                }*/
+                }*//*
 
+
+                // 모든 라우터(경광등) 리스트 검색
                 Dictionary<ushort, ushort> list = QLightAPI.GetAllRouterList();
 
                 foreach (ushort listkey in list.Keys)       // NODE ID
                 {
-                    listBox1.Items.Add(listkey);
+                    //listBox1.Items.Add(listkey);
                 }
 
-                /*foreach (ushort listValues in list.Values)       // GROUP ID
+                *//*foreach (ushort listValues in list.Values)       // GROUP ID
                 {
                     listBox1.Items.Add(listValues);
-                }*/
+                }*//*
 
-                listBox1.Items.Add("총 " + list.Count() + "개");  // 확인용 (검색된 라우터 총 갯수 표시)
+                //listBox1.Items.Add("총 " + list.Count() + "개");  // 확인용 (검색된 라우터 총 갯수 표시)
             }
             catch (Exception ex)
             {
                 MessageBox.Show("" + ex);
             }
-        }
+        }*/
 
         private void bt_LEDON_Click(object sender, EventArgs e)
         {
             //LED_ON();
+            FindMac();
         }
 
         private void bt_LEDOFF_Click(object sender, EventArgs e)
@@ -411,7 +414,7 @@ namespace DH_LED_Controller
                 i++;
             }
 
-            // 같은 그룹의 모든 라우터들의 LED ON (빨간색)
+            // 같은 그룹의 모든 라우터들의 LED ON (초록색)
             QLightAPI.ControlRoutersLED(nodeid,
                 LEDState.OFF,
                 LEDState.OFF,
@@ -454,11 +457,12 @@ namespace DH_LED_Controller
 
         private void bt_QueryTEST_Click(object sender, EventArgs e)  // 테스트용
         {
-            listBox1.Items.Clear();
+            //listBox1.Items.Clear();
             string[] testid;
-            testid = helper.Query("TEST");
+            testid = helper.Query(textBox1.Text);
+            //testid = helper.Query("테스트");
             LED_ON(testid);
-            listBox1.Items.Add(testid[2]);
+            //listBox1.Items.Add(testid[1]);
         }
         #region < UI 색 제어 함수 >
 

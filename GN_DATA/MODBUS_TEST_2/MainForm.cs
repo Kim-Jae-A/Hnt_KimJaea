@@ -18,17 +18,12 @@ namespace MODBUS_TEST_2
         Sensor3 sen3 = new Sensor3();
         Sensor4 sen4 = new Sensor4();
         DBHelper helper = new DBHelper();
+        bool check = false;
 
         public MainForm()
         {
-            Sensor1_Load();
-            Sensor2_Load();
-            Sensor3_Load();
-            Sensor4_Load();
-            helper.Connect();
             InitializeComponent();
-            Tx_TimeSet.Text = GN_SENSOR_DATA.Properties.Settings.Default.TimerSet;
-            LodingData();
+           
         }
         private void Sensor1_Load()
         {
@@ -116,23 +111,20 @@ namespace MODBUS_TEST_2
             sen4.timer2.Interval = set - 3000;
             timer1.Interval = set;
         }
-        private void timer2_Tick(object sender, EventArgs e)
-        {
-            TimerSetting();
-            timer2.Enabled = false;
-        }
         private void LodingData()
         {
             int set = 3000;
+            timer1.Interval = set;
             sen1.timer1.Interval = set - 1200;
             sen2.timer1.Interval = set - 1200;
             sen3.timer1.Interval = set - 1200;
             sen4.timer1.Interval = set - 1200;
-            sen1.timer2.Interval = set - 700;            
-            sen2.timer2.Interval = set - 700;            
-            sen3.timer2.Interval = set - 700;            
+            sen1.timer2.Interval = set - 700;
+            sen2.timer2.Interval = set - 700;
+            sen3.timer2.Interval = set - 700;
             sen4.timer2.Interval = set - 700;
-            timer1.Interval = set;
+            check = true;
+            timer2.Enabled = true;
         }
         public string TemWrite(float x)
         {
@@ -147,6 +139,22 @@ namespace MODBUS_TEST_2
             per_con = x.ToString("0.00");
 
             return per_con;
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            Sensor1_Load();
+            Sensor2_Load();
+            Sensor3_Load();
+            Sensor4_Load();
+            helper.Connect();
+            Tx_TimeSet.Text = GN_SENSOR_DATA.Properties.Settings.Default.TimerSet;
+            LodingData();
+        }
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+            TimerSetting();
+            timer2.Enabled = false;
         }
     }
 }

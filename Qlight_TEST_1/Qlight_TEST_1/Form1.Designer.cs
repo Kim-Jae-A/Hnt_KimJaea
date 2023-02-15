@@ -30,9 +30,6 @@ namespace DH_LED_Controller
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.listBox1 = new System.Windows.Forms.ListBox();
-            this.bt_FindMac = new System.Windows.Forms.Button();
-            this.bt_FindRouter = new System.Windows.Forms.Button();
             this.bt_LEDON = new System.Windows.Forms.Button();
             this.bt_LEDOFF = new System.Windows.Forms.Button();
             this.bt_LEDALLON = new System.Windows.Forms.Button();
@@ -131,40 +128,12 @@ namespace DH_LED_Controller
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.bt_LED_ALL_OFF = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // listBox1
-            // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 12;
-            this.listBox1.Location = new System.Drawing.Point(549, 28);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(262, 208);
-            this.listBox1.TabIndex = 2;
-            // 
-            // bt_FindMac
-            // 
-            this.bt_FindMac.Location = new System.Drawing.Point(30, 424);
-            this.bt_FindMac.Name = "bt_FindMac";
-            this.bt_FindMac.Size = new System.Drawing.Size(99, 28);
-            this.bt_FindMac.TabIndex = 3;
-            this.bt_FindMac.Text = "FindMac";
-            this.bt_FindMac.UseVisualStyleBackColor = true;
-            this.bt_FindMac.Click += new System.EventHandler(this.bt_FIndMac_Click);
-            // 
-            // bt_FindRouter
-            // 
-            this.bt_FindRouter.Location = new System.Drawing.Point(135, 424);
-            this.bt_FindRouter.Name = "bt_FindRouter";
-            this.bt_FindRouter.Size = new System.Drawing.Size(99, 28);
-            this.bt_FindRouter.TabIndex = 5;
-            this.bt_FindRouter.Text = "FindRouter";
-            this.bt_FindRouter.UseVisualStyleBackColor = true;
-            this.bt_FindRouter.Click += new System.EventHandler(this.bt_FindRouter_Click);
             // 
             // bt_LEDON
             // 
@@ -211,7 +180,7 @@ namespace DH_LED_Controller
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Location = new System.Drawing.Point(3, 6);
+            this.tabControl1.Location = new System.Drawing.Point(3, 3);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(544, 446);
@@ -219,7 +188,7 @@ namespace DH_LED_Controller
             // 
             // tabPage1
             // 
-            this.tabPage1.BackColor = System.Drawing.Color.LightGray;
+            this.tabPage1.BackColor = System.Drawing.Color.White;
             this.tabPage1.Controls.Add(this.label4);
             this.tabPage1.Controls.Add(this.label3);
             this.tabPage1.Controls.Add(this.LED_1418);
@@ -1009,7 +978,7 @@ namespace DH_LED_Controller
             // 
             // tabPage2
             // 
-            this.tabPage2.BackColor = System.Drawing.Color.LightGray;
+            this.tabPage2.BackColor = System.Drawing.Color.White;
             this.tabPage2.Controls.Add(this.label6);
             this.tabPage2.Controls.Add(this.LED_1421);
             this.tabPage2.Controls.Add(this.LED_1419);
@@ -1096,7 +1065,7 @@ namespace DH_LED_Controller
             // 
             // tabPage3
             // 
-            this.tabPage3.BackColor = System.Drawing.Color.LightGray;
+            this.tabPage3.BackColor = System.Drawing.Color.White;
             this.tabPage3.Controls.Add(this.Wall);
             this.tabPage3.Controls.Add(this.LED_1224);
             this.tabPage3.Controls.Add(this.LED_1406);
@@ -1236,20 +1205,26 @@ namespace DH_LED_Controller
             this.bt_LED_ALL_OFF.UseVisualStyleBackColor = true;
             this.bt_LED_ALL_OFF.Click += new System.EventHandler(this.bt_LED_ALL_OFF_Click);
             // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(565, 199);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(252, 21);
+            this.textBox1.TabIndex = 15;
+            this.textBox1.Text = "test";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(829, 455);
+            this.ClientSize = new System.Drawing.Size(829, 451);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.bt_LED_ALL_OFF);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.bt_QueryTEST);
             this.Controls.Add(this.bt_LEDALLON);
             this.Controls.Add(this.bt_LEDOFF);
             this.Controls.Add(this.bt_LEDON);
-            this.Controls.Add(this.bt_FindRouter);
-            this.Controls.Add(this.bt_FindMac);
-            this.Controls.Add(this.listBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "LED_Controller";
@@ -1263,13 +1238,11 @@ namespace DH_LED_Controller
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.ListBox listBox1;
-        private System.Windows.Forms.Button bt_FindMac;
-        private System.Windows.Forms.Button bt_FindRouter;
         private System.Windows.Forms.Button bt_LEDON;
         private System.Windows.Forms.Button bt_LEDOFF;
         private System.Windows.Forms.Button bt_LEDALLON;
@@ -1368,6 +1341,7 @@ namespace DH_LED_Controller
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button Wall;
         private System.Windows.Forms.Button bt_LED_ALL_OFF;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
 
