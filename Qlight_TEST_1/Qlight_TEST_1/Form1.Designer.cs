@@ -30,8 +30,6 @@ namespace DH_LED_Controller
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.bt_LEDON = new System.Windows.Forms.Button();
-            this.bt_LEDOFF = new System.Windows.Forms.Button();
             this.bt_LEDALLON = new System.Windows.Forms.Button();
             this.bt_QueryTEST = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -128,36 +126,16 @@ namespace DH_LED_Controller
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.bt_LED_ALL_OFF = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.cb_ITEMLIST = new System.Windows.Forms.ComboBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
-            // bt_LEDON
-            // 
-            this.bt_LEDON.Location = new System.Drawing.Point(682, 277);
-            this.bt_LEDON.Name = "bt_LEDON";
-            this.bt_LEDON.Size = new System.Drawing.Size(104, 28);
-            this.bt_LEDON.TabIndex = 6;
-            this.bt_LEDON.Text = "LED_ON";
-            this.bt_LEDON.UseVisualStyleBackColor = true;
-            this.bt_LEDON.Click += new System.EventHandler(this.bt_LEDON_Click);
-            // 
-            // bt_LEDOFF
-            // 
-            this.bt_LEDOFF.Location = new System.Drawing.Point(582, 277);
-            this.bt_LEDOFF.Name = "bt_LEDOFF";
-            this.bt_LEDOFF.Size = new System.Drawing.Size(90, 28);
-            this.bt_LEDOFF.TabIndex = 7;
-            this.bt_LEDOFF.Text = "LED_OFF";
-            this.bt_LEDOFF.UseVisualStyleBackColor = true;
-            this.bt_LEDOFF.Click += new System.EventHandler(this.bt_LEDOFF_Click);
-            // 
             // bt_LEDALLON
             // 
-            this.bt_LEDALLON.Location = new System.Drawing.Point(582, 311);
+            this.bt_LEDALLON.Location = new System.Drawing.Point(593, 228);
             this.bt_LEDALLON.Name = "bt_LEDALLON";
             this.bt_LEDALLON.Size = new System.Drawing.Size(204, 28);
             this.bt_LEDALLON.TabIndex = 11;
@@ -167,7 +145,7 @@ namespace DH_LED_Controller
             // 
             // bt_QueryTEST
             // 
-            this.bt_QueryTEST.Location = new System.Drawing.Point(582, 243);
+            this.bt_QueryTEST.Location = new System.Drawing.Point(593, 194);
             this.bt_QueryTEST.Name = "bt_QueryTEST";
             this.bt_QueryTEST.Size = new System.Drawing.Size(204, 28);
             this.bt_QueryTEST.TabIndex = 12;
@@ -1006,7 +984,7 @@ namespace DH_LED_Controller
             // LED_1421
             // 
             this.LED_1421.Enabled = false;
-            this.LED_1421.Location = new System.Drawing.Point(266, 207);
+            this.LED_1421.Location = new System.Drawing.Point(270, 208);
             this.LED_1421.Name = "LED_1421";
             this.LED_1421.Size = new System.Drawing.Size(45, 23);
             this.LED_1421.TabIndex = 5;
@@ -1016,7 +994,7 @@ namespace DH_LED_Controller
             // LED_1419
             // 
             this.LED_1419.Enabled = false;
-            this.LED_1419.Location = new System.Drawing.Point(185, 207);
+            this.LED_1419.Location = new System.Drawing.Point(188, 208);
             this.LED_1419.Name = "LED_1419";
             this.LED_1419.Size = new System.Drawing.Size(45, 23);
             this.LED_1419.TabIndex = 4;
@@ -1026,7 +1004,7 @@ namespace DH_LED_Controller
             // LED_1422
             // 
             this.LED_1422.Enabled = false;
-            this.LED_1422.Location = new System.Drawing.Point(105, 207);
+            this.LED_1422.Location = new System.Drawing.Point(109, 208);
             this.LED_1422.Name = "LED_1422";
             this.LED_1422.Size = new System.Drawing.Size(45, 23);
             this.LED_1422.TabIndex = 3;
@@ -1197,7 +1175,7 @@ namespace DH_LED_Controller
             // 
             // bt_LED_ALL_OFF
             // 
-            this.bt_LED_ALL_OFF.Location = new System.Drawing.Point(582, 347);
+            this.bt_LED_ALL_OFF.Location = new System.Drawing.Point(593, 262);
             this.bt_LED_ALL_OFF.Name = "bt_LED_ALL_OFF";
             this.bt_LED_ALL_OFF.Size = new System.Drawing.Size(204, 28);
             this.bt_LED_ALL_OFF.TabIndex = 14;
@@ -1205,26 +1183,26 @@ namespace DH_LED_Controller
             this.bt_LED_ALL_OFF.UseVisualStyleBackColor = true;
             this.bt_LED_ALL_OFF.Click += new System.EventHandler(this.bt_LED_ALL_OFF_Click);
             // 
-            // textBox1
+            // cb_ITEMLIST
             // 
-            this.textBox1.Location = new System.Drawing.Point(565, 199);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(252, 21);
-            this.textBox1.TabIndex = 15;
-            this.textBox1.Text = "test";
+            this.cb_ITEMLIST.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.cb_ITEMLIST.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cb_ITEMLIST.FormattingEnabled = true;
+            this.cb_ITEMLIST.Location = new System.Drawing.Point(568, 161);
+            this.cb_ITEMLIST.Name = "cb_ITEMLIST";
+            this.cb_ITEMLIST.Size = new System.Drawing.Size(248, 20);
+            this.cb_ITEMLIST.TabIndex = 17;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(829, 451);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.cb_ITEMLIST);
             this.Controls.Add(this.bt_LED_ALL_OFF);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.bt_QueryTEST);
             this.Controls.Add(this.bt_LEDALLON);
-            this.Controls.Add(this.bt_LEDOFF);
-            this.Controls.Add(this.bt_LEDON);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "LED_Controller";
@@ -1238,13 +1216,10 @@ namespace DH_LED_Controller
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.Button bt_LEDON;
-        private System.Windows.Forms.Button bt_LEDOFF;
         private System.Windows.Forms.Button bt_LEDALLON;
         private System.Windows.Forms.Button bt_QueryTEST;
         private System.Windows.Forms.TabControl tabControl1;
@@ -1341,7 +1316,7 @@ namespace DH_LED_Controller
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button Wall;
         private System.Windows.Forms.Button bt_LED_ALL_OFF;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.ComboBox cb_ITEMLIST;
     }
 }
 

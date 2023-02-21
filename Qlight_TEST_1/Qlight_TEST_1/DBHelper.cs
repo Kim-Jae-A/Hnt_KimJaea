@@ -7,6 +7,7 @@
 #region < using >
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -49,6 +50,10 @@ namespace DH_LED_Controller
                 Console.WriteLine($"{DateTime.Now} " + ex);
             }
         }
+
+        // Query[0] = 품명
+        // Query[1] = 경광등 ID (NODE ID)
+        // Query[2] = 재고
         public string[] Query(string num)  // 쿼리문 실행 및 쿼리 실행 값 리턴 메소드
         {
             string[] query = new string[4];
@@ -93,6 +98,41 @@ namespace DH_LED_Controller
                 mdr.Close();
             }
             return query;
+        }
+
+        public string[] CodITEM()
+        {
+
+            cmd.Connection = conn;
+            cmd.CommandText = "SELECT COD_ITEM FROM BP0100_ITEMS";
+            try
+            {
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("" + ex);
+            }
+
+            SqlDataReader mdr = cmd.ExecuteReader();
+            string[] items = new string[999];
+            try
+            {
+                if (mdr.HasRows)
+                {
+                    int i = 0;
+                    while (mdr.Read())
+                    {
+                        items[i] = (string)mdr["COD_ITEM"];
+                        i++;
+                    }
+                }
+            }
+            finally
+            {
+                mdr.Close();
+            }
+            return items;
         }
     }
 }
