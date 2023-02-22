@@ -156,29 +156,39 @@ namespace DH_LED_Controller
         public void LED_ON(string[] node)
         {
             ushort[] nodeid = new ushort[1];
-            nodeid[0] = ushort.Parse(node[1]);
-
-            if (Convert.ToInt32(node[2]) <= 0)
+            try
             {
-                QLightAPI.ControlRoutersLED(nodeid,
-                 LEDState.ON,
-                 LEDState.OFF,
-                 LEDState.OFF,
-                 LEDState.OFF,
-                 LEDState.OFF);
-
-                RED_LIGHT(node[1]);
+                nodeid[0] = ushort.Parse(node[1]);
             }
-            else
+            catch
             {
-                QLightAPI.ControlRoutersLED(nodeid,
-                 LEDState.OFF,
-                 LEDState.OFF,
-                 LEDState.ON,
-                 LEDState.OFF,
-                 LEDState.OFF);
 
-                GREEN_LIGHT(node[1]);
+            }
+            finally
+            {
+
+                if (Convert.ToInt32(node[2]) <= 0)
+                {
+                    QLightAPI.ControlRoutersLED(nodeid,
+                     LEDState.ON,
+                     LEDState.OFF,
+                     LEDState.OFF,
+                     LEDState.OFF,
+                     LEDState.OFF);
+
+                    RED_LIGHT(node[1]);
+                }
+                else
+                {
+                    QLightAPI.ControlRoutersLED(nodeid,
+                     LEDState.OFF,
+                     LEDState.OFF,
+                     LEDState.ON,
+                     LEDState.OFF,
+                     LEDState.OFF);
+
+                    GREEN_LIGHT(node[1]);
+                }
             }
         }
 

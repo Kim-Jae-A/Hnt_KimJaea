@@ -30,6 +30,7 @@ namespace MODBUS_TEST_2
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.label1 = new System.Windows.Forms.Label();
             this.Tx_TimeSet = new System.Windows.Forms.TextBox();
@@ -100,6 +101,7 @@ namespace MODBUS_TEST_2
             this.Controls.Add(this.label2);
             this.Controls.Add(this.Tx_TimeSet);
             this.Controls.Add(this.label1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.Text = "GN_SENSOR_DATA";
             this.Load += new System.EventHandler(this.MainForm_Load);

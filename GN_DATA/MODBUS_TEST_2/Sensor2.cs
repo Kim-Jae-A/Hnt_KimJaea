@@ -22,12 +22,14 @@ namespace MODBUS_TEST_2
         //Thread thread;
         public float per;
         public float tem;
+        DBHelper helper = new DBHelper();
 
         public Sensor2()
         {
             InitializeComponent();
             SocketSet();
             ConnServer();
+            helper.Connect();
         }
         private void SocketSet()
         {
@@ -51,7 +53,7 @@ namespace MODBUS_TEST_2
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"{DateTime.Now}" + ex);
+                helper.ErrorQuery($"{DateTime.Now}", $"{ex}");
             }
             finally
             { 
@@ -72,7 +74,7 @@ namespace MODBUS_TEST_2
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"{DateTime.Now}" + ex);
+                helper.ErrorQuery($"{DateTime.Now}", $"{ex}");
             }
         }
         public class AsyncObject
@@ -119,7 +121,7 @@ namespace MODBUS_TEST_2
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"{DateTime.Now}" + ex);
+                helper.ErrorQuery($"{DateTime.Now}", $"{ex}");
             }
         }
 
@@ -134,7 +136,7 @@ namespace MODBUS_TEST_2
                 catch (Exception ex)
                 {
                     obj.ClearBuffer();
-                    Console.WriteLine($"{DateTime.Now}" + ex);
+                    helper.ErrorQuery($"{DateTime.Now}", $"{ex}");
                 }
                 finally
                 {
@@ -201,7 +203,7 @@ namespace MODBUS_TEST_2
             catch (Exception ex)
             {
                 obj.ClearBuffer();
-                Console.WriteLine($"{DateTime.Now}" + ex);
+                helper.ErrorQuery($"{DateTime.Now}", $"{ex}");
             }
             finally
             {
@@ -219,7 +221,7 @@ namespace MODBUS_TEST_2
             catch (Exception ex)
             {
                 obj.ClearBuffer();
-                Console.WriteLine($"{DateTime.Now}" + ex);
+                helper.ErrorQuery($"{DateTime.Now}", $"{ex}");
             }
             finally
             {

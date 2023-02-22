@@ -26,7 +26,8 @@ namespace MODBUS_TEST_2
             }
             catch (SqlException ex)
             {
-                Console.WriteLine($"{DateTime.Now} " + ex);
+                //Console.WriteLine($"{DateTime.Now} " + ex);
+                ErrorQuery($"{DateTime.Now}", $"{ex}");
             }
         }
         public void DisConnect()
@@ -41,6 +42,20 @@ namespace MODBUS_TEST_2
                 $"\r\n('GN-001', getdate(), {tem1}, {tem2}, {tem3},{tem4})," +
                 $"\r\n('GN-002', getdate(), {per1}, {per2}, {per3}, null)," +
                 $"\r\n('GN-003', getdate(), null, null, null, {ph});";
+            try
+            {
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                //Console.WriteLine($"{DateTime.Now} " + ex);
+                ErrorQuery($"{DateTime.Now}", $"{ex}");
+            }
+        }
+        public void ErrorQuery(string time, string code)
+        {
+            cmd.Connection = conn;
+            cmd.CommandText = $"INSERT E0000_SENSORLOG (ERROR_DAY, ERROR_LOG) VALUES ('{time}','{code}')";
             try
             {
                 cmd.ExecuteNonQuery();
