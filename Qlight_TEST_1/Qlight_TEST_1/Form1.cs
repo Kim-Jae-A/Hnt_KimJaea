@@ -299,7 +299,7 @@ namespace DH_LED_Controller
             QLightAPI.AddRouterListManually(1421, 12);
             QLightAPI.AddRouterListManually(1422, 12);
             #endregion
-            #region < 13그룹 라우터 총 20개 >
+            #region < 13그룹 라우터 총 25개 >
             QLightAPI.AddRouterListManually(1301, 13);
             QLightAPI.AddRouterListManually(1302, 13);
             QLightAPI.AddRouterListManually(1303, 13);
